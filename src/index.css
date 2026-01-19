@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Schulheft-Design: System-Font und Basis-Styles */
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Papier-Textur mit horizontalen Linien (wie liniertes Schulheft) */
+.paper-texture {
+  background-image: 
+    repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      #e5e7eb 31px,
+      #e5e7eb 32px
+    );
+  background-color: #fefefe;
+}
+
+/* Fokus-Styles für bessere Tastatur-Navigation */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
