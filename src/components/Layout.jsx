@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Clock, ArrowLeftRight, MessageCircle, Scissors, History, TrendingUp, Settings, Menu, X } from 'lucide-react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
+import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Clock, ArrowLeftRight, MessageCircle, Scissors, History, TrendingUp, Settings, Menu, X, Home } from 'lucide-react';
 
 const navGroups = [
   {
@@ -107,9 +107,9 @@ export default function Layout({ children }) {
         aria-label="Hauptnavigation"
       >
         <div className="p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">
+          <Link to="/" className="block text-2xl font-bold text-gray-800 mb-6 hover:text-blue-600 transition-colors">
             SchoolSync
-          </h1>
+          </Link>
           <NavContent onItemClick={() => {}} />
         </div>
       </nav>
@@ -124,10 +124,16 @@ export default function Layout({ children }) {
           >
             <Menu className="w-6 h-6 text-gray-700" />
           </button>
-          <h1 className="text-lg font-bold text-gray-800 truncate">
+          <Link to="/" className="text-lg font-bold text-gray-800 truncate hover:text-blue-600 transition-colors">
             {currentLabel}
-          </h1>
-          <div className="w-10" /> {/* Spacer for centering */}
+          </Link>
+          <Link
+            to="/"
+            className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Startseite"
+          >
+            <Home className="w-5 h-5 text-gray-700" />
+          </Link>
         </div>
       </div>
 
@@ -146,9 +152,9 @@ export default function Layout({ children }) {
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-bold text-gray-800">
+                <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                   SchoolSync
-                </h1>
+                </Link>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
