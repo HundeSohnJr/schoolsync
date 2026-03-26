@@ -4,6 +4,7 @@ import SchriftlichRechnen from './pages/SchriftlichRechnen';
 import Einmaleins from './pages/Einmaleins';
 import Wortarten from './pages/Wortarten';
 import Einstellungen from './pages/Einstellungen';
+import DerDieDas from './pages/DerDieDas';
 
 /**
  * Haupt-App-Komponente mit React Router
@@ -21,6 +22,7 @@ function App() {
           <Route path="/schriftlich-rechnen" element={<SchriftlichRechnen />} />
           <Route path="/einmaleins" element={<Einmaleins />} />
           <Route path="/wortarten" element={<Wortarten />} />
+          <Route path="/der-die-das" element={<DerDieDas />} />
           <Route path="/einstellungen" element={<Einstellungen />} />
           
           {/* Fallback für unbekannte Routen */}
