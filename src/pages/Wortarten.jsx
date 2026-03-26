@@ -141,6 +141,411 @@ const SENTENCES = [
       { word: "spannende", type: "adjektiv" },
       { word: "Geschichte", type: "nomen" }
     ]
+  },
+  {
+    id: 11,
+    text: "Die hungrige Katze frisst den frischen Fisch.",
+    words: [
+      { word: "Die", type: null },
+      { word: "hungrige", type: "adjektiv" },
+      { word: "Katze", type: "nomen" },
+      { word: "frisst", type: "verb" },
+      { word: "den", type: null },
+      { word: "frischen", type: "adjektiv" },
+      { word: "Fisch", type: "nomen" }
+    ]
+  },
+  {
+    id: 12,
+    text: "Ein fleißiger Schüler schreibt in das dicke Heft.",
+    words: [
+      { word: "Ein", type: null },
+      { word: "fleißiger", type: "adjektiv" },
+      { word: "Schüler", type: "nomen" },
+      { word: "schreibt", type: "verb" },
+      { word: "in", type: null },
+      { word: "das", type: null },
+      { word: "dicke", type: "adjektiv" },
+      { word: "Heft", type: "nomen" }
+    ]
+  },
+  {
+    id: 13,
+    text: "Der braune Hase hüpft über den niedrigen Zaun.",
+    words: [
+      { word: "Der", type: null },
+      { word: "braune", type: "adjektiv" },
+      { word: "Hase", type: "nomen" },
+      { word: "hüpft", type: "verb" },
+      { word: "über", type: null },
+      { word: "den", type: null },
+      { word: "niedrigen", type: "adjektiv" },
+      { word: "Zaun", type: "nomen" }
+    ]
+  },
+  {
+    id: 14,
+    text: "Die nette Mutter backt einen leckeren Kuchen.",
+    words: [
+      { word: "Die", type: null },
+      { word: "nette", type: "adjektiv" },
+      { word: "Mutter", type: "nomen" },
+      { word: "backt", type: "verb" },
+      { word: "einen", type: null },
+      { word: "leckeren", type: "adjektiv" },
+      { word: "Kuchen", type: "nomen" }
+    ]
+  },
+  {
+    id: 15,
+    text: "Das bunte Pferd galoppiert über die grüne Wiese.",
+    words: [
+      { word: "Das", type: null },
+      { word: "bunte", type: "adjektiv" },
+      { word: "Pferd", type: "nomen" },
+      { word: "galoppiert", type: "verb" },
+      { word: "über", type: null },
+      { word: "die", type: null },
+      { word: "grüne", type: "adjektiv" },
+      { word: "Wiese", type: "nomen" }
+    ]
+  },
+  {
+    id: 16,
+    text: "Der liebe Opa erzählt eine lustige Geschichte.",
+    words: [
+      { word: "Der", type: null },
+      { word: "liebe", type: "adjektiv" },
+      { word: "Opa", type: "nomen" },
+      { word: "erzählt", type: "verb" },
+      { word: "eine", type: null },
+      { word: "lustige", type: "adjektiv" },
+      { word: "Geschichte", type: "nomen" }
+    ]
+  },
+  {
+    id: 17,
+    text: "Ein schneller Läufer gewinnt den goldenen Pokal.",
+    words: [
+      { word: "Ein", type: null },
+      { word: "schneller", type: "adjektiv" },
+      { word: "Läufer", type: "nomen" },
+      { word: "gewinnt", type: "verb" },
+      { word: "den", type: null },
+      { word: "goldenen", type: "adjektiv" },
+      { word: "Pokal", type: "nomen" }
+    ]
+  },
+  {
+    id: 18,
+    text: "Die warme Sonne scheint auf den stillen See.",
+    words: [
+      { word: "Die", type: null },
+      { word: "warme", type: "adjektiv" },
+      { word: "Sonne", type: "nomen" },
+      { word: "scheint", type: "verb" },
+      { word: "auf", type: null },
+      { word: "den", type: null },
+      { word: "stillen", type: "adjektiv" },
+      { word: "See", type: "nomen" }
+    ]
+  },
+  {
+    id: 19,
+    text: "Das wilde Eichhörnchen sammelt die braunen Nüsse.",
+    words: [
+      { word: "Das", type: null },
+      { word: "wilde", type: "adjektiv" },
+      { word: "Eichhörnchen", type: "nomen" },
+      { word: "sammelt", type: "verb" },
+      { word: "die", type: null },
+      { word: "braunen", type: "adjektiv" },
+      { word: "Nüsse", type: "nomen" }
+    ]
+  },
+  {
+    id: 20,
+    text: "Der große Bruder hilft bei der schweren Aufgabe.",
+    words: [
+      { word: "Der", type: null },
+      { word: "große", type: "adjektiv" },
+      { word: "Bruder", type: "nomen" },
+      { word: "hilft", type: "verb" },
+      { word: "bei", type: null },
+      { word: "der", type: null },
+      { word: "schweren", type: "adjektiv" },
+      { word: "Aufgabe", type: "nomen" }
+    ]
+  },
+  {
+    id: 21,
+    text: "Eine schlaue Füchsin versteckt die kleinen Jungen.",
+    words: [
+      { word: "Eine", type: null },
+      { word: "schlaue", type: "adjektiv" },
+      { word: "Füchsin", type: "nomen" },
+      { word: "versteckt", type: "verb" },
+      { word: "die", type: null },
+      { word: "kleinen", type: "adjektiv" },
+      { word: "Jungen", type: "nomen" }
+    ]
+  },
+  {
+    id: 22,
+    text: "Der kalte Regen tropft auf das nasse Dach.",
+    words: [
+      { word: "Der", type: null },
+      { word: "kalte", type: "adjektiv" },
+      { word: "Regen", type: "nomen" },
+      { word: "tropft", type: "verb" },
+      { word: "auf", type: null },
+      { word: "das", type: null },
+      { word: "nasse", type: "adjektiv" },
+      { word: "Dach", type: "nomen" }
+    ]
+  },
+  {
+    id: 23,
+    text: "Die junge Schwester malt ein buntes Bild.",
+    words: [
+      { word: "Die", type: null },
+      { word: "junge", type: "adjektiv" },
+      { word: "Schwester", type: "nomen" },
+      { word: "malt", type: "verb" },
+      { word: "ein", type: null },
+      { word: "buntes", type: "adjektiv" },
+      { word: "Bild", type: "nomen" }
+    ]
+  },
+  {
+    id: 24,
+    text: "Das zahme Kaninchen knabbert an der frischen Möhre.",
+    words: [
+      { word: "Das", type: null },
+      { word: "zahme", type: "adjektiv" },
+      { word: "Kaninchen", type: "nomen" },
+      { word: "knabbert", type: "verb" },
+      { word: "an", type: null },
+      { word: "der", type: null },
+      { word: "frischen", type: "adjektiv" },
+      { word: "Möhre", type: "nomen" }
+    ]
+  },
+  {
+    id: 25,
+    text: "Der laute Donner erschreckt den kleinen Hund.",
+    words: [
+      { word: "Der", type: null },
+      { word: "laute", type: "adjektiv" },
+      { word: "Donner", type: "nomen" },
+      { word: "erschreckt", type: "verb" },
+      { word: "den", type: null },
+      { word: "kleinen", type: "adjektiv" },
+      { word: "Hund", type: "nomen" }
+    ]
+  },
+  {
+    id: 26,
+    text: "Ein lustiger Clown zeigt einen tollen Trick.",
+    words: [
+      { word: "Ein", type: null },
+      { word: "lustiger", type: "adjektiv" },
+      { word: "Clown", type: "nomen" },
+      { word: "zeigt", type: "verb" },
+      { word: "einen", type: null },
+      { word: "tollen", type: "adjektiv" },
+      { word: "Trick", type: "nomen" }
+    ]
+  },
+  {
+    id: 27,
+    text: "Die kluge Eule sitzt auf dem alten Ast.",
+    words: [
+      { word: "Die", type: null },
+      { word: "kluge", type: "adjektiv" },
+      { word: "Eule", type: "nomen" },
+      { word: "sitzt", type: "verb" },
+      { word: "auf", type: null },
+      { word: "dem", type: null },
+      { word: "alten", type: "adjektiv" },
+      { word: "Ast", type: "nomen" }
+    ]
+  },
+  {
+    id: 28,
+    text: "Der nette Vater kocht eine heiße Suppe.",
+    words: [
+      { word: "Der", type: null },
+      { word: "nette", type: "adjektiv" },
+      { word: "Vater", type: "nomen" },
+      { word: "kocht", type: "verb" },
+      { word: "eine", type: null },
+      { word: "heiße", type: "adjektiv" },
+      { word: "Suppe", type: "nomen" }
+    ]
+  },
+  {
+    id: 29,
+    text: "Das flinke Reh springt über den breiten Bach.",
+    words: [
+      { word: "Das", type: null },
+      { word: "flinke", type: "adjektiv" },
+      { word: "Reh", type: "nomen" },
+      { word: "springt", type: "verb" },
+      { word: "über", type: null },
+      { word: "den", type: null },
+      { word: "breiten", type: "adjektiv" },
+      { word: "Bach", type: "nomen" }
+    ]
+  },
+  {
+    id: 30,
+    text: "Die hellen Sterne leuchten am dunklen Himmel.",
+    words: [
+      { word: "Die", type: null },
+      { word: "hellen", type: "adjektiv" },
+      { word: "Sterne", type: "nomen" },
+      { word: "leuchten", type: "verb" },
+      { word: "am", type: null },
+      { word: "dunklen", type: "adjektiv" },
+      { word: "Himmel", type: "nomen" }
+    ]
+  },
+  {
+    id: 31,
+    text: "Ein frecher Papagei ruft durch das offene Fenster.",
+    words: [
+      { word: "Ein", type: null },
+      { word: "frecher", type: "adjektiv" },
+      { word: "Papagei", type: "nomen" },
+      { word: "ruft", type: "verb" },
+      { word: "durch", type: null },
+      { word: "das", type: null },
+      { word: "offene", type: "adjektiv" },
+      { word: "Fenster", type: "nomen" }
+    ]
+  },
+  {
+    id: 32,
+    text: "Die süße Erdbeere wächst im sonnigen Beet.",
+    words: [
+      { word: "Die", type: null },
+      { word: "süße", type: "adjektiv" },
+      { word: "Erdbeere", type: "nomen" },
+      { word: "wächst", type: "verb" },
+      { word: "im", type: null },
+      { word: "sonnigen", type: "adjektiv" },
+      { word: "Beet", type: "nomen" }
+    ]
+  },
+  {
+    id: 33,
+    text: "Der tapfere Ritter reitet auf dem schwarzen Pferd.",
+    words: [
+      { word: "Der", type: null },
+      { word: "tapfere", type: "adjektiv" },
+      { word: "Ritter", type: "nomen" },
+      { word: "reitet", type: "verb" },
+      { word: "auf", type: null },
+      { word: "dem", type: null },
+      { word: "schwarzen", type: "adjektiv" },
+      { word: "Pferd", type: "nomen" }
+    ]
+  },
+  {
+    id: 34,
+    text: "Das schüchterne Mädchen bastelt eine schöne Karte.",
+    words: [
+      { word: "Das", type: null },
+      { word: "schüchterne", type: "adjektiv" },
+      { word: "Mädchen", type: "nomen" },
+      { word: "bastelt", type: "verb" },
+      { word: "eine", type: null },
+      { word: "schöne", type: "adjektiv" },
+      { word: "Karte", type: "nomen" }
+    ]
+  },
+  {
+    id: 35,
+    text: "Der weiße Schneemann steht in dem kalten Garten.",
+    words: [
+      { word: "Der", type: null },
+      { word: "weiße", type: "adjektiv" },
+      { word: "Schneemann", type: "nomen" },
+      { word: "steht", type: "verb" },
+      { word: "in", type: null },
+      { word: "dem", type: null },
+      { word: "kalten", type: "adjektiv" },
+      { word: "Garten", type: "nomen" }
+    ]
+  },
+  {
+    id: 36,
+    text: "Die neugierige Maus knabbert an dem harten Käse.",
+    words: [
+      { word: "Die", type: null },
+      { word: "neugierige", type: "adjektiv" },
+      { word: "Maus", type: "nomen" },
+      { word: "knabbert", type: "verb" },
+      { word: "an", type: null },
+      { word: "dem", type: null },
+      { word: "harten", type: "adjektiv" },
+      { word: "Käse", type: "nomen" }
+    ]
+  },
+  {
+    id: 37,
+    text: "Ein langsamer Igel wandert durch den dichten Wald.",
+    words: [
+      { word: "Ein", type: null },
+      { word: "langsamer", type: "adjektiv" },
+      { word: "Igel", type: "nomen" },
+      { word: "wandert", type: "verb" },
+      { word: "durch", type: null },
+      { word: "den", type: null },
+      { word: "dichten", type: "adjektiv" },
+      { word: "Wald", type: "nomen" }
+    ]
+  },
+  {
+    id: 38,
+    text: "Der beste Freund bringt ein tolles Geschenk.",
+    words: [
+      { word: "Der", type: null },
+      { word: "beste", type: "adjektiv" },
+      { word: "Freund", type: "nomen" },
+      { word: "bringt", type: "verb" },
+      { word: "ein", type: null },
+      { word: "tolles", type: "adjektiv" },
+      { word: "Geschenk", type: "nomen" }
+    ]
+  },
+  {
+    id: 39,
+    text: "Die gelbe Ente schwimmt auf dem ruhigen Teich.",
+    words: [
+      { word: "Die", type: null },
+      { word: "gelbe", type: "adjektiv" },
+      { word: "Ente", type: "nomen" },
+      { word: "schwimmt", type: "verb" },
+      { word: "auf", type: null },
+      { word: "dem", type: null },
+      { word: "ruhigen", type: "adjektiv" },
+      { word: "Teich", type: "nomen" }
+    ]
+  },
+  {
+    id: 40,
+    text: "Das müde Baby trinkt die warme Milch.",
+    words: [
+      { word: "Das", type: null },
+      { word: "müde", type: "adjektiv" },
+      { word: "Baby", type: "nomen" },
+      { word: "trinkt", type: "verb" },
+      { word: "die", type: null },
+      { word: "warme", type: "adjektiv" },
+      { word: "Milch", type: "nomen" }
+    ]
   }
 ];
 

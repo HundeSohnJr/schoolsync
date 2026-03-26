@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import SchriftlichRechnen from './pages/SchriftlichRechnen';
 import Einmaleins from './pages/Einmaleins';
 import Wortarten from './pages/Wortarten';
+import Einstellungen from './pages/Einstellungen';
 
 /**
  * Haupt-App-Komponente mit React Router
@@ -20,6 +21,7 @@ function App() {
           <Route path="/schriftlich-rechnen" element={<SchriftlichRechnen />} />
           <Route path="/einmaleins" element={<Einmaleins />} />
           <Route path="/wortarten" element={<Wortarten />} />
+          <Route path="/einstellungen" element={<Einstellungen />} />
           
           {/* Fallback für unbekannte Routen */}
           <Route path="*" element={<Navigate to="/schriftlich-rechnen" replace />} />

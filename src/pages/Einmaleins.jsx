@@ -4,10 +4,21 @@ import { Flame, RefreshCw, Check, X, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 /**
- * Generiert eine zufällige 1×1 Aufgabe
+ * Schwierigkeitsgrad-Konfiguration
  */
-const generateRandomQuestion = () => {
-  const num1 = Math.floor(Math.random() * 10) + 1;
+const DIFFICULTY_RANGES = {
+  leicht: [1, 2, 3, 4, 5],
+  mittel: [6, 7, 8],
+  schwer: [9, 10],
+  alle: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+};
+
+/**
+ * Generiert eine zufällige 1×1 Aufgabe (gefiltert nach Schwierigkeit)
+ */
+const generateRandomQuestion = (difficulty = 'alle') => {
+  const range = DIFFICULTY_RANGES[difficulty] || DIFFICULTY_RANGES.alle;
+  const num1 = range[Math.floor(Math.random() * range.length)];
   const num2 = Math.floor(Math.random() * 10) + 1;
   return { num1, num2 };
 };
@@ -34,6 +45,7 @@ export default function Einmaleins() {
   
   // Session State
   const [mode, setMode] = useState('random'); // 'random' | 'focus' | 'mistakes'
+  const [difficulty, setDifficulty] = useState('alle'); // 'leicht' | 'mittel' | 'schwer' | 'alle'
   const [focusRow, setFocusRow] = useState(7);
   const [currentQuestion, setCurrentQuestion] = useState(generateRandomQuestion());
   const [userAnswer, setUserAnswer] = useState('');
@@ -64,7 +76,7 @@ export default function Einmaleins() {
     setSessionResults([]);
     setIsSessionComplete(false);
     setCorrectStreak(0);
-    
+
     let queue = [];
     if (newMode === 'focus') {
       queue = generateFocusQuestions(focusRow);
@@ -75,15 +87,17 @@ export default function Einmaleins() {
       }
       queue = queue.slice(0, 10).sort(() => Math.random() - 0.5);
     } else {
-      // Random mode: 10 unique questions
+      // Random mode: 10 unique questions filtered by difficulty
       const used = new Set();
-      while (queue.length < 10) {
-        const q = generateRandomQuestion();
+      let attempts = 0;
+      while (queue.length < 10 && attempts < 200) {
+        const q = generateRandomQuestion(difficulty);
         const key = `${q.num1}×${q.num2}`;
         if (!used.has(key)) {
           used.add(key);
           queue.push(q);
         }
+        attempts++;
       }
     }
     
@@ -275,6 +289,38 @@ export default function Einmaleins() {
               </div>
             </div>
           </div>
+
+          {/* Schwierigkeitsgrad */}
+          {!isSessionComplete && (
+            <div className="flex gap-2 items-center flex-wrap mb-3">
+              <span className="text-sm font-semibold text-gray-500">Schwierigkeit:</span>
+              {[
+                { key: 'leicht', label: 'Leicht (1-5)', color: 'green' },
+                { key: 'mittel', label: 'Mittel (6-8)', color: 'yellow' },
+                { key: 'schwer', label: 'Schwer (9-10)', color: 'red' },
+                { key: 'alle', label: 'Alle', color: 'blue' },
+              ].map(({ key, label, color }) => (
+                <button
+                  key={key}
+                  onClick={() => {
+                    setDifficulty(key);
+                    if (mode === 'random') startNewSession('random');
+                  }}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
+                    difficulty === key
+                      ? `bg-${color}-500 text-white`
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                  style={difficulty === key ? {
+                    backgroundColor: color === 'green' ? '#22c55e' : color === 'yellow' ? '#eab308' : color === 'red' ? '#ef4444' : '#3b82f6',
+                    color: 'white'
+                  } : {}}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Modus-Auswahl */}
           {!isSessionComplete && (
