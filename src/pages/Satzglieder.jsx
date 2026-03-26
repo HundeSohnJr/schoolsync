@@ -14,93 +14,70 @@ import confetti from 'canvas-confetti';
 const SENTENCES = [
   {
     id: 1,
-    text: "Der Hund frisst den Knochen.",
+    text: "Fina streichelt den Loki.",
     words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Hund", part: "subjekt" },
-      { word: "frisst", part: "prädikat" },
+      { word: "Fina", part: "subjekt" },
+      { word: "streichelt", part: "prädikat" },
       { word: "den", part: "objekt" },
-      { word: "Knochen.", part: "objekt" },
+      { word: "Loki.", part: "objekt" },
     ]
   },
   {
     id: 2,
-    text: "Die Katze fängt die Maus.",
+    text: "Loki und Elvis fressen das Futter.",
     words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Katze", part: "subjekt" },
-      { word: "fängt", part: "prädikat" },
-      { word: "die", part: "objekt" },
-      { word: "Maus.", part: "objekt" },
+      { word: "Loki", part: "subjekt" },
+      { word: "und", part: "subjekt" },
+      { word: "Elvis", part: "subjekt" },
+      { word: "fressen", part: "prädikat" },
+      { word: "das", part: "objekt" },
+      { word: "Futter.", part: "objekt" },
     ]
   },
   {
     id: 3,
-    text: "Der kleine Hund holt den Ball.",
+    text: "Papa Philipp liest Fina ein Buch vor.",
     words: [
-      { word: "Der", part: "subjekt" },
-      { word: "kleine", part: "subjekt" },
-      { word: "Hund", part: "subjekt" },
-      { word: "holt", part: "prädikat" },
-      { word: "den", part: "objekt" },
-      { word: "Ball.", part: "objekt" },
+      { word: "Papa", part: "subjekt" },
+      { word: "Philipp", part: "subjekt" },
+      { word: "liest", part: "prädikat" },
+      { word: "Fina", part: "objekt" },
+      { word: "ein", part: "objekt" },
+      { word: "Buch", part: "objekt" },
+      { word: "vor.", part: "prädikat" },
     ]
   },
   {
     id: 4,
-    text: "Das Mädchen liest ein Buch.",
+    text: "Mama Anastasia kocht das Abendessen.",
     words: [
-      { word: "Das", part: "subjekt" },
-      { word: "Mädchen", part: "subjekt" },
-      { word: "liest", part: "prädikat" },
-      { word: "ein", part: "objekt" },
-      { word: "Buch.", part: "objekt" },
+      { word: "Mama", part: "subjekt" },
+      { word: "Anastasia", part: "subjekt" },
+      { word: "kocht", part: "prädikat" },
+      { word: "das", part: "objekt" },
+      { word: "Abendessen.", part: "objekt" },
     ]
   },
   {
     id: 5,
-    text: "Die Lehrerin erklärt die Aufgabe.",
+    text: "Fina turnt am Samstag bei der TSG Bürstadt.",
     words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Lehrerin", part: "subjekt" },
-      { word: "erklärt", part: "prädikat" },
-      { word: "die", part: "objekt" },
-      { word: "Aufgabe.", part: "objekt" },
+      { word: "Fina", part: "subjekt" },
+      { word: "turnt", part: "prädikat" },
+      { word: "am", part: null },
+      { word: "Samstag", part: null },
+      { word: "bei", part: null },
+      { word: "der", part: null },
+      { word: "TSG", part: null },
+      { word: "Bürstadt.", part: null },
     ]
   },
   {
     id: 6,
-    text: "Der Junge gibt dem Hund einen Knochen.",
+    text: "Opa Roland erzählt im Garten eine Geschichte.",
     words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Junge", part: "subjekt" },
-      { word: "gibt", part: "prädikat" },
-      { word: "dem", part: "objekt" },
-      { word: "Hund", part: "objekt" },
-      { word: "einen", part: "objekt" },
-      { word: "Knochen.", part: "objekt" },
-    ]
-  },
-  {
-    id: 7,
-    text: "Die Mutter und der Vater kochen das Essen.",
-    words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Mutter", part: "subjekt" },
-      { word: "und", part: "subjekt" },
-      { word: "der", part: "subjekt" },
-      { word: "Vater", part: "subjekt" },
-      { word: "kochen", part: "prädikat" },
-      { word: "das", part: "objekt" },
-      { word: "Essen.", part: "objekt" },
-    ]
-  },
-  {
-    id: 8,
-    text: "Der Opa erzählt im Garten eine Geschichte.",
-    words: [
-      { word: "Der", part: "subjekt" },
       { word: "Opa", part: "subjekt" },
+      { word: "Roland", part: "subjekt" },
       { word: "erzählt", part: "prädikat" },
       { word: "im", part: null },
       { word: "Garten", part: null },
@@ -109,289 +86,309 @@ const SENTENCES = [
     ]
   },
   {
-    id: 9,
-    text: "Das Kind schenkt der Lehrerin eine Blume.",
+    id: 7,
+    text: "Fina gibt dem Elvis ein Leckerli.",
     words: [
-      { word: "Das", part: "subjekt" },
-      { word: "Kind", part: "subjekt" },
-      { word: "schenkt", part: "prädikat" },
-      { word: "der", part: "objekt" },
-      { word: "Lehrerin", part: "objekt" },
-      { word: "eine", part: "objekt" },
-      { word: "Blume.", part: "objekt" },
+      { word: "Fina", part: "subjekt" },
+      { word: "gibt", part: "prädikat" },
+      { word: "dem", part: "objekt" },
+      { word: "Elvis", part: "objekt" },
+      { word: "ein", part: "objekt" },
+      { word: "Leckerli.", part: "objekt" },
+    ]
+  },
+  {
+    id: 8,
+    text: "Tante Kathi und Onkel Robin besuchen die Familie.",
+    words: [
+      { word: "Tante", part: "subjekt" },
+      { word: "Kathi", part: "subjekt" },
+      { word: "und", part: "subjekt" },
+      { word: "Onkel", part: "subjekt" },
+      { word: "Robin", part: "subjekt" },
+      { word: "besuchen", part: "prädikat" },
+      { word: "die", part: "objekt" },
+      { word: "Familie.", part: "objekt" },
+    ]
+  },
+  {
+    id: 9,
+    text: "Am Morgen füttert Fina die Hunde.",
+    words: [
+      { word: "Am", part: null },
+      { word: "Morgen", part: null },
+      { word: "füttert", part: "prädikat" },
+      { word: "Fina", part: "subjekt" },
+      { word: "die", part: "objekt" },
+      { word: "Hunde.", part: "objekt" },
     ]
   },
   {
     id: 10,
-    text: "Am Morgen trinkt die Oma einen Tee.",
+    text: "Oma Angelika backt einen leckeren Kuchen.",
     words: [
-      { word: "Am", part: null },
-      { word: "Morgen", part: null },
-      { word: "trinkt", part: "prädikat" },
-      { word: "die", part: "subjekt" },
       { word: "Oma", part: "subjekt" },
+      { word: "Angelika", part: "subjekt" },
+      { word: "backt", part: "prädikat" },
       { word: "einen", part: "objekt" },
-      { word: "Tee.", part: "objekt" },
+      { word: "leckeren", part: "objekt" },
+      { word: "Kuchen.", part: "objekt" },
     ]
   },
   {
     id: 11,
-    text: "Der Vogel singt ein schönes Lied.",
+    text: "Der kleine Loki holt den Ball.",
     words: [
       { word: "Der", part: "subjekt" },
-      { word: "Vogel", part: "subjekt" },
-      { word: "singt", part: "prädikat" },
-      { word: "ein", part: "objekt" },
-      { word: "schönes", part: "objekt" },
-      { word: "Lied.", part: "objekt" },
+      { word: "kleine", part: "subjekt" },
+      { word: "Loki", part: "subjekt" },
+      { word: "holt", part: "prädikat" },
+      { word: "den", part: "objekt" },
+      { word: "Ball.", part: "objekt" },
     ]
   },
   {
     id: 12,
-    text: "Die Kinder spielen am Nachmittag Fußball.",
+    text: "Fina und Mama Anastasia backen Plätzchen.",
     words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Kinder", part: "subjekt" },
-      { word: "spielen", part: "prädikat" },
-      { word: "am", part: null },
-      { word: "Nachmittag", part: null },
-      { word: "Fußball.", part: "objekt" },
+      { word: "Fina", part: "subjekt" },
+      { word: "und", part: "subjekt" },
+      { word: "Mama", part: "subjekt" },
+      { word: "Anastasia", part: "subjekt" },
+      { word: "backen", part: "prädikat" },
+      { word: "Plätzchen.", part: "objekt" },
     ]
   },
   {
     id: 13,
-    text: "Der Lehrer zeigt den Schülern ein Bild.",
+    text: "Oma Katja schenkt Fina ein schönes Kleid.",
     words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Lehrer", part: "subjekt" },
-      { word: "zeigt", part: "prädikat" },
-      { word: "den", part: "objekt" },
-      { word: "Schülern", part: "objekt" },
+      { word: "Oma", part: "subjekt" },
+      { word: "Katja", part: "subjekt" },
+      { word: "schenkt", part: "prädikat" },
+      { word: "Fina", part: "objekt" },
       { word: "ein", part: "objekt" },
-      { word: "Bild.", part: "objekt" },
+      { word: "schönes", part: "objekt" },
+      { word: "Kleid.", part: "objekt" },
     ]
   },
   {
     id: 14,
-    text: "Die Schwester und der Bruder bauen einen Schneemann.",
+    text: "In Bürstadt geht Fina zur Schule.",
     words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Schwester", part: "subjekt" },
-      { word: "und", part: "subjekt" },
-      { word: "der", part: "subjekt" },
-      { word: "Bruder", part: "subjekt" },
-      { word: "bauen", part: "prädikat" },
-      { word: "einen", part: "objekt" },
-      { word: "Schneemann.", part: "objekt" },
+      { word: "In", part: null },
+      { word: "Bürstadt", part: null },
+      { word: "geht", part: "prädikat" },
+      { word: "Fina", part: "subjekt" },
+      { word: "zur", part: null },
+      { word: "Schule.", part: null },
     ]
   },
   {
     id: 15,
-    text: "Der Vater liest dem Kind ein Buch vor.",
+    text: "Papa Philipp wirft dem Loki den Stock.",
     words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Vater", part: "subjekt" },
-      { word: "liest", part: "prädikat" },
+      { word: "Papa", part: "subjekt" },
+      { word: "Philipp", part: "subjekt" },
+      { word: "wirft", part: "prädikat" },
       { word: "dem", part: "objekt" },
-      { word: "Kind", part: "objekt" },
-      { word: "ein", part: "objekt" },
-      { word: "Buch", part: "objekt" },
-      { word: "vor.", part: "prädikat" },
-    ]
-  },
-  {
-    id: 16,
-    text: "Im Park füttert das Mädchen die Enten.",
-    words: [
-      { word: "Im", part: null },
-      { word: "Park", part: null },
-      { word: "füttert", part: "prädikat" },
-      { word: "das", part: "subjekt" },
-      { word: "Mädchen", part: "subjekt" },
-      { word: "die", part: "objekt" },
-      { word: "Enten.", part: "objekt" },
-    ]
-  },
-  {
-    id: 17,
-    text: "Der Bäcker backt am Morgen frische Brötchen.",
-    words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Bäcker", part: "subjekt" },
-      { word: "backt", part: "prädikat" },
-      { word: "am", part: null },
-      { word: "Morgen", part: null },
-      { word: "frische", part: "objekt" },
-      { word: "Brötchen.", part: "objekt" },
-    ]
-  },
-  {
-    id: 18,
-    text: "Die Ärztin hilft dem kranken Kind.",
-    words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Ärztin", part: "subjekt" },
-      { word: "hilft", part: "prädikat" },
-      { word: "dem", part: "objekt" },
-      { word: "kranken", part: "objekt" },
-      { word: "Kind.", part: "objekt" },
-    ]
-  },
-  {
-    id: 19,
-    text: "Der Hase frisst im Garten eine Möhre.",
-    words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Hase", part: "subjekt" },
-      { word: "frisst", part: "prädikat" },
-      { word: "im", part: null },
-      { word: "Garten", part: null },
-      { word: "eine", part: "objekt" },
-      { word: "Möhre.", part: "objekt" },
-    ]
-  },
-  {
-    id: 20,
-    text: "Die Oma strickt dem Enkelkind einen Schal.",
-    words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Oma", part: "subjekt" },
-      { word: "strickt", part: "prädikat" },
-      { word: "dem", part: "objekt" },
-      { word: "Enkelkind", part: "objekt" },
-      { word: "einen", part: "objekt" },
-      { word: "Schal.", part: "objekt" },
-    ]
-  },
-  {
-    id: 21,
-    text: "Anna und Tom räumen das Zimmer auf.",
-    words: [
-      { word: "Anna", part: "subjekt" },
-      { word: "und", part: "subjekt" },
-      { word: "Tom", part: "subjekt" },
-      { word: "räumen", part: "prädikat" },
-      { word: "das", part: "objekt" },
-      { word: "Zimmer", part: "objekt" },
-      { word: "auf.", part: "prädikat" },
-    ]
-  },
-  {
-    id: 22,
-    text: "Der Schüler schreibt einen Brief.",
-    words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Schüler", part: "subjekt" },
-      { word: "schreibt", part: "prädikat" },
-      { word: "einen", part: "objekt" },
-      { word: "Brief.", part: "objekt" },
-    ]
-  },
-  {
-    id: 23,
-    text: "Am Abend liest der Vater eine Zeitung.",
-    words: [
-      { word: "Am", part: null },
-      { word: "Abend", part: null },
-      { word: "liest", part: "prädikat" },
-      { word: "der", part: "subjekt" },
-      { word: "Vater", part: "subjekt" },
-      { word: "eine", part: "objekt" },
-      { word: "Zeitung.", part: "objekt" },
-    ]
-  },
-  {
-    id: 24,
-    text: "Die Mama kauft im Laden frisches Obst.",
-    words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Mama", part: "subjekt" },
-      { word: "kauft", part: "prädikat" },
-      { word: "im", part: null },
-      { word: "Laden", part: null },
-      { word: "frisches", part: "objekt" },
-      { word: "Obst.", part: "objekt" },
-    ]
-  },
-  {
-    id: 25,
-    text: "Das Pferd trägt den Reiter über die Wiese.",
-    words: [
-      { word: "Das", part: "subjekt" },
-      { word: "Pferd", part: "subjekt" },
-      { word: "trägt", part: "prädikat" },
-      { word: "den", part: "objekt" },
-      { word: "Reiter", part: "objekt" },
-      { word: "über", part: null },
-      { word: "die", part: null },
-      { word: "Wiese.", part: null },
-    ]
-  },
-  {
-    id: 26,
-    text: "Der Koch gibt der Frau die Suppe.",
-    words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Koch", part: "subjekt" },
-      { word: "gibt", part: "prädikat" },
-      { word: "der", part: "objekt" },
-      { word: "Frau", part: "objekt" },
-      { word: "die", part: "objekt" },
-      { word: "Suppe.", part: "objekt" },
-    ]
-  },
-  {
-    id: 27,
-    text: "Die Kinder und die Eltern besuchen den Zoo.",
-    words: [
-      { word: "Die", part: "subjekt" },
-      { word: "Kinder", part: "subjekt" },
-      { word: "und", part: "subjekt" },
-      { word: "die", part: "subjekt" },
-      { word: "Eltern", part: "subjekt" },
-      { word: "besuchen", part: "prädikat" },
-      { word: "den", part: "objekt" },
-      { word: "Zoo.", part: "objekt" },
-    ]
-  },
-  {
-    id: 28,
-    text: "Der Hund bringt dem Jungen den Stock.",
-    words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Hund", part: "subjekt" },
-      { word: "bringt", part: "prädikat" },
-      { word: "dem", part: "objekt" },
-      { word: "Jungen", part: "objekt" },
+      { word: "Loki", part: "objekt" },
       { word: "den", part: "objekt" },
       { word: "Stock.", part: "objekt" },
     ]
   },
   {
-    id: 29,
-    text: "In der Schule malt das Kind ein Bild.",
+    id: 16,
+    text: "Elvis schläft auf dem Sofa.",
     words: [
-      { word: "In", part: null },
+      { word: "Elvis", part: "subjekt" },
+      { word: "schläft", part: "prädikat" },
+      { word: "auf", part: null },
+      { word: "dem", part: null },
+      { word: "Sofa.", part: null },
+    ]
+  },
+  {
+    id: 17,
+    text: "Beim Turnen übt Fina eine schwere Rolle.",
+    words: [
+      { word: "Beim", part: null },
+      { word: "Turnen", part: null },
+      { word: "übt", part: "prädikat" },
+      { word: "Fina", part: "subjekt" },
+      { word: "eine", part: "objekt" },
+      { word: "schwere", part: "objekt" },
+      { word: "Rolle.", part: "objekt" },
+    ]
+  },
+  {
+    id: 18,
+    text: "Opa Dima zeigt Fina ein altes Foto.",
+    words: [
+      { word: "Opa", part: "subjekt" },
+      { word: "Dima", part: "subjekt" },
+      { word: "zeigt", part: "prädikat" },
+      { word: "Fina", part: "objekt" },
+      { word: "ein", part: "objekt" },
+      { word: "altes", part: "objekt" },
+      { word: "Foto.", part: "objekt" },
+    ]
+  },
+  {
+    id: 19,
+    text: "Fina malt in der Schule ein Bild.",
+    words: [
+      { word: "Fina", part: "subjekt" },
+      { word: "malt", part: "prädikat" },
+      { word: "in", part: null },
       { word: "der", part: null },
       { word: "Schule", part: null },
-      { word: "malt", part: "prädikat" },
-      { word: "das", part: "subjekt" },
-      { word: "Kind", part: "subjekt" },
       { word: "ein", part: "objekt" },
       { word: "Bild.", part: "objekt" },
     ]
   },
   {
-    id: 30,
-    text: "Der Postbote bringt am Mittag ein Paket.",
+    id: 20,
+    text: "Philipp und Anastasia räumen die Küche auf.",
     words: [
-      { word: "Der", part: "subjekt" },
-      { word: "Postbote", part: "subjekt" },
+      { word: "Philipp", part: "subjekt" },
+      { word: "und", part: "subjekt" },
+      { word: "Anastasia", part: "subjekt" },
+      { word: "räumen", part: "prädikat" },
+      { word: "die", part: "objekt" },
+      { word: "Küche", part: "objekt" },
+      { word: "auf.", part: "prädikat" },
+    ]
+  },
+  {
+    id: 21,
+    text: "Fina hilft der Mama beim Einkaufen.",
+    words: [
+      { word: "Fina", part: "subjekt" },
+      { word: "hilft", part: "prädikat" },
+      { word: "der", part: "objekt" },
+      { word: "Mama", part: "objekt" },
+      { word: "beim", part: null },
+      { word: "Einkaufen.", part: null },
+    ]
+  },
+  {
+    id: 22,
+    text: "Am Abend liest Fina dem Papa eine Geschichte vor.",
+    words: [
+      { word: "Am", part: null },
+      { word: "Abend", part: null },
+      { word: "liest", part: "prädikat" },
+      { word: "Fina", part: "subjekt" },
+      { word: "dem", part: "objekt" },
+      { word: "Papa", part: "objekt" },
+      { word: "eine", part: "objekt" },
+      { word: "Geschichte", part: "objekt" },
+      { word: "vor.", part: "prädikat" },
+    ]
+  },
+  {
+    id: 23,
+    text: "Loki bringt dem Papa den Schuh.",
+    words: [
+      { word: "Loki", part: "subjekt" },
       { word: "bringt", part: "prädikat" },
-      { word: "am", part: null },
-      { word: "Mittag", part: null },
+      { word: "dem", part: "objekt" },
+      { word: "Papa", part: "objekt" },
+      { word: "den", part: "objekt" },
+      { word: "Schuh.", part: "objekt" },
+    ]
+  },
+  {
+    id: 24,
+    text: "Onkel Robin spielt mit Fina ein Spiel.",
+    words: [
+      { word: "Onkel", part: "subjekt" },
+      { word: "Robin", part: "subjekt" },
+      { word: "spielt", part: "prädikat" },
+      { word: "mit", part: null },
+      { word: "Fina", part: null },
       { word: "ein", part: "objekt" },
-      { word: "Paket.", part: "objekt" },
+      { word: "Spiel.", part: "objekt" },
+    ]
+  },
+  {
+    id: 25,
+    text: "Fina schreibt der Oma Angelika einen Brief.",
+    words: [
+      { word: "Fina", part: "subjekt" },
+      { word: "schreibt", part: "prädikat" },
+      { word: "der", part: "objekt" },
+      { word: "Oma", part: "objekt" },
+      { word: "Angelika", part: "objekt" },
+      { word: "einen", part: "objekt" },
+      { word: "Brief.", part: "objekt" },
+    ]
+  },
+  {
+    id: 26,
+    text: "Die ganze Familie besucht den Tierpark.",
+    words: [
+      { word: "Die", part: "subjekt" },
+      { word: "ganze", part: "subjekt" },
+      { word: "Familie", part: "subjekt" },
+      { word: "besucht", part: "prädikat" },
+      { word: "den", part: "objekt" },
+      { word: "Tierpark.", part: "objekt" },
+    ]
+  },
+  {
+    id: 27,
+    text: "Tante Kathi kauft Fina ein Eis.",
+    words: [
+      { word: "Tante", part: "subjekt" },
+      { word: "Kathi", part: "subjekt" },
+      { word: "kauft", part: "prädikat" },
+      { word: "Fina", part: "objekt" },
+      { word: "ein", part: "objekt" },
+      { word: "Eis.", part: "objekt" },
+    ]
+  },
+  {
+    id: 28,
+    text: "Nach dem Turnen trinkt Fina ein Glas Wasser.",
+    words: [
+      { word: "Nach", part: null },
+      { word: "dem", part: null },
+      { word: "Turnen", part: null },
+      { word: "trinkt", part: "prädikat" },
+      { word: "Fina", part: "subjekt" },
+      { word: "ein", part: "objekt" },
+      { word: "Glas", part: "objekt" },
+      { word: "Wasser.", part: "objekt" },
+    ]
+  },
+  {
+    id: 29,
+    text: "Loki und Elvis jagen die Katze durch den Garten.",
+    words: [
+      { word: "Loki", part: "subjekt" },
+      { word: "und", part: "subjekt" },
+      { word: "Elvis", part: "subjekt" },
+      { word: "jagen", part: "prädikat" },
+      { word: "die", part: "objekt" },
+      { word: "Katze", part: "objekt" },
+      { word: "durch", part: null },
+      { word: "den", part: null },
+      { word: "Garten.", part: null },
+    ]
+  },
+  {
+    id: 30,
+    text: "Fina zeigt dem Opa Roland ihr Turnvideo.",
+    words: [
+      { word: "Fina", part: "subjekt" },
+      { word: "zeigt", part: "prädikat" },
+      { word: "dem", part: "objekt" },
+      { word: "Opa", part: "objekt" },
+      { word: "Roland", part: "objekt" },
+      { word: "ihr", part: "objekt" },
+      { word: "Turnvideo.", part: "objekt" },
     ]
   },
 ];

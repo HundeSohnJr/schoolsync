@@ -9,214 +9,144 @@ import confetti from 'canvas-confetti';
 const SENTENCES = [
   {
     id: 1,
-    text: "Der schnelle Hund läuft über die Wiese.",
+    text: "Der lustige Loki rennt durch den großen Garten.",
     words: [
       { word: "Der", type: null },
-      { word: "schnelle", type: "adjektiv" },
-      { word: "Hund", type: "nomen" },
-      { word: "läuft", type: "verb" },
-      { word: "über", type: null },
-      { word: "die", type: null },
-      { word: "Wiese", type: "nomen" }
-    ]
-  },
-  {
-    id: 2,
-    text: "Das kleine Mädchen singt ein fröhliches Lied.",
-    words: [
-      { word: "Das", type: null },
-      { word: "kleine", type: "adjektiv" },
-      { word: "Mädchen", type: "nomen" },
-      { word: "singt", type: "verb" },
-      { word: "ein", type: null },
-      { word: "fröhliches", type: "adjektiv" },
-      { word: "Lied", type: "nomen" }
-    ]
-  },
-  {
-    id: 3,
-    text: "Der mutige Junge klettert auf den hohen Baum.",
-    words: [
-      { word: "Der", type: null },
-      { word: "mutige", type: "adjektiv" },
-      { word: "Junge", type: "nomen" },
-      { word: "klettert", type: "verb" },
-      { word: "auf", type: null },
+      { word: "lustige", type: "adjektiv" },
+      { word: "Loki", type: "nomen" },
+      { word: "rennt", type: "verb" },
+      { word: "durch", type: null },
       { word: "den", type: null },
-      { word: "hohen", type: "adjektiv" },
-      { word: "Baum", type: "nomen" }
-    ]
-  },
-  {
-    id: 4,
-    text: "Die rote Blume wächst im bunten Garten.",
-    words: [
-      { word: "Die", type: null },
-      { word: "rote", type: "adjektiv" },
-      { word: "Blume", type: "nomen" },
-      { word: "wächst", type: "verb" },
-      { word: "im", type: null },
-      { word: "bunten", type: "adjektiv" },
+      { word: "großen", type: "adjektiv" },
       { word: "Garten", type: "nomen" }
     ]
   },
   {
-    id: 5,
-    text: "Ein großer Vogel fliegt über den blauen Himmel.",
+    id: 2,
+    text: "Fina turnt an dem hohen Reck bei der TSG Bürstadt.",
     words: [
-      { word: "Ein", type: null },
-      { word: "großer", type: "adjektiv" },
-      { word: "Vogel", type: "nomen" },
-      { word: "fliegt", type: "verb" },
-      { word: "über", type: null },
-      { word: "den", type: null },
-      { word: "blauen", type: "adjektiv" },
-      { word: "Himmel", type: "nomen" }
-    ]
-  },
-  {
-    id: 6,
-    text: "Das lustige Kind spielt mit dem neuen Ball.",
-    words: [
-      { word: "Das", type: null },
-      { word: "lustige", type: "adjektiv" },
-      { word: "Kind", type: "nomen" },
-      { word: "spielt", type: "verb" },
-      { word: "mit", type: null },
+      { word: "Fina", type: "nomen" },
+      { word: "turnt", type: "verb" },
+      { word: "an", type: null },
       { word: "dem", type: null },
-      { word: "neuen", type: "adjektiv" },
-      { word: "Ball", type: "nomen" }
+      { word: "hohen", type: "adjektiv" },
+      { word: "Reck", type: "nomen" },
+      { word: "bei", type: null },
+      { word: "der", type: null },
+      { word: "TSG", type: "nomen" },
+      { word: "Bürstadt", type: "nomen" }
     ]
   },
   {
-    id: 7,
-    text: "Der alte Lehrer erklärt die schwierige Aufgabe.",
+    id: 3,
+    text: "Mama Anastasia kocht eine leckere Suppe.",
+    words: [
+      { word: "Mama", type: "nomen" },
+      { word: "Anastasia", type: "nomen" },
+      { word: "kocht", type: "verb" },
+      { word: "eine", type: null },
+      { word: "leckere", type: "adjektiv" },
+      { word: "Suppe", type: "nomen" }
+    ]
+  },
+  {
+    id: 4,
+    text: "Der kleine Elvis schläft auf dem weichen Sofa.",
     words: [
       { word: "Der", type: null },
-      { word: "alte", type: "adjektiv" },
-      { word: "Lehrer", type: "nomen" },
-      { word: "erklärt", type: "verb" },
-      { word: "die", type: null },
-      { word: "schwierige", type: "adjektiv" },
-      { word: "Aufgabe", type: "nomen" }
-    ]
-  },
-  {
-    id: 8,
-    text: "Eine kleine Katze schläft auf dem weichen Kissen.",
-    words: [
-      { word: "Eine", type: null },
       { word: "kleine", type: "adjektiv" },
-      { word: "Katze", type: "nomen" },
+      { word: "Elvis", type: "nomen" },
       { word: "schläft", type: "verb" },
       { word: "auf", type: null },
       { word: "dem", type: null },
       { word: "weichen", type: "adjektiv" },
-      { word: "Kissen", type: "nomen" }
+      { word: "Sofa", type: "nomen" }
     ]
   },
   {
-    id: 9,
-    text: "Der starke Wind weht durch die dunklen Wolken.",
+    id: 5,
+    text: "Papa Philipp liest ein spannendes Buch.",
+    words: [
+      { word: "Papa", type: "nomen" },
+      { word: "Philipp", type: "nomen" },
+      { word: "liest", type: "verb" },
+      { word: "ein", type: null },
+      { word: "spannendes", type: "adjektiv" },
+      { word: "Buch", type: "nomen" }
+    ]
+  },
+  {
+    id: 6,
+    text: "Fina und Loki spielen im sonnigen Garten.",
+    words: [
+      { word: "Fina", type: "nomen" },
+      { word: "und", type: null },
+      { word: "Loki", type: "nomen" },
+      { word: "spielen", type: "verb" },
+      { word: "im", type: null },
+      { word: "sonnigen", type: "adjektiv" },
+      { word: "Garten", type: "nomen" }
+    ]
+  },
+  {
+    id: 7,
+    text: "Oma Angelika backt einen süßen Kuchen.",
+    words: [
+      { word: "Oma", type: "nomen" },
+      { word: "Angelika", type: "nomen" },
+      { word: "backt", type: "verb" },
+      { word: "einen", type: null },
+      { word: "süßen", type: "adjektiv" },
+      { word: "Kuchen", type: "nomen" }
+    ]
+  },
+  {
+    id: 8,
+    text: "Der starke Wind weht über die Dächer von Bürstadt.",
     words: [
       { word: "Der", type: null },
       { word: "starke", type: "adjektiv" },
       { word: "Wind", type: "nomen" },
       { word: "weht", type: "verb" },
-      { word: "durch", type: null },
+      { word: "über", type: null },
       { word: "die", type: null },
-      { word: "dunklen", type: "adjektiv" },
-      { word: "Wolken", type: "nomen" }
+      { word: "Dächer", type: "nomen" },
+      { word: "von", type: null },
+      { word: "Bürstadt", type: "nomen" }
+    ]
+  },
+  {
+    id: 9,
+    text: "Tante Kathi bringt ein tolles Geschenk.",
+    words: [
+      { word: "Tante", type: "nomen" },
+      { word: "Kathi", type: "nomen" },
+      { word: "bringt", type: "verb" },
+      { word: "ein", type: null },
+      { word: "tolles", type: "adjektiv" },
+      { word: "Geschenk", type: "nomen" }
     ]
   },
   {
     id: 10,
-    text: "Die freundliche Lehrerin liest eine spannende Geschichte.",
+    text: "Fina macht einen schönen Handstand in der Turnhalle.",
     words: [
-      { word: "Die", type: null },
-      { word: "freundliche", type: "adjektiv" },
-      { word: "Lehrerin", type: "nomen" },
-      { word: "liest", type: "verb" },
-      { word: "eine", type: null },
-      { word: "spannende", type: "adjektiv" },
-      { word: "Geschichte", type: "nomen" }
+      { word: "Fina", type: "nomen" },
+      { word: "macht", type: "verb" },
+      { word: "einen", type: null },
+      { word: "schönen", type: "adjektiv" },
+      { word: "Handstand", type: "nomen" },
+      { word: "in", type: null },
+      { word: "der", type: null },
+      { word: "Turnhalle", type: "nomen" }
     ]
   },
   {
     id: 11,
-    text: "Die hungrige Katze frisst den frischen Fisch.",
+    text: "Opa Roland erzählt eine lustige Geschichte.",
     words: [
-      { word: "Die", type: null },
-      { word: "hungrige", type: "adjektiv" },
-      { word: "Katze", type: "nomen" },
-      { word: "frisst", type: "verb" },
-      { word: "den", type: null },
-      { word: "frischen", type: "adjektiv" },
-      { word: "Fisch", type: "nomen" }
-    ]
-  },
-  {
-    id: 12,
-    text: "Ein fleißiger Schüler schreibt in das dicke Heft.",
-    words: [
-      { word: "Ein", type: null },
-      { word: "fleißiger", type: "adjektiv" },
-      { word: "Schüler", type: "nomen" },
-      { word: "schreibt", type: "verb" },
-      { word: "in", type: null },
-      { word: "das", type: null },
-      { word: "dicke", type: "adjektiv" },
-      { word: "Heft", type: "nomen" }
-    ]
-  },
-  {
-    id: 13,
-    text: "Der braune Hase hüpft über den niedrigen Zaun.",
-    words: [
-      { word: "Der", type: null },
-      { word: "braune", type: "adjektiv" },
-      { word: "Hase", type: "nomen" },
-      { word: "hüpft", type: "verb" },
-      { word: "über", type: null },
-      { word: "den", type: null },
-      { word: "niedrigen", type: "adjektiv" },
-      { word: "Zaun", type: "nomen" }
-    ]
-  },
-  {
-    id: 14,
-    text: "Die nette Mutter backt einen leckeren Kuchen.",
-    words: [
-      { word: "Die", type: null },
-      { word: "nette", type: "adjektiv" },
-      { word: "Mutter", type: "nomen" },
-      { word: "backt", type: "verb" },
-      { word: "einen", type: null },
-      { word: "leckeren", type: "adjektiv" },
-      { word: "Kuchen", type: "nomen" }
-    ]
-  },
-  {
-    id: 15,
-    text: "Das bunte Pferd galoppiert über die grüne Wiese.",
-    words: [
-      { word: "Das", type: null },
-      { word: "bunte", type: "adjektiv" },
-      { word: "Pferd", type: "nomen" },
-      { word: "galoppiert", type: "verb" },
-      { word: "über", type: null },
-      { word: "die", type: null },
-      { word: "grüne", type: "adjektiv" },
-      { word: "Wiese", type: "nomen" }
-    ]
-  },
-  {
-    id: 16,
-    text: "Der liebe Opa erzählt eine lustige Geschichte.",
-    words: [
-      { word: "Der", type: null },
-      { word: "liebe", type: "adjektiv" },
       { word: "Opa", type: "nomen" },
+      { word: "Roland", type: "nomen" },
       { word: "erzählt", type: "verb" },
       { word: "eine", type: null },
       { word: "lustige", type: "adjektiv" },
@@ -224,21 +154,75 @@ const SENTENCES = [
     ]
   },
   {
-    id: 17,
-    text: "Ein schneller Läufer gewinnt den goldenen Pokal.",
+    id: 12,
+    text: "Die beiden Hunde fressen das leckere Futter.",
     words: [
-      { word: "Ein", type: null },
-      { word: "schneller", type: "adjektiv" },
-      { word: "Läufer", type: "nomen" },
-      { word: "gewinnt", type: "verb" },
-      { word: "den", type: null },
-      { word: "goldenen", type: "adjektiv" },
-      { word: "Pokal", type: "nomen" }
+      { word: "Die", type: null },
+      { word: "beiden", type: "adjektiv" },
+      { word: "Hunde", type: "nomen" },
+      { word: "fressen", type: "verb" },
+      { word: "das", type: null },
+      { word: "leckere", type: "adjektiv" },
+      { word: "Futter", type: "nomen" }
     ]
   },
   {
-    id: 18,
-    text: "Die warme Sonne scheint auf den stillen See.",
+    id: 13,
+    text: "Fina schreibt einen langen Text in das neue Heft.",
+    words: [
+      { word: "Fina", type: "nomen" },
+      { word: "schreibt", type: "verb" },
+      { word: "einen", type: null },
+      { word: "langen", type: "adjektiv" },
+      { word: "Text", type: "nomen" },
+      { word: "in", type: null },
+      { word: "das", type: null },
+      { word: "neue", type: "adjektiv" },
+      { word: "Heft", type: "nomen" }
+    ]
+  },
+  {
+    id: 14,
+    text: "Oma Katja singt ein fröhliches Lied.",
+    words: [
+      { word: "Oma", type: "nomen" },
+      { word: "Katja", type: "nomen" },
+      { word: "singt", type: "verb" },
+      { word: "ein", type: null },
+      { word: "fröhliches", type: "adjektiv" },
+      { word: "Lied", type: "nomen" }
+    ]
+  },
+  {
+    id: 15,
+    text: "Loki und Elvis jagen den bunten Ball.",
+    words: [
+      { word: "Loki", type: "nomen" },
+      { word: "und", type: null },
+      { word: "Elvis", type: "nomen" },
+      { word: "jagen", type: "verb" },
+      { word: "den", type: null },
+      { word: "bunten", type: "adjektiv" },
+      { word: "Ball", type: "nomen" }
+    ]
+  },
+  {
+    id: 16,
+    text: "Onkel Robin spielt ein lustiges Spiel mit Fina.",
+    words: [
+      { word: "Onkel", type: "nomen" },
+      { word: "Robin", type: "nomen" },
+      { word: "spielt", type: "verb" },
+      { word: "ein", type: null },
+      { word: "lustiges", type: "adjektiv" },
+      { word: "Spiel", type: "nomen" },
+      { word: "mit", type: null },
+      { word: "Fina", type: "nomen" }
+    ]
+  },
+  {
+    id: 17,
+    text: "Die warme Sonne scheint auf den Spielplatz in Bürstadt.",
     words: [
       { word: "Die", type: null },
       { word: "warme", type: "adjektiv" },
@@ -246,151 +230,308 @@ const SENTENCES = [
       { word: "scheint", type: "verb" },
       { word: "auf", type: null },
       { word: "den", type: null },
-      { word: "stillen", type: "adjektiv" },
-      { word: "See", type: "nomen" }
+      { word: "Spielplatz", type: "nomen" },
+      { word: "in", type: null },
+      { word: "Bürstadt", type: "nomen" }
+    ]
+  },
+  {
+    id: 18,
+    text: "Fina malt ein buntes Bild von Loki.",
+    words: [
+      { word: "Fina", type: "nomen" },
+      { word: "malt", type: "verb" },
+      { word: "ein", type: null },
+      { word: "buntes", type: "adjektiv" },
+      { word: "Bild", type: "nomen" },
+      { word: "von", type: null },
+      { word: "Loki", type: "nomen" }
     ]
   },
   {
     id: 19,
-    text: "Das wilde Eichhörnchen sammelt die braunen Nüsse.",
+    text: "Papa Philipp kocht eine heiße Suppe im Winter.",
     words: [
-      { word: "Das", type: null },
-      { word: "wilde", type: "adjektiv" },
-      { word: "Eichhörnchen", type: "nomen" },
-      { word: "sammelt", type: "verb" },
-      { word: "die", type: null },
-      { word: "braunen", type: "adjektiv" },
-      { word: "Nüsse", type: "nomen" }
+      { word: "Papa", type: "nomen" },
+      { word: "Philipp", type: "nomen" },
+      { word: "kocht", type: "verb" },
+      { word: "eine", type: null },
+      { word: "heiße", type: "adjektiv" },
+      { word: "Suppe", type: "nomen" },
+      { word: "im", type: null },
+      { word: "Winter", type: "nomen" }
     ]
   },
   {
     id: 20,
-    text: "Der große Bruder hilft bei der schweren Aufgabe.",
+    text: "Der freche Loki klaut den alten Schuh.",
     words: [
       { word: "Der", type: null },
-      { word: "große", type: "adjektiv" },
-      { word: "Bruder", type: "nomen" },
-      { word: "hilft", type: "verb" },
-      { word: "bei", type: null },
-      { word: "der", type: null },
-      { word: "schweren", type: "adjektiv" },
-      { word: "Aufgabe", type: "nomen" }
+      { word: "freche", type: "adjektiv" },
+      { word: "Loki", type: "nomen" },
+      { word: "klaut", type: "verb" },
+      { word: "den", type: null },
+      { word: "alten", type: "adjektiv" },
+      { word: "Schuh", type: "nomen" }
     ]
   },
   {
     id: 21,
-    text: "Eine schlaue Füchsin versteckt die kleinen Jungen.",
+    text: "Fina springt über den hohen Kasten beim Turnen.",
     words: [
-      { word: "Eine", type: null },
-      { word: "schlaue", type: "adjektiv" },
-      { word: "Füchsin", type: "nomen" },
-      { word: "versteckt", type: "verb" },
-      { word: "die", type: null },
-      { word: "kleinen", type: "adjektiv" },
-      { word: "Jungen", type: "nomen" }
+      { word: "Fina", type: "nomen" },
+      { word: "springt", type: "verb" },
+      { word: "über", type: null },
+      { word: "den", type: null },
+      { word: "hohen", type: "adjektiv" },
+      { word: "Kasten", type: "nomen" },
+      { word: "beim", type: null },
+      { word: "Turnen", type: "nomen" }
     ]
   },
   {
     id: 22,
-    text: "Der kalte Regen tropft auf das nasse Dach.",
+    text: "Opa Dima zeigt Fina ein altes Foto.",
     words: [
-      { word: "Der", type: null },
-      { word: "kalte", type: "adjektiv" },
-      { word: "Regen", type: "nomen" },
-      { word: "tropft", type: "verb" },
-      { word: "auf", type: null },
-      { word: "das", type: null },
-      { word: "nasse", type: "adjektiv" },
-      { word: "Dach", type: "nomen" }
+      { word: "Opa", type: "nomen" },
+      { word: "Dima", type: "nomen" },
+      { word: "zeigt", type: "verb" },
+      { word: "Fina", type: "nomen" },
+      { word: "ein", type: null },
+      { word: "altes", type: "adjektiv" },
+      { word: "Foto", type: "nomen" }
     ]
   },
   {
     id: 23,
-    text: "Die junge Schwester malt ein buntes Bild.",
+    text: "Der müde Elvis liegt auf der warmen Decke.",
     words: [
-      { word: "Die", type: null },
-      { word: "junge", type: "adjektiv" },
-      { word: "Schwester", type: "nomen" },
-      { word: "malt", type: "verb" },
-      { word: "ein", type: null },
-      { word: "buntes", type: "adjektiv" },
-      { word: "Bild", type: "nomen" }
+      { word: "Der", type: null },
+      { word: "müde", type: "adjektiv" },
+      { word: "Elvis", type: "nomen" },
+      { word: "liegt", type: "verb" },
+      { word: "auf", type: null },
+      { word: "der", type: null },
+      { word: "warmen", type: "adjektiv" },
+      { word: "Decke", type: "nomen" }
     ]
   },
   {
     id: 24,
-    text: "Das zahme Kaninchen knabbert an der frischen Möhre.",
+    text: "Mama Anastasia liest eine spannende Geschichte.",
     words: [
-      { word: "Das", type: null },
-      { word: "zahme", type: "adjektiv" },
-      { word: "Kaninchen", type: "nomen" },
-      { word: "knabbert", type: "verb" },
-      { word: "an", type: null },
-      { word: "der", type: null },
-      { word: "frischen", type: "adjektiv" },
-      { word: "Möhre", type: "nomen" }
+      { word: "Mama", type: "nomen" },
+      { word: "Anastasia", type: "nomen" },
+      { word: "liest", type: "verb" },
+      { word: "eine", type: null },
+      { word: "spannende", type: "adjektiv" },
+      { word: "Geschichte", type: "nomen" }
     ]
   },
   {
     id: 25,
-    text: "Der laute Donner erschreckt den kleinen Hund.",
+    text: "Fina fährt mit dem schnellen Fahrrad durch Bürstadt.",
     words: [
-      { word: "Der", type: null },
-      { word: "laute", type: "adjektiv" },
-      { word: "Donner", type: "nomen" },
-      { word: "erschreckt", type: "verb" },
-      { word: "den", type: null },
-      { word: "kleinen", type: "adjektiv" },
-      { word: "Hund", type: "nomen" }
+      { word: "Fina", type: "nomen" },
+      { word: "fährt", type: "verb" },
+      { word: "mit", type: null },
+      { word: "dem", type: null },
+      { word: "schnellen", type: "adjektiv" },
+      { word: "Fahrrad", type: "nomen" },
+      { word: "durch", type: null },
+      { word: "Bürstadt", type: "nomen" }
     ]
   },
   {
     id: 26,
-    text: "Ein lustiger Clown zeigt einen tollen Trick.",
+    text: "Der kalte Regen fällt auf die Straßen von Bürstadt.",
     words: [
-      { word: "Ein", type: null },
-      { word: "lustiger", type: "adjektiv" },
-      { word: "Clown", type: "nomen" },
-      { word: "zeigt", type: "verb" },
-      { word: "einen", type: null },
-      { word: "tollen", type: "adjektiv" },
-      { word: "Trick", type: "nomen" }
+      { word: "Der", type: null },
+      { word: "kalte", type: "adjektiv" },
+      { word: "Regen", type: "nomen" },
+      { word: "fällt", type: "verb" },
+      { word: "auf", type: null },
+      { word: "die", type: null },
+      { word: "Straßen", type: "nomen" },
+      { word: "von", type: null },
+      { word: "Bürstadt", type: "nomen" }
     ]
   },
   {
     id: 27,
-    text: "Die kluge Eule sitzt auf dem alten Ast.",
+    text: "Fina und Mama backen die kleinen Plätzchen.",
     words: [
-      { word: "Die", type: null },
-      { word: "kluge", type: "adjektiv" },
-      { word: "Eule", type: "nomen" },
-      { word: "sitzt", type: "verb" },
-      { word: "auf", type: null },
-      { word: "dem", type: null },
-      { word: "alten", type: "adjektiv" },
-      { word: "Ast", type: "nomen" }
+      { word: "Fina", type: "nomen" },
+      { word: "und", type: null },
+      { word: "Mama", type: "nomen" },
+      { word: "backen", type: "verb" },
+      { word: "die", type: null },
+      { word: "kleinen", type: "adjektiv" },
+      { word: "Plätzchen", type: "nomen" }
     ]
   },
   {
     id: 28,
-    text: "Der nette Vater kocht eine heiße Suppe.",
+    text: "Loki bellt den neugierigen Briefträger an.",
     words: [
-      { word: "Der", type: null },
-      { word: "nette", type: "adjektiv" },
-      { word: "Vater", type: "nomen" },
-      { word: "kocht", type: "verb" },
-      { word: "eine", type: null },
-      { word: "heiße", type: "adjektiv" },
-      { word: "Suppe", type: "nomen" }
+      { word: "Loki", type: "nomen" },
+      { word: "bellt", type: "verb" },
+      { word: "den", type: null },
+      { word: "neugierigen", type: "adjektiv" },
+      { word: "Briefträger", type: "nomen" },
+      { word: "an", type: null }
     ]
   },
   {
     id: 29,
-    text: "Das flinke Reh springt über den breiten Bach.",
+    text: "Tante Kathi und Onkel Robin besuchen die fröhliche Familie.",
     words: [
-      { word: "Das", type: null },
-      { word: "flinke", type: "adjektiv" },
-      { word: "Reh", type: "nomen" },
+      { word: "Tante", type: "nomen" },
+      { word: "Kathi", type: "nomen" },
+      { word: "und", type: null },
+      { word: "Onkel", type: "nomen" },
+      { word: "Robin", type: "nomen" },
+      { word: "besuchen", type: "verb" },
+      { word: "die", type: null },
+      { word: "fröhliche", type: "adjektiv" },
+      { word: "Familie", type: "nomen" }
+    ]
+  },
+  {
+    id: 30,
+    text: "Die hellen Sterne leuchten über dem Haus in Bürstadt.",
+    words: [
+      { word: "Die", type: null },
+      { word: "hellen", type: "adjektiv" },
+      { word: "Sterne", type: "nomen" },
+      { word: "leuchten", type: "verb" },
+      { word: "über", type: null },
+      { word: "dem", type: null },
+      { word: "Haus", type: "nomen" },
+      { word: "in", type: null },
+      { word: "Bürstadt", type: "nomen" }
+    ]
+  },
+  {
+    id: 31,
+    text: "Fina streichelt den braven Elvis auf dem Kopf.",
+    words: [
+      { word: "Fina", type: "nomen" },
+      { word: "streichelt", type: "verb" },
+      { word: "den", type: null },
+      { word: "braven", type: "adjektiv" },
+      { word: "Elvis", type: "nomen" },
+      { word: "auf", type: null },
+      { word: "dem", type: null },
+      { word: "Kopf", type: "nomen" }
+    ]
+  },
+  {
+    id: 32,
+    text: "Oma Angelika und Opa Roland kommen zu Besuch nach Bürstadt.",
+    words: [
+      { word: "Oma", type: "nomen" },
+      { word: "Angelika", type: "nomen" },
+      { word: "und", type: null },
+      { word: "Opa", type: "nomen" },
+      { word: "Roland", type: "nomen" },
+      { word: "kommen", type: "verb" },
+      { word: "zu", type: null },
+      { word: "Besuch", type: "nomen" },
+      { word: "nach", type: null },
+      { word: "Bürstadt", type: "nomen" }
+    ]
+  },
+  {
+    id: 33,
+    text: "Papa baut ein stabiles Regal im Zimmer.",
+    words: [
+      { word: "Papa", type: "nomen" },
+      { word: "baut", type: "verb" },
+      { word: "ein", type: null },
+      { word: "stabiles", type: "adjektiv" },
+      { word: "Regal", type: "nomen" },
+      { word: "im", type: null },
+      { word: "Zimmer", type: "nomen" }
+    ]
+  },
+  {
+    id: 34,
+    text: "Der weiße Schnee bedeckt den ganzen Garten.",
+    words: [
+      { word: "Der", type: null },
+      { word: "weiße", type: "adjektiv" },
+      { word: "Schnee", type: "nomen" },
+      { word: "bedeckt", type: "verb" },
+      { word: "den", type: null },
+      { word: "ganzen", type: "adjektiv" },
+      { word: "Garten", type: "nomen" }
+    ]
+  },
+  {
+    id: 35,
+    text: "Fina lernt eine neue Übung am niedrigen Schwebebalken.",
+    words: [
+      { word: "Fina", type: "nomen" },
+      { word: "lernt", type: "verb" },
+      { word: "eine", type: null },
+      { word: "neue", type: "adjektiv" },
+      { word: "Übung", type: "nomen" },
+      { word: "am", type: null },
+      { word: "niedrigen", type: "adjektiv" },
+      { word: "Schwebebalken", type: "nomen" }
+    ]
+  },
+  {
+    id: 36,
+    text: "Loki und Elvis trinken das frische Wasser.",
+    words: [
+      { word: "Loki", type: "nomen" },
+      { word: "und", type: null },
+      { word: "Elvis", type: "nomen" },
+      { word: "trinken", type: "verb" },
+      { word: "das", type: null },
+      { word: "frische", type: "adjektiv" },
+      { word: "Wasser", type: "nomen" }
+    ]
+  },
+  {
+    id: 37,
+    text: "Fina bastelt eine bunte Karte für Oma Katja.",
+    words: [
+      { word: "Fina", type: "nomen" },
+      { word: "bastelt", type: "verb" },
+      { word: "eine", type: null },
+      { word: "bunte", type: "adjektiv" },
+      { word: "Karte", type: "nomen" },
+      { word: "für", type: null },
+      { word: "Oma", type: "nomen" },
+      { word: "Katja", type: "nomen" }
+    ]
+  },
+  {
+    id: 38,
+    text: "Die fleißige Fina löst die schwierige Aufgabe in der Schule.",
+    words: [
+      { word: "Die", type: null },
+      { word: "fleißige", type: "adjektiv" },
+      { word: "Fina", type: "nomen" },
+      { word: "löst", type: "verb" },
+      { word: "die", type: null },
+      { word: "schwierige", type: "adjektiv" },
+      { word: "Aufgabe", type: "nomen" },
+      { word: "in", type: null },
+      { word: "der", type: null },
+      { word: "Schule", type: "nomen" }
+    ]
+  },
+  {
+    id: 39,
+    text: "Der wilde Loki springt über den breiten Bach.",
+    words: [
+      { word: "Der", type: null },
+      { word: "wilde", type: "adjektiv" },
+      { word: "Loki", type: "nomen" },
       { word: "springt", type: "verb" },
       { word: "über", type: null },
       { word: "den", type: null },
@@ -399,152 +540,19 @@ const SENTENCES = [
     ]
   },
   {
-    id: 30,
-    text: "Die hellen Sterne leuchten am dunklen Himmel.",
-    words: [
-      { word: "Die", type: null },
-      { word: "hellen", type: "adjektiv" },
-      { word: "Sterne", type: "nomen" },
-      { word: "leuchten", type: "verb" },
-      { word: "am", type: null },
-      { word: "dunklen", type: "adjektiv" },
-      { word: "Himmel", type: "nomen" }
-    ]
-  },
-  {
-    id: 31,
-    text: "Ein frecher Papagei ruft durch das offene Fenster.",
-    words: [
-      { word: "Ein", type: null },
-      { word: "frecher", type: "adjektiv" },
-      { word: "Papagei", type: "nomen" },
-      { word: "ruft", type: "verb" },
-      { word: "durch", type: null },
-      { word: "das", type: null },
-      { word: "offene", type: "adjektiv" },
-      { word: "Fenster", type: "nomen" }
-    ]
-  },
-  {
-    id: 32,
-    text: "Die süße Erdbeere wächst im sonnigen Beet.",
-    words: [
-      { word: "Die", type: null },
-      { word: "süße", type: "adjektiv" },
-      { word: "Erdbeere", type: "nomen" },
-      { word: "wächst", type: "verb" },
-      { word: "im", type: null },
-      { word: "sonnigen", type: "adjektiv" },
-      { word: "Beet", type: "nomen" }
-    ]
-  },
-  {
-    id: 33,
-    text: "Der tapfere Ritter reitet auf dem schwarzen Pferd.",
-    words: [
-      { word: "Der", type: null },
-      { word: "tapfere", type: "adjektiv" },
-      { word: "Ritter", type: "nomen" },
-      { word: "reitet", type: "verb" },
-      { word: "auf", type: null },
-      { word: "dem", type: null },
-      { word: "schwarzen", type: "adjektiv" },
-      { word: "Pferd", type: "nomen" }
-    ]
-  },
-  {
-    id: 34,
-    text: "Das schüchterne Mädchen bastelt eine schöne Karte.",
-    words: [
-      { word: "Das", type: null },
-      { word: "schüchterne", type: "adjektiv" },
-      { word: "Mädchen", type: "nomen" },
-      { word: "bastelt", type: "verb" },
-      { word: "eine", type: null },
-      { word: "schöne", type: "adjektiv" },
-      { word: "Karte", type: "nomen" }
-    ]
-  },
-  {
-    id: 35,
-    text: "Der weiße Schneemann steht in dem kalten Garten.",
-    words: [
-      { word: "Der", type: null },
-      { word: "weiße", type: "adjektiv" },
-      { word: "Schneemann", type: "nomen" },
-      { word: "steht", type: "verb" },
-      { word: "in", type: null },
-      { word: "dem", type: null },
-      { word: "kalten", type: "adjektiv" },
-      { word: "Garten", type: "nomen" }
-    ]
-  },
-  {
-    id: 36,
-    text: "Die neugierige Maus knabbert an dem harten Käse.",
-    words: [
-      { word: "Die", type: null },
-      { word: "neugierige", type: "adjektiv" },
-      { word: "Maus", type: "nomen" },
-      { word: "knabbert", type: "verb" },
-      { word: "an", type: null },
-      { word: "dem", type: null },
-      { word: "harten", type: "adjektiv" },
-      { word: "Käse", type: "nomen" }
-    ]
-  },
-  {
-    id: 37,
-    text: "Ein langsamer Igel wandert durch den dichten Wald.",
-    words: [
-      { word: "Ein", type: null },
-      { word: "langsamer", type: "adjektiv" },
-      { word: "Igel", type: "nomen" },
-      { word: "wandert", type: "verb" },
-      { word: "durch", type: null },
-      { word: "den", type: null },
-      { word: "dichten", type: "adjektiv" },
-      { word: "Wald", type: "nomen" }
-    ]
-  },
-  {
-    id: 38,
-    text: "Der beste Freund bringt ein tolles Geschenk.",
-    words: [
-      { word: "Der", type: null },
-      { word: "beste", type: "adjektiv" },
-      { word: "Freund", type: "nomen" },
-      { word: "bringt", type: "verb" },
-      { word: "ein", type: null },
-      { word: "tolles", type: "adjektiv" },
-      { word: "Geschenk", type: "nomen" }
-    ]
-  },
-  {
-    id: 39,
-    text: "Die gelbe Ente schwimmt auf dem ruhigen Teich.",
-    words: [
-      { word: "Die", type: null },
-      { word: "gelbe", type: "adjektiv" },
-      { word: "Ente", type: "nomen" },
-      { word: "schwimmt", type: "verb" },
-      { word: "auf", type: null },
-      { word: "dem", type: null },
-      { word: "ruhigen", type: "adjektiv" },
-      { word: "Teich", type: "nomen" }
-    ]
-  },
-  {
     id: 40,
-    text: "Das müde Baby trinkt die warme Milch.",
+    text: "Die ganze Familie geht an den schönen See im Sommer.",
     words: [
-      { word: "Das", type: null },
-      { word: "müde", type: "adjektiv" },
-      { word: "Baby", type: "nomen" },
-      { word: "trinkt", type: "verb" },
-      { word: "die", type: null },
-      { word: "warme", type: "adjektiv" },
-      { word: "Milch", type: "nomen" }
+      { word: "Die", type: null },
+      { word: "ganze", type: "adjektiv" },
+      { word: "Familie", type: "nomen" },
+      { word: "geht", type: "verb" },
+      { word: "an", type: null },
+      { word: "den", type: null },
+      { word: "schönen", type: "adjektiv" },
+      { word: "See", type: "nomen" },
+      { word: "im", type: null },
+      { word: "Sommer", type: "nomen" }
     ]
   }
 ];
