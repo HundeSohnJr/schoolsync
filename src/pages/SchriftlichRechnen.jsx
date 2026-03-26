@@ -534,21 +534,11 @@ export default function SchriftlichRechnen() {
       <div className="max-w-2xl mx-auto">
         <TheoryPanel title="Wie geht schriftliches Rechnen?">
           <p><strong>Bei der Addition:</strong> Schreibe die Zahlen untereinander. Rechne von rechts nach links. Wenn eine Spalte mehr als 9 ergibt, schreibe den Übertrag in die nächste Spalte.</p>
-          <p><strong>Bei der Subtraktion (Entbündeln):</strong> Wenn die obere Zahl kleiner ist, hole einen Zehner. <strong>(Ergänzen):</strong> Frage dich: Was muss ich zur unteren Zahl addieren?</p>
+          <p><strong>Bei der Subtraktion (Entbündeln):</strong> Wenn die obere Zahl kleiner ist, hole dir einen Zehner von der nächsten Stelle. Schreibe die neue Zahl oben hin.</p>
         </TheoryPanel>
 
         {/* Action-Buttons */}
         <div className="flex justify-end gap-3 mb-6">
-          {activeOperation === OPERATIONS.SUBTRACTION && (
-            <button
-              onClick={handleMethodToggle}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
-              aria-label="Subtraktions-Methode wechseln"
-            >
-              Methode: {mathMethod} ⟷
-            </button>
-          )}
-          
           <button
             onClick={() => generateProblem(activeOperation)}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

@@ -101,33 +101,6 @@ export default function Einstellungen() {
             Mathe-Einstellungen
           </h2>
 
-          {/* Subtraktionsmethode */}
-          <div className="mb-4">
-            <label className="block text-sm font-semibold text-gray-600 mb-2">
-              Subtraktionsmethode
-            </label>
-            <div className="flex gap-2">
-              {['Entbündeln', 'Ergänzen'].map((method) => (
-                <button
-                  key={method}
-                  onClick={() => updateSettings('mathMethod', method)}
-                  className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                    mathMethod === method
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  {method}
-                </button>
-              ))}
-            </div>
-            <p className="text-sm text-gray-500 mt-1">
-              {mathMethod === 'Entbündeln'
-                ? 'Zehner werden aufgelöst und zur nächsten Stelle addiert'
-                : 'Die Ergänzungsmethode nutzt Auffüllen statt Abziehen'}
-            </p>
-          </div>
-
           {/* Standard-Schwierigkeit */}
           <div>
             <label className="block text-sm font-semibold text-gray-600 mb-2">
