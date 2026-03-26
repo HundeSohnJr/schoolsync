@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useStreak, useSettings, useProgress, useErrors } from '../context/AppContext';
 import { Flame, RefreshCw, Check, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Generiert eine Zufallszahl zwischen min und max (inklusive)
@@ -531,6 +532,11 @@ export default function SchriftlichRechnen() {
       </div>
 
       <div className="max-w-2xl mx-auto">
+        <TheoryPanel title="Wie geht schriftliches Rechnen?">
+          <p><strong>Bei der Addition:</strong> Schreibe die Zahlen untereinander. Rechne von rechts nach links. Wenn eine Spalte mehr als 9 ergibt, schreibe den Übertrag in die nächste Spalte.</p>
+          <p><strong>Bei der Subtraktion (Entbündeln):</strong> Wenn die obere Zahl kleiner ist, hole einen Zehner. <strong>(Ergänzen):</strong> Frage dich: Was muss ich zur unteren Zahl addieren?</p>
+        </TheoryPanel>
+
         {/* Action-Buttons */}
         <div className="flex justify-end gap-3 mb-6">
           {activeOperation === OPERATIONS.SUBTRACTION && (

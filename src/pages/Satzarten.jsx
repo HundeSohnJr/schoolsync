@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Satzarten-Datenbank: Aussagesatz, Fragesatz, Ausrufesatz
@@ -246,6 +247,14 @@ export default function Satzarten() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12" ref={containerRef}>
+        <TheoryPanel title="Welches Satzzeichen?">
+          <ul>
+            <li><strong>Aussagesatz</strong> = erzählt etwas → Punkt (<strong>.</strong>) Beispiel: Fina geht zur Schule.</li>
+            <li><strong>Fragesatz</strong> = fragt etwas → Fragezeichen (<strong>?</strong>) Beispiel: Wann kommt Mama?</li>
+            <li><strong>Ausrufesatz</strong> = ruft, befiehlt, staunt → Ausrufezeichen (<strong>!</strong>) Beispiel: Komm sofort her!</li>
+          </ul>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress */}

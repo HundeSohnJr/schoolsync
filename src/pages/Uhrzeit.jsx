@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 // ---------------------------------------------------------------------------
 // Reusable SVG Analog Clock
@@ -585,6 +586,16 @@ export default function Uhrzeit() {
 
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 py-12">
+        <TheoryPanel title="Die Uhr lesen">
+          <p>Der <strong>kleine Zeiger</strong> zeigt die Stunde. Der <strong>große Zeiger</strong> zeigt die Minuten.</p>
+          <ul>
+            <li>Wenn der große Zeiger auf <strong>12</strong> steht: volle Stunde.</li>
+            <li>Auf <strong>6</strong>: halb.</li>
+            <li>Auf <strong>3</strong>: Viertel nach.</li>
+            <li>Auf <strong>9</strong>: Viertel vor.</li>
+          </ul>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress bar */}

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Verb-Datenbank mit allen drei Zeitformen in personalisierten Sätzen für Fina
@@ -478,6 +479,15 @@ export default function Zeitformen() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12" ref={containerRef}>
+        <TheoryPanel title="Die drei Zeitformen">
+          <ul>
+            <li><strong>Präsens</strong> = jetzt, heute: Fina spielt mit Loki.</li>
+            <li><strong>Präteritum</strong> = früher, es war einmal: Fina spielte mit Loki.</li>
+            <li><strong>Perfekt</strong> = es ist passiert (mit "hat" oder "ist"): Fina hat mit Loki gespielt.</li>
+          </ul>
+          <p><strong>Tipp:</strong> Im Perfekt steht das zweite Verb am Ende! (hat ... gespielt, ist ... gelaufen)</p>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress Bar */}

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Silbentrennung-Datenbank für Klasse 2-3
@@ -336,6 +337,16 @@ export default function Silbentrennung() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12" ref={containerRef}>
+        <TheoryPanel title="Silben trennen">
+          <ul>
+            <li>Sprich das Wort langsam und klatsche mit: <strong>Son-ne</strong> (2 Klatscher)</li>
+            <li>Doppelte Buchstaben werden getrennt: <strong>Was-ser</strong>, <strong>Mut-ter</strong>, <strong>Son-ne</strong></li>
+            <li><strong>ch</strong>, <strong>sch</strong>, <strong>ck</strong> bleiben IMMER zusammen: Kü-che, Fi-sche, Zu-cker</li>
+            <li><strong>st</strong> bleibt zusammen: Fens-ter, Schwes-ter</li>
+            <li>Zusammengesetzte Wörter: an der Wortgrenze trennen: <strong>Haus-tür</strong>, <strong>Schul-ta-sche</strong></li>
+          </ul>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress */}

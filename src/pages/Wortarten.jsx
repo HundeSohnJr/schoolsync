@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useStreak, useProgress } from '../context/AppContext';
 import { Flame, Check, X, Circle, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Satz-Datenbank für Klasse 3
@@ -811,6 +812,15 @@ export default function Wortarten() {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-12">
+        <TheoryPanel title="Wortarten erkennen">
+          <ul>
+            <li><strong>Nomen (blau):</strong> Menschen, Tiere, Dinge, Gefühle. Immer großgeschrieben! Test: Kann man "der/die/das" davor setzen?</li>
+            <li><strong>Verben (rot):</strong> Was man tun kann. Test: Kann man "ich..." davor setzen? (ich laufe, ich spiele)</li>
+            <li><strong>Adjektive (grün):</strong> Wie etwas ist. Test: Wie ist es? (schnell, groß, lustig)</li>
+            <li><strong>Artikel und Präpositionen</strong> werden NICHT markiert!</li>
+          </ul>
+        </TheoryPanel>
+
         {!isSessionComplete ? (
           /* Session läuft */
           <div className="bg-white rounded-xl shadow-lg p-8">

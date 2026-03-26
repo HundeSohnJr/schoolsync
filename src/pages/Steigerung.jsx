@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ArrowUpRight, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Adjektiv-Datenbank mit Steigerungsformen für Klasse 3
@@ -425,6 +426,16 @@ export default function Steigerung() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12" ref={containerRef}>
+        <TheoryPanel title="Adjektive steigern">
+          <ul>
+            <li><strong>Grundform:</strong> schnell, groß, gut</li>
+            <li><strong>Komparativ</strong> (Vergleich, mit "-er"): schneller, größer, besser</li>
+            <li><strong>Superlativ</strong> (am meisten, mit "am ...-sten"): am schnellsten, am größten, am besten</li>
+          </ul>
+          <p>Viele Adjektive bekommen einen <strong>Umlaut</strong>: groß → größer, alt → älter</p>
+          <p><strong>Aufpassen bei:</strong> gut → besser → am besten, viel → mehr → am meisten</p>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress Bar */}

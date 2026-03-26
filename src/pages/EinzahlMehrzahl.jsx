@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ArrowRightLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Wortpaare: Einzahl/Mehrzahl für Klasse 3
@@ -411,6 +412,17 @@ export default function EinzahlMehrzahl() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12" ref={containerRef}>
+        <TheoryPanel title="Einzahl und Mehrzahl">
+          <ul>
+            <li>Mehrzahl mit <strong>-e</strong>: der Hund → die Hunde</li>
+            <li>Mehrzahl mit <strong>-er</strong>: das Kind → die Kinder</li>
+            <li>Mehrzahl mit <strong>-en/-n</strong>: die Blume → die Blumen</li>
+            <li>Mehrzahl mit <strong>Umlaut</strong>: der Baum → die Bäume (a→ä, o→ö, u→ü)</li>
+            <li>Manche ändern sich <strong>gar nicht</strong>: der Lehrer → die Lehrer</li>
+          </ul>
+          <p>In der Mehrzahl ist der Artikel immer <strong>"die"</strong>!</p>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress */}

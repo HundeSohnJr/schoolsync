@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Nomen-Datenbank mit Artikeln für Klasse 3
@@ -335,6 +336,15 @@ export default function DerDieDas() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12" ref={containerRef}>
+        <TheoryPanel title="der, die oder das?">
+          <ul>
+            <li><strong>der</strong> = männlich (maskulin): der Hund, der Tisch, der Vater</li>
+            <li><strong>die</strong> = weiblich (feminin): die Katze, die Blume, die Mutter</li>
+            <li><strong>das</strong> = sächlich (neutral): das Kind, das Buch, das Haus</li>
+          </ul>
+          <p><strong>Tipp:</strong> Bei "-ung", "-heit", "-keit" ist es immer DIE. Bei "-chen" und "-lein" ist es immer DAS.</p>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress */}

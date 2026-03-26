@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Satzglieder-Datenbank für Klasse 3
@@ -704,6 +705,15 @@ export default function Satzglieder() {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-12">
+        <TheoryPanel title="Satzglieder bestimmen">
+          <ul>
+            <li><strong>Subjekt (blau):</strong> Wer oder was tut etwas? → "Fina spielt." Wer spielt? Fina!</li>
+            <li><strong>Prädikat (rot):</strong> Was tut das Subjekt? → "Fina spielt." Was tut Fina? Spielt!</li>
+            <li><strong>Objekt (grün):</strong> Wen oder was? / Wem? → "Fina streichelt den Hund." Wen streichelt sie? Den Hund!</li>
+          </ul>
+          <p>Manche Wörter gehören zu keinem Satzglied (Orts- und Zeitangaben wie "im Garten", "am Montag").</p>
+        </TheoryPanel>
+
         {!isSessionComplete && currentSentence ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress Bar */}

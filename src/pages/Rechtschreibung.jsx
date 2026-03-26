@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Rechtschreibung-Datenbank für Klasse 3
@@ -567,6 +568,16 @@ export default function Rechtschreibung() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12" ref={containerRef}>
+        <TheoryPanel title="Rechtschreib-Regeln">
+          <ul>
+            <li><strong>Kurzer Vokal</strong> → danach Doppelkonsonant: Sonne, Wasser, Klasse</li>
+            <li><strong>Langer Vokal</strong> → oft Dehnungs-h: fahren, Zahn, Uhr</li>
+            <li><strong>Langes i</strong> → meistens "ie": Biene, spielen, Tier</li>
+            <li><strong>ß</strong> nach langem Vokal: Straße, groß, Fuß</li>
+            <li><strong>ss</strong> nach kurzem Vokal: Wasser, Schloss, Fluss</li>
+          </ul>
+        </TheoryPanel>
+
         {!isSessionComplete && current ? (
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Progress Bar */}

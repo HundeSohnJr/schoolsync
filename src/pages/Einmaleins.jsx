@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, RefreshCw, Check, X, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TheoryPanel from '../components/TheoryPanel';
 
 /**
  * Schwierigkeitsgrad-Konfiguration
@@ -379,6 +380,10 @@ export default function Einmaleins() {
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-12">
+        <TheoryPanel title="1×1 Tipps">
+          <p>Die <strong>2er-Reihe</strong>: immer verdoppeln. Die <strong>5er-Reihe</strong>: endet immer auf 0 oder 5. Die <strong>9er-Reihe</strong>: Quersumme ist immer 9 (z.B. 27 → 2+7=9). <strong>Tauschaufgaben</strong> helfen: 3×7 = 7×3.</p>
+        </TheoryPanel>
+
         {!isSessionComplete ? (
           /* Session läuft */
           <div className="bg-white rounded-xl shadow-lg p-8">
