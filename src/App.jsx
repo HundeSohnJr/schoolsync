@@ -5,6 +5,8 @@ import Einmaleins from './pages/Einmaleins';
 import Wortarten from './pages/Wortarten';
 import Einstellungen from './pages/Einstellungen';
 import DerDieDas from './pages/DerDieDas';
+import Satzglieder from './pages/Satzglieder';
+import Rechtschreibung from './pages/Rechtschreibung';
 
 /**
  * Haupt-App-Komponente mit React Router
@@ -23,6 +25,8 @@ function App() {
           <Route path="/einmaleins" element={<Einmaleins />} />
           <Route path="/wortarten" element={<Wortarten />} />
           <Route path="/der-die-das" element={<DerDieDas />} />
+          <Route path="/satzglieder" element={<Satzglieder />} />
+          <Route path="/rechtschreibung" element={<Rechtschreibung />} />
           <Route path="/einstellungen" element={<Einstellungen />} />
           
           {/* Fallback für unbekannte Routen */}

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Calculator, Grid3x3, BookOpen, Tag, Settings } from 'lucide-react';
+import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Settings } from 'lucide-react';
 
 /**
  * Layout-Komponente mit Sidebar-Navigation und Hauptbereich
@@ -26,6 +26,16 @@ export default function Layout({ children }) {
       path: '/der-die-das',
       label: 'Deutsch: der/die/das',
       icon: Tag,
+    },
+    {
+      path: '/satzglieder',
+      label: 'Deutsch: Satzglieder',
+      icon: Layers,
+    },
+    {
+      path: '/rechtschreibung',
+      label: 'Deutsch: Rechtschreibung',
+      icon: PenTool,
     },
     {
       path: '/einstellungen',
