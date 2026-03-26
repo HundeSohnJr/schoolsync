@@ -19,6 +19,19 @@ body {
   background-color: #fefefe;
 }
 
+/* Text size settings — applied via class on <html> */
+.text-size-small { font-size: 14px; }
+.text-size-normal { font-size: 16px; }
+.text-size-large { font-size: 18px; }
+
+/* High contrast mode */
+.high-contrast { --tw-text-opacity: 1; font-weight: 500; }
+.high-contrast .bg-white { background-color: #fff; border: 2px solid #1f2937; }
+.high-contrast .text-gray-600 { color: #111827; }
+.high-contrast .text-gray-500 { color: #1f2937; }
+.high-contrast .text-gray-400 { color: #374151; }
+.high-contrast button { font-weight: 700; }
+
 /* Fokus-Styles für bessere Tastatur-Navigation */
 :focus-visible {
   outline: 2px solid #3b82f6;

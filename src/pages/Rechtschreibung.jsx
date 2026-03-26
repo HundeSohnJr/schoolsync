@@ -192,7 +192,7 @@ const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 /**
  * Generiert eine Session für Lückenwörter
  */
-const generateGapSession = (count = 15, filterCategory = null) => {
+const generateGapSession = (count = 10, filterCategory = null) => {
   let pool = filterCategory && filterCategory !== 'alle'
     ? GAP_WORDS.filter(w => w.category === filterCategory)
     : [...GAP_WORDS];
@@ -203,7 +203,7 @@ const generateGapSession = (count = 15, filterCategory = null) => {
 /**
  * Generiert eine Session für Richtig/Falsch
  */
-const generateRFSession = (count = 15, filterCategory = null) => {
+const generateRFSession = (count = 10, filterCategory = null) => {
   let pool = filterCategory && filterCategory !== 'alle'
     ? RICHTIG_FALSCH_WORDS.filter(w => w.category === filterCategory)
     : [...RICHTIG_FALSCH_WORDS];
@@ -216,7 +216,7 @@ const generateRFSession = (count = 15, filterCategory = null) => {
  */
 export default function Rechtschreibung() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten');
+  const { increment } = useProgress('rechtschreibung');
   const { errors, addError } = useErrors();
 
   // Session State
@@ -247,9 +247,9 @@ export default function Rechtschreibung() {
 
     let q = [];
     if (newMode === 'gap') {
-      q = generateGapSession(15, cat);
+      q = generateGapSession(10, cat);
     } else if (newMode === 'rf') {
-      q = generateRFSession(15, cat);
+      q = generateRFSession(10, cat);
     } else if (newMode === 'mistakes') {
       const spellingErrors = getSpellingErrors();
       if (spellingErrors.length === 0) return;
@@ -261,10 +261,10 @@ export default function Rechtschreibung() {
       }
       // If we found fewer than needed, repeat
       if (pool.length === 0) return;
-      while (pool.length < 15) {
+      while (pool.length < 10) {
         pool = [...pool, ...pool];
       }
-      q = shuffle(pool).slice(0, 15);
+      q = shuffle(pool).slice(0, 10);
     }
 
     setQuestions(q);

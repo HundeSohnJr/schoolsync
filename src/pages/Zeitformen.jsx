@@ -231,9 +231,9 @@ const shuffle = (arr) => {
 };
 
 /**
- * Generiert eine Session mit 15 Fragen
+ * Generiert eine Session mit 10 Fragen
  */
-const generateSession = (mode, count = 15) => {
+const generateSession = (mode, count = 10) => {
   const pool = shuffle(VERB_SETS);
   const selected = pool.slice(0, Math.min(count, pool.length));
 
@@ -290,7 +290,7 @@ const generateSession = (mode, count = 15) => {
  */
 export default function Zeitformen() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten');
+  const { increment } = useProgress('zeitformen');
   const { addError } = useErrors();
 
   const [mode, setMode] = useState('identify');
@@ -308,7 +308,7 @@ export default function Zeitformen() {
 
   const startNewSession = (newMode = mode) => {
     setMode(newMode);
-    setQuestions(generateSession(newMode, 15));
+    setQuestions(generateSession(newMode, 10));
     setCurrentIndex(0);
     setSessionResults([]);
     setIsSessionComplete(false);

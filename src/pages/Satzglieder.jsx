@@ -448,7 +448,7 @@ const generateSession = (count = 10) => {
  */
 export default function Satzglieder() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten');
+  const { increment } = useProgress('satzglieder');
   const { addError } = useErrors();
 
   // Session State

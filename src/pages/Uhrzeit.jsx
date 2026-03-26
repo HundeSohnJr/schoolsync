@@ -315,7 +315,7 @@ const MODES = [
   { key: 3, label: 'Wie viel Zeit?' },
 ];
 
-function generateSession(mode, count = 15) {
+function generateSession(mode, count = 10) {
   if (mode === 1) return generateMode1Questions(count);
   if (mode === 2) return generateMode2Questions(count);
   if (mode === 3) return generateMode3Questions(count);
@@ -335,7 +335,7 @@ function generateSession(mode, count = 15) {
 
 export default function Uhrzeit() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('einmaleins'); // temporary
+  const { increment } = useProgress('uhrzeit');
   const { addError } = useErrors();
 
   const [activeMode, setActiveMode] = useState(0); // 0 = mixed, 1/2/3
@@ -354,7 +354,7 @@ export default function Uhrzeit() {
 
   const startNewSession = useCallback((mode = activeMode) => {
     setActiveMode(mode);
-    setQuestions(generateSession(mode || 0, 15));
+    setQuestions(generateSession(mode || 0, 10));
     setCurrentIndex(0);
     setSessionResults([]);
     setIsSessionComplete(false);

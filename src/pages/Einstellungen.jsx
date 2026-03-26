@@ -1,4 +1,4 @@
-import { useSettings, useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useSettings, useStreak, useAllProgress, useErrors } from '../context/AppContext';
 import { Settings, Type, Contrast, RotateCcw, Flame } from 'lucide-react';
 
 /**
@@ -8,10 +8,25 @@ import { Settings, Type, Contrast, RotateCcw, Flame } from 'lucide-react';
 export default function Einstellungen() {
   const { textSize, highContrast, mathMethod, difficulty, updateSettings } = useSettings();
   const { streak } = useStreak();
-  const schriftlich = useProgress('schriftlich');
-  const einmaleins = useProgress('einmaleins');
-  const wortarten = useProgress('wortarten');
+  const progress = useAllProgress();
   const { errors } = useErrors();
+
+  const allModules = [
+    { key: 'schriftlich', label: 'Schriftlich Rechnen' },
+    { key: 'einmaleins', label: '1x1 Training' },
+    { key: 'uhrzeit', label: 'Uhrzeit' },
+    { key: 'wortarten', label: 'Wortarten' },
+    { key: 'der-die-das', label: 'der/die/das' },
+    { key: 'einzahl-mehrzahl', label: 'Einzahl & Mehrzahl' },
+    { key: 'satzglieder', label: 'Satzglieder' },
+    { key: 'satzarten', label: 'Satzarten' },
+    { key: 'zeitformen', label: 'Zeitformen' },
+    { key: 'steigerung', label: 'Steigerung' },
+    { key: 'rechtschreibung', label: 'Rechtschreibung' },
+    { key: 'silbentrennung', label: 'Silbentrennung' },
+  ];
+
+  const totalSessions = allModules.reduce((sum, m) => sum + (progress[m.key]?.total || 0), 0);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -146,7 +161,7 @@ export default function Einstellungen() {
             Statistiken
           </h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="bg-orange-50 rounded-lg p-4 text-center">
               <Flame className="w-8 h-8 text-orange-500 mx-auto mb-1" />
               <div className="text-2xl font-bold text-gray-800">{streak}</div>
@@ -155,34 +170,31 @@ export default function Einstellungen() {
 
             <div className="bg-blue-50 rounded-lg p-4 text-center">
               <div className="text-2xl font-bold text-gray-800">
-                {schriftlich.total + einmaleins.total + wortarten.total}
+                {totalSessions}
               </div>
               <div className="text-sm text-gray-600">Sessions gesamt</div>
             </div>
+          </div>
 
-            <div className="bg-green-50 rounded-lg p-4">
-              <div className="text-sm font-semibold text-gray-600 mb-2">Heute geübt</div>
-              <div className="space-y-1 text-sm">
-                <div className="flex justify-between">
-                  <span>Schriftlich Rechnen</span>
-                  <span className="font-bold">{schriftlich.today}×</span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+            {allModules.map((mod) => {
+              const p = progress[mod.key] || { today: 0, total: 0 };
+              return (
+                <div key={mod.key} className="bg-gray-50 rounded-lg p-3">
+                  <div className="text-sm font-semibold text-gray-700 mb-1 truncate">{mod.label}</div>
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>Heute: <span className="font-bold text-gray-700">{p.today}</span></span>
+                    <span>Gesamt: <span className="font-bold text-gray-700">{p.total}</span></span>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span>1×1 Training</span>
-                  <span className="font-bold">{einmaleins.today}×</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Wortarten</span>
-                  <span className="font-bold">{wortarten.today}×</span>
-                </div>
-              </div>
-            </div>
+              );
+            })}
+          </div>
 
-            <div className="bg-red-50 rounded-lg p-4">
-              <div className="text-sm font-semibold text-gray-600 mb-2">Fehler-Speicher</div>
-              <div className="text-2xl font-bold text-gray-800">{errors.length}/20</div>
-              <div className="text-sm text-gray-500">Gespeicherte Fehler</div>
-            </div>
+          <div className="bg-red-50 rounded-lg p-4">
+            <div className="text-sm font-semibold text-gray-600 mb-2">Fehler-Speicher</div>
+            <div className="text-2xl font-bold text-gray-800">{errors.length}/20</div>
+            <div className="text-sm text-gray-500">Gespeicherte Fehler</div>
           </div>
         </div>
 

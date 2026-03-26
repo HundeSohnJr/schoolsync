@@ -134,7 +134,7 @@ const buildOptions = (entry) => {
 /**
  * Generiert eine zufällige Session
  */
-const generateSession = (count = 15, filterCategory = null) => {
+const generateSession = (count = 10, filterCategory = null) => {
   let pool = filterCategory
     ? WORDS.filter(w => w.category === filterCategory)
     : [...WORDS];
@@ -148,7 +148,7 @@ const generateSession = (count = 15, filterCategory = null) => {
  */
 export default function Silbentrennung() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten');
+  const { increment } = useProgress('silbentrennung');
   const { addError } = useErrors();
 
   const [category, setCategory] = useState('Alle');
@@ -168,7 +168,7 @@ export default function Silbentrennung() {
   const startNewSession = (cat = category) => {
     setCategory(cat);
     const filter = cat === 'Alle' ? null : cat;
-    const newQuestions = generateSession(15, filter);
+    const newQuestions = generateSession(10, filter);
     setQuestions(newQuestions);
     setOptions(newQuestions.length > 0 ? buildOptions(newQuestions[0]) : []);
     setCurrentIndex(0);

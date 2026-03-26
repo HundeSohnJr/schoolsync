@@ -62,13 +62,13 @@ const SENTENCES = [
 ];
 
 /**
- * Generiert eine Session mit 15 Sätzen (5 pro Typ, gemischt)
+ * Generiert eine Session mit 10 Sätzen (~3-4 pro Typ, gemischt)
  */
 const generateSession = () => {
   const byType = {
-    aussage: SENTENCES.filter(s => s.type === 'aussage').sort(() => Math.random() - 0.5).slice(0, 5),
-    frage: SENTENCES.filter(s => s.type === 'frage').sort(() => Math.random() - 0.5).slice(0, 5),
-    ausruf: SENTENCES.filter(s => s.type === 'ausruf').sort(() => Math.random() - 0.5).slice(0, 5),
+    aussage: SENTENCES.filter(s => s.type === 'aussage').sort(() => Math.random() - 0.5).slice(0, 4),
+    frage: SENTENCES.filter(s => s.type === 'frage').sort(() => Math.random() - 0.5).slice(0, 3),
+    ausruf: SENTENCES.filter(s => s.type === 'ausruf').sort(() => Math.random() - 0.5).slice(0, 3),
   };
   return [...byType.aussage, ...byType.frage, ...byType.ausruf].sort(() => Math.random() - 0.5);
 };
@@ -91,7 +91,7 @@ const TYPE_LABELS = {
  */
 export default function Satzarten() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten');
+  const { increment } = useProgress('satzarten');
   const { addError } = useErrors();
 
   const [questions, setQuestions] = useState([]);
@@ -316,7 +316,7 @@ export default function Satzarten() {
                   key={p}
                   onClick={() => handleAnswer(p)}
                   disabled={showFeedback}
-                  className={`w-28 h-24 text-5xl font-bold text-white rounded-xl transition-all duration-150
+                  className={`w-20 h-16 sm:w-28 sm:h-24 text-4xl sm:text-5xl font-bold text-white rounded-xl transition-all duration-150
                     ${PUNCTUATION_STYLES[p].bg} ${PUNCTUATION_STYLES[p].hover}
                     disabled:opacity-50 disabled:cursor-not-allowed
                     focus:outline-none focus:ring-4 ${PUNCTUATION_STYLES[p].ring} focus:ring-offset-2

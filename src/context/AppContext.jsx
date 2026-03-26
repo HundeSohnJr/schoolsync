@@ -5,13 +5,35 @@ const AppContext = createContext(null);
 const STORAGE_KEY = 'schoolsync-data';
 
 /**
+ * All module keys for progress tracking
+ */
+const MODULE_KEYS = [
+  'schriftlich', 'einmaleins', 'uhrzeit',
+  'wortarten', 'der-die-das', 'einzahl-mehrzahl',
+  'satzglieder', 'satzarten', 'zeitformen',
+  'steigerung', 'rechtschreibung', 'silbentrennung',
+];
+
+const buildDefaultProgress = () => {
+  const progress = {};
+  for (const key of MODULE_KEYS) {
+    progress[key] = { today: 0, total: 0 };
+  }
+  return progress;
+};
+
+/**
  * Initiale Datenstruktur
  */
 const getInitialState = () => {
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored) {
     try {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored);
+      // Merge with defaults to support new module keys
+      const defaultProgress = buildDefaultProgress();
+      parsed.progress = { ...defaultProgress, ...parsed.progress };
+      return parsed;
     } catch (e) {
       console.error('Fehler beim Laden der Daten:', e);
     }
@@ -22,11 +44,7 @@ const getInitialState = () => {
       count: 0,
       lastVisit: null,
     },
-    progress: {
-      schriftlich: { today: 0, total: 0 },
-      einmaleins: { today: 0, total: 0 },
-      wortarten: { today: 0, total: 0 },
-    },
+    progress: buildDefaultProgress(),
     errors: [],
     settings: {
       textSize: 'normal',
@@ -39,8 +57,6 @@ const getInitialState = () => {
 
 /**
  * Berechnet ob Streak fortgesetzt werden kann
- * @param {string|null} lastVisit - ISO Date String
- * @returns {boolean} true wenn Streak fortgesetzt werden kann
  */
 const canContinueStreak = (lastVisit) => {
   if (!lastVisit) return false;
@@ -48,14 +64,12 @@ const canContinueStreak = (lastVisit) => {
   const last = new Date(lastVisit);
   const today = new Date();
 
-  // Setze beide Daten auf Mitternacht für Tagesvergleich
   last.setHours(0, 0, 0, 0);
   today.setHours(0, 0, 0, 0);
 
   const diffTime = today - last;
   const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
-  // Streak bleibt bei 1 Tag Pause, resettet bei 2+ Tagen
   return diffDays <= 2;
 };
 
@@ -88,23 +102,29 @@ export function AppProvider({ children }) {
   // Reset "today" counts wenn neuer Tag
   useEffect(() => {
     if (isNewDay(state.streak.lastVisit)) {
-      setState((prev) => ({
-        ...prev,
-        progress: {
-          schriftlich: { ...prev.progress.schriftlich, today: 0 },
-          einmaleins: { ...prev.progress.einmaleins, today: 0 },
-          wortarten: { ...prev.progress.wortarten, today: 0 },
-        },
-      }));
+      setState((prev) => {
+        const resetProgress = {};
+        for (const key of Object.keys(prev.progress)) {
+          resetProgress[key] = { ...prev.progress[key], today: 0 };
+        }
+        return { ...prev, progress: resetProgress };
+      });
     }
   }, [state.streak.lastVisit]);
 
-  /**
-   * Update Streak beim Lösen einer Aufgabe
-   */
+  // Apply settings to document
+  useEffect(() => {
+    const root = document.documentElement;
+    // Text size
+    root.classList.remove('text-size-small', 'text-size-normal', 'text-size-large');
+    root.classList.add(`text-size-${state.settings.textSize}`);
+    // High contrast
+    root.classList.toggle('high-contrast', state.settings.highContrast);
+  }, [state.settings.textSize, state.settings.highContrast]);
+
   const updateStreak = () => {
     const now = new Date().toISOString();
-    
+
     setState((prev) => {
       const canContinue = canContinueStreak(prev.streak.lastVisit);
       const isNew = isNewDay(prev.streak.lastVisit);
@@ -119,28 +139,24 @@ export function AppProvider({ children }) {
     });
   };
 
-  /**
-   * Erhöhe Fortschritt für ein Modul
-   */
   const incrementProgress = (module) => {
-    setState((prev) => ({
-      ...prev,
-      progress: {
-        ...prev.progress,
-        [module]: {
-          today: prev.progress[module].today + 1,
-          total: prev.progress[module].total + 1,
+    setState((prev) => {
+      const current = prev.progress[module] || { today: 0, total: 0 };
+      return {
+        ...prev,
+        progress: {
+          ...prev.progress,
+          [module]: {
+            today: current.today + 1,
+            total: current.total + 1,
+          },
         },
-      },
-    }));
-    
-    // Update Streak
+      };
+    });
+
     updateStreak();
   };
 
-  /**
-   * Füge Fehler zur Historie hinzu (max 20, FIFO)
-   */
   const addError = (type, question) => {
     setState((prev) => {
       const newError = {
@@ -150,8 +166,7 @@ export function AppProvider({ children }) {
       };
 
       const updatedErrors = [...prev.errors, newError];
-      
-      // Behalte nur die letzten 20 Einträge
+
       if (updatedErrors.length > 20) {
         updatedErrors.shift();
       }
@@ -163,9 +178,6 @@ export function AppProvider({ children }) {
     });
   };
 
-  /**
-   * Update Settings
-   */
   const updateSettings = (key, value) => {
     setState((prev) => ({
       ...prev,
@@ -187,15 +199,9 @@ export function AppProvider({ children }) {
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-/**
- * Custom Hook: useStreak
- * @returns {{ streak: number, lastVisit: string|null, updateStreak: function }}
- */
 export function useStreak() {
   const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useStreak muss innerhalb von AppProvider verwendet werden');
-  }
+  if (!context) throw new Error('useStreak muss innerhalb von AppProvider verwendet werden');
 
   return {
     streak: context.state.streak.count,
@@ -204,18 +210,11 @@ export function useStreak() {
   };
 }
 
-/**
- * Custom Hook: useProgress
- * @param {string} module - "schriftlich" | "einmaleins" | "wortarten"
- * @returns {{ today: number, total: number, increment: function }}
- */
 export function useProgress(module) {
   const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useProgress muss innerhalb von AppProvider verwendet werden');
-  }
+  if (!context) throw new Error('useProgress muss innerhalb von AppProvider verwendet werden');
 
-  const progress = context.state.progress[module];
+  const progress = context.state.progress[module] || { today: 0, total: 0 };
 
   return {
     today: progress.today,
@@ -224,15 +223,15 @@ export function useProgress(module) {
   };
 }
 
-/**
- * Custom Hook: useErrors
- * @returns {{ errors: Array, addError: function }}
- */
+export function useAllProgress() {
+  const context = useContext(AppContext);
+  if (!context) throw new Error('useAllProgress muss innerhalb von AppProvider verwendet werden');
+  return context.state.progress;
+}
+
 export function useErrors() {
   const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useErrors muss innerhalb von AppProvider verwendet werden');
-  }
+  if (!context) throw new Error('useErrors muss innerhalb von AppProvider verwendet werden');
 
   return {
     errors: context.state.errors,
@@ -240,15 +239,9 @@ export function useErrors() {
   };
 }
 
-/**
- * Custom Hook: useSettings
- * @returns {{ textSize: string, highContrast: boolean, mathMethod: string, updateSettings: function }}
- */
 export function useSettings() {
   const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useSettings muss innerhalb von AppProvider verwendet werden');
-  }
+  if (!context) throw new Error('useSettings muss innerhalb von AppProvider verwendet werden');
 
   return {
     ...context.state.settings,

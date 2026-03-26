@@ -407,7 +407,7 @@ export default function Einmaleins() {
 
             {/* Aufgabe */}
             <div className="text-center mb-8">
-              <div className="text-6xl font-bold text-gray-800 mb-8">
+              <div className="text-4xl sm:text-6xl font-bold text-gray-800 mb-8">
                 {currentQuestion.num1} × {currentQuestion.num2} = ?
               </div>
 
@@ -421,7 +421,7 @@ export default function Einmaleins() {
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   disabled={showFeedback}
-                  className="w-32 h-20 text-center text-5xl font-bold border-4 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none disabled:bg-gray-100"
+                  className="w-24 h-16 sm:w-32 sm:h-20 text-center text-4xl sm:text-5xl font-bold border-4 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none disabled:bg-gray-100"
                   maxLength={3}
                   autoFocus
                 />

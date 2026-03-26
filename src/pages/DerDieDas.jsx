@@ -138,7 +138,7 @@ const NOUNS = [
 /**
  * Generiert eine zufällige Auswahl von Nomen
  */
-const generateSession = (count = 15, filterCategory = null) => {
+const generateSession = (count = 10, filterCategory = null) => {
   let pool = filterCategory
     ? NOUNS.filter(n => n.hint === filterCategory)
     : [...NOUNS];
@@ -161,7 +161,7 @@ const ARTICLE_COLORS = {
  */
 export default function DerDieDas() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten'); // Shared with Wortarten for now
+  const { increment } = useProgress('der-die-das');
   const { addError } = useErrors();
 
   const [category, setCategory] = useState('Alle');
@@ -180,7 +180,7 @@ export default function DerDieDas() {
   const startNewSession = (cat = category) => {
     setCategory(cat);
     const filter = cat === 'Alle' ? null : cat;
-    setQuestions(generateSession(15, filter));
+    setQuestions(generateSession(10, filter));
     setCurrentIndex(0);
     setSessionResults([]);
     setIsSessionComplete(false);
@@ -405,7 +405,7 @@ export default function DerDieDas() {
                   key={article}
                   onClick={() => handleAnswer(article)}
                   disabled={showFeedback}
-                  className={`w-28 h-20 text-2xl font-bold text-white rounded-xl transition-all duration-150
+                  className={`w-20 h-16 sm:w-28 sm:h-20 text-2xl font-bold text-white rounded-xl transition-all duration-150
                     ${ARTICLE_COLORS[article].bg} ${ARTICLE_COLORS[article].hover}
                     disabled:opacity-50 disabled:cursor-not-allowed
                     focus:outline-none focus:ring-4 ${ARTICLE_COLORS[article].ring} focus:ring-offset-2

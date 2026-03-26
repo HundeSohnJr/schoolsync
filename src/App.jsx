@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
+import Dashboard from './pages/Dashboard';
 import SchriftlichRechnen from './pages/SchriftlichRechnen';
 import Einmaleins from './pages/Einmaleins';
 import Wortarten from './pages/Wortarten';
@@ -24,7 +25,7 @@ function App() {
       <Layout>
         <Routes>
           {/* Standardroute: Umleitung zur ersten Seite */}
-          <Route path="/" element={<Navigate to="/schriftlich-rechnen" replace />} />
+          <Route path="/" element={<Dashboard />} />
           
           {/* Hauptrouten */}
           <Route path="/schriftlich-rechnen" element={<SchriftlichRechnen />} />
@@ -42,7 +43,7 @@ function App() {
           <Route path="/einstellungen" element={<Einstellungen />} />
           
           {/* Fallback für unbekannte Routen */}
-          <Route path="*" element={<Navigate to="/schriftlich-rechnen" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>
     </BrowserRouter>

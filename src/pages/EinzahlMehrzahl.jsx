@@ -150,7 +150,7 @@ const generateOptions = (correctAnswer, pool, mode) => {
 /**
  * Generiert eine Session
  */
-const generateSession = (count = 15, filterPattern = null, mode = 'singular-to-plural') => {
+const generateSession = (count = 10, filterPattern = null, mode = 'singular-to-plural') => {
   let pool = filterPattern
     ? WORD_PAIRS.filter((w) => w.pattern === filterPattern)
     : [...WORD_PAIRS];
@@ -198,7 +198,7 @@ const PATTERN_COLORS = {
  */
 export default function EinzahlMehrzahl() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten');
+  const { increment } = useProgress('einzahl-mehrzahl');
   const { addError } = useErrors();
 
   const [mode, setMode] = useState('singular-to-plural');
@@ -219,7 +219,7 @@ export default function EinzahlMehrzahl() {
     setPatternFilter(pat);
     setMode(m);
     const filter = pat === 'Alle' ? null : pat;
-    setQuestions(generateSession(15, filter, m));
+    setQuestions(generateSession(10, filter, m));
     setCurrentIndex(0);
     setSessionResults([]);
     setIsSessionComplete(false);

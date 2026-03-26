@@ -125,7 +125,7 @@ const generateDistractors = (correct, field, adjective) => {
 /**
  * Generiert eine Session für Mode 1
  */
-const generateSteigernSession = (count = 15, filterCategory = null) => {
+const generateSteigernSession = (count = 10, filterCategory = null) => {
   let pool = filterCategory && filterCategory !== 'Alle'
     ? ADJECTIVES.filter(a => a.category === filterCategory)
     : [...ADJECTIVES];
@@ -185,7 +185,7 @@ const generateSteigernSession = (count = 15, filterCategory = null) => {
 /**
  * Generiert eine Session für Mode 2
  */
-const generateErkennenSession = (count = 15) => {
+const generateErkennenSession = (count = 10) => {
   const pool = [...SENTENCES].sort(() => Math.random() - 0.5);
   return pool.slice(0, Math.min(count, pool.length));
 };
@@ -215,7 +215,7 @@ const HighlightedSentence = ({ sentence }) => {
  */
 export default function Steigerung() {
   const { streak, updateStreak } = useStreak();
-  const { increment } = useProgress('wortarten');
+  const { increment } = useProgress('steigerung');
   const { addError } = useErrors();
 
   const [mode, setMode] = useState('steigern');
@@ -236,9 +236,9 @@ export default function Steigerung() {
     setMode(newMode);
     setCategory(cat);
     if (newMode === 'steigern') {
-      setQuestions(generateSteigernSession(15, cat));
+      setQuestions(generateSteigernSession(10, cat));
     } else {
-      setQuestions(generateErkennenSession(15));
+      setQuestions(generateErkennenSession(10));
     }
     setCurrentIndex(0);
     setSessionResults([]);
