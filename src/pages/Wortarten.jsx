@@ -594,8 +594,14 @@ export default function Wortarten() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('wortarten');
   
+  // Shuffle sentences into a session queue
+  const generateQueue = () => {
+    return [...SENTENCES].sort(() => Math.random() - 0.5).slice(0, 10);
+  };
+
   // Session State
-  const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
+  const [sessionQueue, setSessionQueue] = useState(generateQueue);
+  const [currentQueueIndex, setCurrentQueueIndex] = useState(0);
   const [selectedBrush, setSelectedBrush] = useState(null);
   const [userMarks, setUserMarks] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
@@ -603,11 +609,11 @@ export default function Wortarten() {
   const [sessionResults, setSessionResults] = useState([]);
   const [correctStreak, setCorrectStreak] = useState(0);
   const [isSessionComplete, setIsSessionComplete] = useState(false);
-  
+
   // Streak Modal
   const [showStreakModal, setShowStreakModal] = useState(false);
-  
-  const currentSentence = SENTENCES[currentSentenceIndex];
+
+  const currentSentence = sessionQueue[currentQueueIndex];
 
   /**
    * Handler für Wort-Klick
@@ -698,14 +704,15 @@ export default function Wortarten() {
   const handleNext = () => {
     if (isSessionComplete) {
       // Neue Session starten
-      setCurrentSentenceIndex(0);
+      setSessionQueue(generateQueue());
+      setCurrentQueueIndex(0);
       setSessionProgress(0);
       setSessionResults([]);
       setIsSessionComplete(false);
       setCorrectStreak(0);
     } else {
       // Nächster Satz in aktueller Session
-      setCurrentSentenceIndex((currentSentenceIndex + 1) % SENTENCES.length);
+      setCurrentQueueIndex(currentQueueIndex + 1);
     }
     
     setUserMarks([]);
