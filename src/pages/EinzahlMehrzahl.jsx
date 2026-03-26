@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ArrowRightLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Wortpaare: Einzahl/Mehrzahl für Klasse 3
@@ -569,6 +570,8 @@ export default function EinzahlMehrzahl() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* Buttons */}
               <div className="flex gap-4 justify-center">

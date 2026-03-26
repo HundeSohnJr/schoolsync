@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Rechtschreibung-Datenbank für Klasse 3
@@ -191,13 +192,32 @@ const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
 /**
  * Generiert eine Session für Lückenwörter
+ * Wenn errorWords vorhanden, werden bis zu 3 davon bevorzugt eingemischt
  */
-const generateGapSession = (count = 10, filterCategory = null) => {
+const generateGapSession = (count = 10, filterCategory = null, errorWords = []) => {
   let pool = filterCategory && filterCategory !== 'alle'
     ? GAP_WORDS.filter(w => w.category === filterCategory)
     : [...GAP_WORDS];
-  pool = shuffle(pool);
-  return pool.slice(0, Math.min(count, pool.length));
+
+  // Include up to 3 previously-wrong words
+  const prioritized = [];
+  if (errorWords.length > 0) {
+    const shuffledErrors = shuffle(errorWords);
+    for (const errWord of shuffledErrors) {
+      if (prioritized.length >= 3) break;
+      const match = pool.find(w => w.word === errWord);
+      if (match && !prioritized.some(p => p.word === match.word)) {
+        prioritized.push(match);
+      }
+    }
+  }
+
+  // Fill the rest randomly (excluding already picked)
+  const prioritizedWords = new Set(prioritized.map(w => w.word));
+  const remaining = shuffle(pool.filter(w => !prioritizedWords.has(w.word)))
+    .slice(0, count - prioritized.length);
+
+  return shuffle([...prioritized, ...remaining]);
 };
 
 /**
@@ -247,7 +267,10 @@ export default function Rechtschreibung() {
 
     let q = [];
     if (newMode === 'gap') {
-      q = generateGapSession(10, cat);
+      const spellingErrorWords = errors
+        .filter(e => e.type === 'spelling')
+        .map(e => e.question);
+      q = generateGapSession(10, cat, spellingErrorWords);
     } else if (newMode === 'rf') {
       q = generateRFSession(10, cat);
     } else if (newMode === 'mistakes') {
@@ -843,6 +866,8 @@ export default function Rechtschreibung() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* Action Buttons */}
               <div className="flex gap-4 justify-center flex-wrap">

@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Satzarten-Datenbank: Aussagesatz, Fragesatz, Ausrufesatz
@@ -388,6 +389,8 @@ export default function Satzarten() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* Buttons */}
               <div className="flex gap-4 justify-center">

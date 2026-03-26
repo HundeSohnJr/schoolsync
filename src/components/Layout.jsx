@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Clock, ArrowLeftRight, MessageCircle, Scissors, History, TrendingUp, Settings, Menu, X, Home, Brain } from 'lucide-react';
 
@@ -93,7 +93,21 @@ function NavContent({ onItemClick }) {
  */
 export default function Layout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showPauseBanner, setShowPauseBanner] = useState(false);
+  const pauseShownRef = useRef(false);
   const location = useLocation();
+
+  // Pause suggestion after 15 minutes of continuous use
+  useEffect(() => {
+    if (pauseShownRef.current) return;
+    const timer = setTimeout(() => {
+      if (!pauseShownRef.current) {
+        setShowPauseBanner(true);
+        pauseShownRef.current = true;
+      }
+    }, 15 * 60 * 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Find current page label for mobile header
   const allItems = navGroups.flatMap(g => g.items);
@@ -174,6 +188,25 @@ export default function Layout({ children }) {
       <main className="flex-1 paper-texture overflow-auto">
         {/* Mobile top padding for fixed header */}
         <div className="md:hidden h-14" />
+
+        {/* Pause suggestion banner */}
+        {showPauseBanner && (
+          <div className="max-w-4xl mx-auto px-4 pt-4 md:px-8 md:pt-8">
+            <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+              <span className="text-green-800 text-sm font-medium">
+                Du übst schon 15 Minuten — toll! Eine kleine Pause tut gut. 🧃
+              </span>
+              <button
+                onClick={() => setShowPauseBanner(false)}
+                className="ml-4 text-green-600 hover:text-green-800 font-bold text-lg leading-none focus:outline-none"
+                aria-label="Banner schließen"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="max-w-4xl mx-auto p-4 md:p-8">
           {children}
         </div>

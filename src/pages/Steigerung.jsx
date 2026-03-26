@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ArrowUpRight, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Adjektiv-Datenbank mit Steigerungsformen für Klasse 3
@@ -641,6 +642,8 @@ export default function Steigerung() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* Buttons */}
               <div className="flex gap-4 justify-center">

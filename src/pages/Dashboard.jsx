@@ -95,13 +95,35 @@ export default function Dashboard() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {section.modules.map((mod) => {
                   const Icon = mod.icon;
-                  const p = progress[mod.key] || { today: 0, total: 0 };
+                  const p = progress[mod.key] || { today: 0, total: 0, correct: 0, attempts: 0 };
+                  const accuracy = p.attempts > 0 ? p.correct / p.attempts : null;
+                  const hasBadge = p.attempts >= 5;
+
+                  let badgeLabel = null;
+                  let badgeColor = null;
+                  if (hasBadge && accuracy !== null) {
+                    if (accuracy >= 0.85) {
+                      badgeLabel = 'Super!';
+                      badgeColor = 'bg-green-500 text-white';
+                    } else if (accuracy >= 0.60) {
+                      badgeLabel = 'Gut';
+                      badgeColor = 'bg-yellow-400 text-yellow-900';
+                    } else {
+                      badgeLabel = 'Üben!';
+                      badgeColor = 'bg-red-500 text-white';
+                    }
+                  }
 
                   return (
                     <div
                       key={mod.key}
-                      className={`${colors.bg} border ${colors.border} rounded-xl p-4 flex flex-col items-center text-center transition-transform hover:scale-105 hover:shadow-md`}
+                      className={`${colors.bg} border ${colors.border} rounded-xl p-4 flex flex-col items-center text-center transition-transform hover:scale-105 hover:shadow-md relative`}
                     >
+                      {badgeLabel && (
+                        <span className={`absolute top-2 right-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full ${badgeColor}`}>
+                          {badgeLabel}
+                        </span>
+                      )}
                       <Icon className={`w-8 h-8 mb-2 ${colors.icon}`} />
                       <h3 className="font-semibold text-gray-800 text-sm mb-2 leading-tight">
                         {mod.label}

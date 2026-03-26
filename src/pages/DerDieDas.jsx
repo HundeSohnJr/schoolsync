@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Nomen-Datenbank mit Artikeln für Klasse 3
@@ -137,15 +138,35 @@ const NOUNS = [
 
 /**
  * Generiert eine zufällige Auswahl von Nomen
+ * Wenn errorNouns vorhanden, werden bis zu 3 davon bevorzugt eingemischt
  */
-const generateSession = (count = 10, filterCategory = null) => {
+const generateSession = (count = 10, filterCategory = null, errorNouns = []) => {
   let pool = filterCategory
     ? NOUNS.filter(n => n.hint === filterCategory)
     : [...NOUNS];
 
-  // Shuffle
-  pool = pool.sort(() => Math.random() - 0.5);
-  return pool.slice(0, Math.min(count, pool.length));
+  // Include up to 3 previously-wrong nouns
+  const prioritized = [];
+  if (errorNouns.length > 0) {
+    const shuffledErrors = [...errorNouns].sort(() => Math.random() - 0.5);
+    for (const errNoun of shuffledErrors) {
+      if (prioritized.length >= 3) break;
+      const match = pool.find(n => n.word === errNoun);
+      if (match && !prioritized.includes(match)) {
+        prioritized.push(match);
+      }
+    }
+  }
+
+  // Fill the rest randomly (excluding already picked)
+  const prioritizedWords = new Set(prioritized.map(n => n.word));
+  const remaining = pool
+    .filter(n => !prioritizedWords.has(n.word))
+    .sort(() => Math.random() - 0.5)
+    .slice(0, count - prioritized.length);
+
+  // Combine and shuffle
+  return [...prioritized, ...remaining].sort(() => Math.random() - 0.5);
 };
 
 const CATEGORIES = ['Alle', 'Tier', 'Schule', 'Familie', 'Essen', 'Natur', 'Haus', 'Kleidung', 'Sport'];
@@ -162,7 +183,7 @@ const ARTICLE_COLORS = {
 export default function DerDieDas() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('der-die-das');
-  const { addError } = useErrors();
+  const { errors, addError } = useErrors();
 
   const [category, setCategory] = useState('Alle');
   const [questions, setQuestions] = useState([]);
@@ -180,7 +201,15 @@ export default function DerDieDas() {
   const startNewSession = (cat = category) => {
     setCategory(cat);
     const filter = cat === 'Alle' ? null : cat;
-    setQuestions(generateSession(10, filter));
+    // Extract nouns from article errors (format: "der Hund" -> "Hund")
+    const errorNouns = errors
+      .filter(e => e.type === 'article')
+      .map(e => {
+        const parts = e.question.split(' ');
+        return parts.length >= 2 ? parts.slice(1).join(' ') : null;
+      })
+      .filter(Boolean);
+    setQuestions(generateSession(10, filter, errorNouns));
     setCurrentIndex(0);
     setSessionResults([]);
     setIsSessionComplete(false);
@@ -474,6 +503,8 @@ export default function DerDieDas() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* Buttons */}
               <div className="flex gap-4 justify-center">

@@ -86,6 +86,7 @@ export default function SchriftlichRechnen() {
   const [wrongCarryIndices, setWrongCarryIndices] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [correctCarries, setCorrectCarries] = useState(null);
+  const [correctStreak, setCorrectStreak] = useState(0);
   
   // Refs
   const carryRefs = useRef([]);
@@ -383,15 +384,20 @@ export default function SchriftlichRechnen() {
     if (isCompletelyCorrect) {
       // Richtig!
       setIsCorrect(true);
-      
-      // Konfetti
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.6 },
-        colors: ['#3b82f6', '#10b981'],
-      });
-      
+
+      const newStreak = correctStreak + 1;
+      setCorrectStreak(newStreak);
+
+      // Konfetti nur bei jedem 5. richtigen hintereinander
+      if (newStreak % 5 === 0) {
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#3b82f6', '#10b981'],
+        });
+      }
+
       // Update Context
       updateStreak();
       increment();
@@ -399,6 +405,7 @@ export default function SchriftlichRechnen() {
       // Falsch
       setIsCorrect(false);
       setAttemptCount(prev => prev + 1);
+      setCorrectStreak(0);
       
       // Speichere Fehler
       const operatorSymbol = {

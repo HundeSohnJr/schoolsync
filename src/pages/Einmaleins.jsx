@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, RefreshCw, Check, X, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Schwierigkeitsgrad-Konfiguration
@@ -515,6 +516,8 @@ export default function Einmaleins() {
                 </div>
               )}
 
+              <SessionRating />
+
               {/* Buttons */}
               <div className="flex gap-4 justify-center">
                 {stats && stats.mistakes.length > 0 && (
@@ -531,7 +534,7 @@ export default function Einmaleins() {
                     Nochmal diese üben
                   </button>
                 )}
-                
+
                 <button
                   onClick={() => startNewSession('random')}
                   className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

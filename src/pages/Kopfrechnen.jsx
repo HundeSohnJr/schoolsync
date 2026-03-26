@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, Timer } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 // ---------------------------------------------------------------------------
 // Modus-Definitionen
@@ -790,6 +791,8 @@ export default function Kopfrechnen() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* Buttons */}
               <div className="flex gap-4 justify-center">

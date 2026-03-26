@@ -17,7 +17,7 @@ const MODULE_KEYS = [
 const buildDefaultProgress = () => {
   const progress = {};
   for (const key of MODULE_KEYS) {
-    progress[key] = { today: 0, total: 0 };
+    progress[key] = { today: 0, total: 0, correct: 0, attempts: 0 };
   }
   return progress;
 };
@@ -30,9 +30,20 @@ const getInitialState = () => {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      // Merge with defaults to support new module keys
+      // Merge with defaults to support new module keys and new fields
       const defaultProgress = buildDefaultProgress();
-      parsed.progress = { ...defaultProgress, ...parsed.progress };
+      const mergedProgress = {};
+      for (const key of Object.keys({ ...defaultProgress, ...parsed.progress })) {
+        const def = defaultProgress[key] || { today: 0, total: 0, correct: 0, attempts: 0 };
+        const existing = parsed.progress?.[key] || {};
+        mergedProgress[key] = {
+          today: existing.today ?? def.today,
+          total: existing.total ?? def.total,
+          correct: existing.correct ?? def.correct,
+          attempts: existing.attempts ?? def.attempts,
+        };
+      }
+      parsed.progress = mergedProgress;
       return parsed;
     } catch (e) {
       console.error('Fehler beim Laden der Daten:', e);
@@ -139,22 +150,52 @@ export function AppProvider({ children }) {
     });
   };
 
-  const incrementProgress = (module) => {
+  const incrementProgress = (module, wasCorrect) => {
     setState((prev) => {
-      const current = prev.progress[module] || { today: 0, total: 0 };
+      const current = prev.progress[module] || { today: 0, total: 0, correct: 0, attempts: 0 };
+      const updated = { ...current };
+
+      if (wasCorrect === undefined) {
+        // Legacy call: session completion (increment today/total as before)
+        updated.today = current.today + 1;
+        updated.total = current.total + 1;
+      } else {
+        // New call: also track accuracy
+        updated.today = current.today + 1;
+        updated.total = current.total + 1;
+        updated.attempts = current.attempts + 1;
+        if (wasCorrect) {
+          updated.correct = current.correct + 1;
+        }
+      }
+
       return {
         ...prev,
         progress: {
           ...prev.progress,
-          [module]: {
-            today: current.today + 1,
-            total: current.total + 1,
-          },
+          [module]: updated,
         },
       };
     });
 
     updateStreak();
+  };
+
+  const recordAttempt = (module, wasCorrect) => {
+    setState((prev) => {
+      const current = prev.progress[module] || { today: 0, total: 0, correct: 0, attempts: 0 };
+      return {
+        ...prev,
+        progress: {
+          ...prev.progress,
+          [module]: {
+            ...current,
+            attempts: current.attempts + 1,
+            correct: wasCorrect ? current.correct + 1 : current.correct,
+          },
+        },
+      };
+    });
   };
 
   const addError = (type, question) => {
@@ -192,6 +233,7 @@ export function AppProvider({ children }) {
     state,
     updateStreak,
     incrementProgress,
+    recordAttempt,
     addError,
     updateSettings,
   };
@@ -214,13 +256,21 @@ export function useProgress(module) {
   const context = useContext(AppContext);
   if (!context) throw new Error('useProgress muss innerhalb von AppProvider verwendet werden');
 
-  const progress = context.state.progress[module] || { today: 0, total: 0 };
+  const progress = context.state.progress[module] || { today: 0, total: 0, correct: 0, attempts: 0 };
 
   return {
     today: progress.today,
     total: progress.total,
-    increment: () => context.incrementProgress(module),
+    correct: progress.correct,
+    attempts: progress.attempts,
+    increment: (wasCorrect) => context.incrementProgress(module, wasCorrect),
   };
+}
+
+export function useRecordAttempt() {
+  const context = useContext(AppContext);
+  if (!context) throw new Error('useRecordAttempt muss innerhalb von AppProvider verwendet werden');
+  return context.recordAttempt;
 }
 
 export function useAllProgress() {

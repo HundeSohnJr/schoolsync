@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Satzglieder-Datenbank für Klasse 3
@@ -925,6 +926,8 @@ export default function Satzglieder() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* New Session Button */}
               <div className="flex gap-4 justify-center">

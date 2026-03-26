@@ -3,6 +3,7 @@ import { useStreak, useProgress } from '../context/AppContext';
 import { Flame, Check, X, Circle, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Satz-Datenbank für Klasse 3
@@ -1001,6 +1002,8 @@ export default function Wortarten() {
                   )}
                 </>
               )}
+
+              <SessionRating />
 
               {/* Button */}
               <button

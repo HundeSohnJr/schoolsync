@@ -3,6 +3,7 @@ import { useStreak, useProgress, useErrors } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
+import SessionRating from '../components/SessionRating';
 
 /**
  * Verb-Datenbank mit allen drei Zeitformen in personalisierten Sätzen für Fina
@@ -719,6 +720,8 @@ export default function Zeitformen() {
                   </ul>
                 </div>
               )}
+
+              <SessionRating />
 
               {/* Action Buttons */}
               <div className="flex gap-4 justify-center flex-wrap">
