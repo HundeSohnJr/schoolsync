@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Settings } from 'lucide-react';
+import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Clock, ArrowLeftRight, MessageCircle, Scissors, History, TrendingUp, Settings } from 'lucide-react';
 
 /**
  * Layout-Komponente mit Sidebar-Navigation und Hauptbereich
@@ -36,6 +36,36 @@ export default function Layout({ children }) {
       path: '/rechtschreibung',
       label: 'Deutsch: Rechtschreibung',
       icon: PenTool,
+    },
+    {
+      path: '/uhrzeit',
+      label: 'Mathe: Uhrzeit',
+      icon: Clock,
+    },
+    {
+      path: '/einzahl-mehrzahl',
+      label: 'Deutsch: Einzahl/Mehrzahl',
+      icon: ArrowLeftRight,
+    },
+    {
+      path: '/satzarten',
+      label: 'Deutsch: Satzarten',
+      icon: MessageCircle,
+    },
+    {
+      path: '/silbentrennung',
+      label: 'Deutsch: Silbentrennung',
+      icon: Scissors,
+    },
+    {
+      path: '/zeitformen',
+      label: 'Deutsch: Zeitformen',
+      icon: History,
+    },
+    {
+      path: '/steigerung',
+      label: 'Deutsch: Steigerung',
+      icon: TrendingUp,
     },
     {
       path: '/einstellungen',
