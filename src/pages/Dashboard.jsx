@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAllProgress, useStreak } from '../context/AppContext';
 import {
-  Calculator, Grid3x3, Clock, BookOpen, Tag, ArrowLeftRight,
+  Calculator, Grid3x3, Brain, Clock, BookOpen, Tag, ArrowLeftRight,
   Layers, MessageCircle, History, TrendingUp, PenTool, Scissors,
   Flame,
 } from 'lucide-react';
@@ -13,6 +13,7 @@ const sections = [
     modules: [
       { key: 'schriftlich', path: '/schriftlich-rechnen', label: 'Schriftlich Rechnen', icon: Calculator },
       { key: 'einmaleins', path: '/einmaleins', label: '1x1 Training', icon: Grid3x3 },
+      { key: 'kopfrechnen', path: '/kopfrechnen', label: 'Kopfrechnen', icon: Brain },
       { key: 'uhrzeit', path: '/uhrzeit', label: 'Uhrzeit', icon: Clock },
     ],
   },

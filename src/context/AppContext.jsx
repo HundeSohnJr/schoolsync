@@ -8,7 +8,7 @@ const STORAGE_KEY = 'schoolsync-data';
  * All module keys for progress tracking
  */
 const MODULE_KEYS = [
-  'schriftlich', 'einmaleins', 'uhrzeit',
+  'schriftlich', 'einmaleins', 'kopfrechnen', 'uhrzeit',
   'wortarten', 'der-die-das', 'einzahl-mehrzahl',
   'satzglieder', 'satzarten', 'zeitformen',
   'steigerung', 'rechtschreibung', 'silbentrennung',

@@ -8,6 +8,7 @@ import Einstellungen from './pages/Einstellungen';
 import DerDieDas from './pages/DerDieDas';
 import Satzglieder from './pages/Satzglieder';
 import Rechtschreibung from './pages/Rechtschreibung';
+import Kopfrechnen from './pages/Kopfrechnen';
 import Uhrzeit from './pages/Uhrzeit';
 import EinzahlMehrzahl from './pages/EinzahlMehrzahl';
 import Satzarten from './pages/Satzarten';
@@ -34,6 +35,7 @@ function App() {
           <Route path="/der-die-das" element={<DerDieDas />} />
           <Route path="/satzglieder" element={<Satzglieder />} />
           <Route path="/rechtschreibung" element={<Rechtschreibung />} />
+          <Route path="/kopfrechnen" element={<Kopfrechnen />} />
           <Route path="/uhrzeit" element={<Uhrzeit />} />
           <Route path="/einzahl-mehrzahl" element={<EinzahlMehrzahl />} />
           <Route path="/satzarten" element={<Satzarten />} />

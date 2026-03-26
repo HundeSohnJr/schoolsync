@@ -14,6 +14,7 @@ export default function Einstellungen() {
   const allModules = [
     { key: 'schriftlich', label: 'Schriftlich Rechnen' },
     { key: 'einmaleins', label: '1x1 Training' },
+    { key: 'kopfrechnen', label: 'Kopfrechnen' },
     { key: 'uhrzeit', label: 'Uhrzeit' },
     { key: 'wortarten', label: 'Wortarten' },
     { key: 'der-die-das', label: 'der/die/das' },
