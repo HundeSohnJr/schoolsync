@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAllProgress, useStreak } from '../context/AppContext';
 import {
-  Calculator, Grid3x3, Brain, Clock, BookOpen, Tag, ArrowLeftRight,
+  Calculator, Grid3x3, Brain, Coins, Clock, Hash, BookOpen, Tag, ArrowLeftRight,
   Layers, MessageCircle, History, TrendingUp, PenTool, Scissors,
   Flame,
 } from 'lucide-react';
@@ -14,7 +14,9 @@ const sections = [
       { key: 'schriftlich', path: '/schriftlich-rechnen', label: 'Schriftlich Rechnen', icon: Calculator },
       { key: 'einmaleins', path: '/einmaleins', label: '1x1 Training', icon: Grid3x3 },
       { key: 'kopfrechnen', path: '/kopfrechnen', label: 'Kopfrechnen', icon: Brain },
+      { key: 'geld-rechnen', path: '/geld-rechnen', label: 'Geld rechnen', icon: Coins },
       { key: 'uhrzeit', path: '/uhrzeit', label: 'Uhrzeit', icon: Clock },
+      { key: 'zahlenraum', path: '/zahlenraum', label: 'Zahlenraum bis 1000', icon: Hash },
     ],
   },
   {
@@ -36,6 +38,7 @@ const sections = [
     modules: [
       { key: 'rechtschreibung', path: '/rechtschreibung', label: 'Rechtschreibung', icon: PenTool },
       { key: 'silbentrennung', path: '/silbentrennung', label: 'Silbentrennung', icon: Scissors },
+      { key: 'gross-klein', path: '/gross-klein', label: 'Groß/Klein', icon: PenTool },
     ],
   },
 ];

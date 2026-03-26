@@ -15,6 +15,9 @@ import Satzarten from './pages/Satzarten';
 import Silbentrennung from './pages/Silbentrennung';
 import Zeitformen from './pages/Zeitformen';
 import Steigerung from './pages/Steigerung';
+import GrossKlein from './pages/GrossKlein';
+import GeldRechnen from './pages/GeldRechnen';
+import Zahlenraum from './pages/Zahlenraum';
 
 /**
  * Haupt-App-Komponente mit React Router
@@ -42,6 +45,9 @@ function App() {
           <Route path="/silbentrennung" element={<Silbentrennung />} />
           <Route path="/zeitformen" element={<Zeitformen />} />
           <Route path="/steigerung" element={<Steigerung />} />
+          <Route path="/gross-klein" element={<GrossKlein />} />
+          <Route path="/geld-rechnen" element={<GeldRechnen />} />
+          <Route path="/zahlenraum" element={<Zahlenraum />} />
           <Route path="/einstellungen" element={<Einstellungen />} />
           
           {/* Fallback für unbekannte Routen */}

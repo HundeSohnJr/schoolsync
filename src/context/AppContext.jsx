@@ -8,10 +8,10 @@ const STORAGE_KEY = 'schoolsync-data';
  * All module keys for progress tracking
  */
 const MODULE_KEYS = [
-  'schriftlich', 'einmaleins', 'kopfrechnen', 'uhrzeit',
+  'schriftlich', 'einmaleins', 'kopfrechnen', 'geld-rechnen', 'uhrzeit', 'zahlenraum',
   'wortarten', 'der-die-das', 'einzahl-mehrzahl',
   'satzglieder', 'satzarten', 'zeitformen',
-  'steigerung', 'rechtschreibung', 'silbentrennung',
+  'steigerung', 'rechtschreibung', 'silbentrennung', 'gross-klein',
 ];
 
 const buildDefaultProgress = () => {

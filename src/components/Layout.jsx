@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Clock, ArrowLeftRight, MessageCircle, Scissors, History, TrendingUp, Settings, Menu, X, Home, Brain } from 'lucide-react';
+import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Clock, ArrowLeftRight, MessageCircle, Scissors, History, TrendingUp, Settings, Menu, X, Home, Brain, Coins, Hash } from 'lucide-react';
 
 const navGroups = [
   {
@@ -9,7 +9,9 @@ const navGroups = [
       { path: '/schriftlich-rechnen', label: 'Schriftlich Rechnen', icon: Calculator },
       { path: '/einmaleins', label: '1×1 Training', icon: Grid3x3 },
       { path: '/kopfrechnen', label: 'Kopfrechnen', icon: Brain },
+      { path: '/geld-rechnen', label: 'Geld rechnen', icon: Coins },
       { path: '/uhrzeit', label: 'Uhrzeit', icon: Clock },
+      { path: '/zahlenraum', label: 'Zahlenraum bis 1000', icon: Hash },
     ],
   },
   {
@@ -29,6 +31,7 @@ const navGroups = [
     items: [
       { path: '/rechtschreibung', label: 'Rechtschreibung', icon: PenTool },
       { path: '/silbentrennung', label: 'Silbentrennung', icon: Scissors },
+      { path: '/gross-klein', label: 'Groß/Klein', icon: PenTool },
     ],
   },
 ];
