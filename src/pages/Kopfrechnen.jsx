@@ -240,7 +240,7 @@ export default function Kopfrechnen() {
   const [correctStreak, setCorrectStreak] = useState(0);
 
   // Timer state
-  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
+  const [questionStartTime, setQuestionStartTime] = useState(() => Date.now());
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   // Feedback state
@@ -482,7 +482,7 @@ export default function Kopfrechnen() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

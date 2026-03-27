@@ -4,6 +4,7 @@ import { Flame, Check, X, Circle, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Satz-Datenbank für Klasse 3
@@ -598,7 +599,7 @@ export default function Wortarten() {
   
   // Shuffle sentences into a session queue
   const generateQueue = () => {
-    return [...SENTENCES].sort(() => Math.random() - 0.5).slice(0, 10);
+    return shuffle(SENTENCES).slice(0, 10);
   };
 
   // Session State
@@ -685,7 +686,7 @@ export default function Wortarten() {
     
     setIsChecked(true);
     setSessionResults([...sessionResults, { 
-      sentenceIndex: currentSentenceIndex, 
+      sentenceIndex: sessionProgress,
       correct: allCorrect,
       results
     }]);
@@ -786,7 +787,7 @@ export default function Wortarten() {
   const stats = isSessionComplete ? calculateStats() : null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, ArrowUpRight, HelpCircle } from 'lucide-r
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Adjektiv-Datenbank mit Steigerungsformen für Klasse 3
@@ -117,9 +118,9 @@ const FORM_LABELS = {
 /**
  * Generiert falsche Optionen für Mode 1 (Steigern)
  */
-const generateDistractors = (correct, field, adjective) => {
+const generateDistractors = (correct, field) => {
   const allForms = ADJECTIVES.map(a => a[field]).filter(f => f !== correct);
-  const shuffled = allForms.sort(() => Math.random() - 0.5);
+  const shuffled = shuffle(allForms);
   return shuffled.slice(0, 2);
 };
 
@@ -131,7 +132,7 @@ const generateSteigernSession = (count = 10, filterCategory = null) => {
     ? ADJECTIVES.filter(a => a.category === filterCategory)
     : [...ADJECTIVES];
 
-  pool = pool.sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
+  pool = shuffle(pool).slice(0, Math.min(count, pool.length));
 
   return pool.map(adj => {
     // Randomly ask for komparativ or superlativ (or both)
@@ -141,7 +142,7 @@ const generateSteigernSession = (count = 10, filterCategory = null) => {
     if (askType < 0.4) {
       // Ask for Komparativ
       const distractors = generateDistractors(adj.komparativ, 'komparativ', adj);
-      const options = [adj.komparativ, ...distractors].sort(() => Math.random() - 0.5);
+      const options = shuffle([adj.komparativ, ...distractors]);
       question = {
         type: 'komparativ',
         adjective: adj,
@@ -154,7 +155,7 @@ const generateSteigernSession = (count = 10, filterCategory = null) => {
     } else if (askType < 0.8) {
       // Ask for Superlativ
       const distractors = generateDistractors(adj.superlativ, 'superlativ', adj);
-      const options = [adj.superlativ, ...distractors].sort(() => Math.random() - 0.5);
+      const options = shuffle([adj.superlativ, ...distractors]);
       question = {
         type: 'superlativ',
         adjective: adj,
@@ -167,7 +168,7 @@ const generateSteigernSession = (count = 10, filterCategory = null) => {
     } else {
       // Ask for Grundform given Komparativ
       const distractors = generateDistractors(adj.grundform, 'grundform', adj);
-      const options = [adj.grundform, ...distractors].sort(() => Math.random() - 0.5);
+      const options = shuffle([adj.grundform, ...distractors]);
       question = {
         type: 'grundform',
         adjective: adj,
@@ -187,7 +188,7 @@ const generateSteigernSession = (count = 10, filterCategory = null) => {
  * Generiert eine Session für Mode 2
  */
 const generateErkennenSession = (count = 10) => {
-  const pool = [...SENTENCES].sort(() => Math.random() - 0.5);
+  const pool = shuffle(SENTENCES);
   return pool.slice(0, Math.min(count, pool.length));
 };
 
@@ -230,7 +231,7 @@ export default function Steigerung() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswer, setLastAnswer] = useState(null);
   const [showStreakModal, setShowStreakModal] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   const containerRef = useRef(null);
 
@@ -254,29 +255,6 @@ export default function Steigerung() {
   useEffect(() => {
     startNewSession();
   }, []);
-
-  // Keyboard support
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-
-      const current = questions[currentIndex];
-      if (!current) return;
-
-      if (mode === 'steigern') {
-        const options = current.options;
-        if (e.key === '1' && options[0]) handleAnswer(options[0]);
-        if (e.key === '2' && options[1]) handleAnswer(options[1]);
-        if (e.key === '3' && options[2]) handleAnswer(options[2]);
-      } else {
-        if (e.key === '1') handleAnswer('grundform');
-        if (e.key === '2') handleAnswer('komparativ');
-        if (e.key === '3') handleAnswer('superlativ');
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions, mode]);
 
   const handleAnswer = (answer) => {
     if (showFeedback || isSessionComplete || questions.length === 0) return;
@@ -343,6 +321,29 @@ export default function Steigerung() {
     }, correct ? 800 : 1500);
   };
 
+  // Keyboard support
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+
+      const current = questions[currentIndex];
+      if (!current) return;
+
+      if (mode === 'steigern') {
+        const options = current.options;
+        if (e.key === '1' && options[0]) handleAnswer(options[0]);
+        if (e.key === '2' && options[1]) handleAnswer(options[1]);
+        if (e.key === '3' && options[2]) handleAnswer(options[2]);
+      } else {
+        if (e.key === '1') handleAnswer('grundform');
+        if (e.key === '2') handleAnswer('komparativ');
+        if (e.key === '3') handleAnswer('superlativ');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, mode, handleAnswer]);
+
   const calculateStats = () => {
     if (sessionResults.length === 0) return null;
     const correct = sessionResults.filter(r => r.correct).length;
@@ -361,7 +362,7 @@ export default function Steigerung() {
   const stats = calculateStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">
@@ -387,20 +388,23 @@ export default function Steigerung() {
           {!isSessionComplete && (
             <div className="mb-4">
               <div className="flex gap-2 mb-3">
-                {MODES.map(({ id, label, icon: Icon }) => (
+                {MODES.map((modeItem) => {
+                  const ModeIcon = modeItem.icon;
+                  return (
                   <button
-                    key={id}
-                    onClick={() => startNewSession(id, category)}
+                    key={modeItem.id}
+                    onClick={() => startNewSession(modeItem.id, category)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                      mode === id
+                      mode === modeItem.id
                         ? 'bg-purple-500 text-white'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    {label}
+                    <ModeIcon className="w-4 h-4" />
+                    {modeItem.label}
                   </button>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Category filter (only for steigern mode) */}
@@ -498,7 +502,6 @@ export default function Steigerung() {
                 <div className="flex flex-col gap-3">
                   {current.options.map((option, idx) => {
                     const isCorrect = showFeedback && option === current.correctAnswer;
-                    const isWrong = showFeedback && lastAnswer && !lastAnswer.correct && option === lastAnswer?.correctAnswer;
 
                     return (
                       <button

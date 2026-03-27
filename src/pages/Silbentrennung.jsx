@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Silbentrennung-Datenbank für Klasse 2-3
@@ -129,7 +130,7 @@ const buildOptions = (entry) => {
   // Pad if fewer than 3 (should not happen with our data)
   const options = [correct, ...wrongs];
   // Shuffle
-  return options.sort(() => Math.random() - 0.5);
+  return shuffle(options);
 };
 
 /**
@@ -140,7 +141,7 @@ const generateSession = (count = 10, filterCategory = null) => {
     ? WORDS.filter(w => w.category === filterCategory)
     : [...WORDS];
 
-  pool = pool.sort(() => Math.random() - 0.5);
+  pool = shuffle(pool);
   return pool.slice(0, Math.min(count, pool.length));
 };
 
@@ -163,7 +164,7 @@ export default function Silbentrennung() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswer, setLastAnswer] = useState(null);
   const [showStreakModal, setShowStreakModal] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   const containerRef = useRef(null);
 
@@ -192,19 +193,6 @@ export default function Silbentrennung() {
       setOptions(buildOptions(questions[currentIndex]));
     }
   }, [currentIndex, questions]);
-
-  // Keyboard support: 1-4
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-      const num = parseInt(e.key, 10);
-      if (num >= 1 && num <= options.length) {
-        handleAnswer(options[num - 1]);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions, options]);
 
   const handleAnswer = (answer) => {
     if (showFeedback || isSessionComplete || questions.length === 0) return;
@@ -262,6 +250,19 @@ export default function Silbentrennung() {
     }, correct ? 800 : 1500);
   };
 
+  // Keyboard support: 1-4
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+      const num = parseInt(e.key, 10);
+      if (num >= 1 && num <= options.length) {
+        handleAnswer(options[num - 1]);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, options, handleAnswer]);
+
   const calculateStats = () => {
     if (sessionResults.length === 0) return null;
     const correct = sessionResults.filter(r => r.correct).length;
@@ -291,7 +292,7 @@ export default function Silbentrennung() {
   const stats = calculateStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Verb-Datenbank mit allen drei Zeitformen in personalisierten Sätzen für Fina
@@ -219,17 +220,6 @@ const MODES = [
   { key: 'transform', label: 'Verwandle den Satz', icon: '\u2192' },
 ];
 
-/**
- * Shuffle-Hilfsfunktion (Fisher-Yates)
- */
-const shuffle = (arr) => {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-};
 
 /**
  * Generiert eine Session mit 10 Fragen
@@ -304,7 +294,7 @@ export default function Zeitformen() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswer, setLastAnswer] = useState(null);
   const [showStreakModal, setShowStreakModal] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   const containerRef = useRef(null);
 
@@ -323,28 +313,6 @@ export default function Zeitformen() {
   useEffect(() => {
     startNewSession();
   }, []);
-
-  // Keyboard support
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-      if (!questions[currentIndex]) return;
-
-      const q = questions[currentIndex];
-
-      if (q.type === 'identify') {
-        if (e.key === '1') handleAnswer('präsens');
-        if (e.key === '2') handleAnswer('präteritum');
-        if (e.key === '3') handleAnswer('perfekt');
-      } else {
-        if (e.key === '1' && q.options[0]) handleAnswer(q.options[0]);
-        if (e.key === '2' && q.options[1]) handleAnswer(q.options[1]);
-        if (e.key === '3' && q.options[2]) handleAnswer(q.options[2]);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions]);
 
   const handleAnswer = (answer) => {
     if (showFeedback || isSessionComplete || questions.length === 0) return;
@@ -407,6 +375,28 @@ export default function Zeitformen() {
     }, correct ? 800 : 2000);
   };
 
+  // Keyboard support
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+      if (!questions[currentIndex]) return;
+
+      const q = questions[currentIndex];
+
+      if (q.type === 'identify') {
+        if (e.key === '1') handleAnswer('präsens');
+        if (e.key === '2') handleAnswer('präteritum');
+        if (e.key === '3') handleAnswer('perfekt');
+      } else {
+        if (e.key === '1' && q.options[0]) handleAnswer(q.options[0]);
+        if (e.key === '2' && q.options[1]) handleAnswer(q.options[1]);
+        if (e.key === '3' && q.options[2]) handleAnswer(q.options[2]);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, handleAnswer]);
+
   const calculateStats = () => {
     if (sessionResults.length === 0) return null;
     const correct = sessionResults.filter((r) => r.correct).length;
@@ -436,7 +426,7 @@ export default function Zeitformen() {
   const stats = calculateStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

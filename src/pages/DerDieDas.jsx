@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Nomen-Datenbank mit Artikeln für Klasse 3
@@ -148,7 +149,7 @@ const generateSession = (count = 10, filterCategory = null, errorNouns = []) => 
   // Include up to 3 previously-wrong nouns
   const prioritized = [];
   if (errorNouns.length > 0) {
-    const shuffledErrors = [...errorNouns].sort(() => Math.random() - 0.5);
+    const shuffledErrors = shuffle(errorNouns);
     for (const errNoun of shuffledErrors) {
       if (prioritized.length >= 3) break;
       const match = pool.find(n => n.word === errNoun);
@@ -160,13 +161,12 @@ const generateSession = (count = 10, filterCategory = null, errorNouns = []) => 
 
   // Fill the rest randomly (excluding already picked)
   const prioritizedWords = new Set(prioritized.map(n => n.word));
-  const remaining = pool
-    .filter(n => !prioritizedWords.has(n.word))
-    .sort(() => Math.random() - 0.5)
+  const remaining = shuffle(pool
+    .filter(n => !prioritizedWords.has(n.word)))
     .slice(0, count - prioritized.length);
 
   // Combine and shuffle
-  return [...prioritized, ...remaining].sort(() => Math.random() - 0.5);
+  return shuffle([...prioritized, ...remaining]);
 };
 
 const CATEGORIES = ['Alle', 'Tier', 'Schule', 'Familie', 'Essen', 'Natur', 'Haus', 'Kleidung', 'Sport'];
@@ -195,7 +195,7 @@ export default function DerDieDas() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswer, setLastAnswer] = useState(null);
   const [showStreakModal, setShowStreakModal] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   const containerRef = useRef(null);
 
@@ -223,18 +223,6 @@ export default function DerDieDas() {
   useEffect(() => {
     startNewSession();
   }, []);
-
-  // Keyboard support
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-      if (e.key === '1') handleAnswer('der');
-      if (e.key === '2') handleAnswer('die');
-      if (e.key === '3') handleAnswer('das');
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions]);
 
   const handleAnswer = (article) => {
     if (showFeedback || isSessionComplete || questions.length === 0) return;
@@ -292,6 +280,18 @@ export default function DerDieDas() {
     }, correct ? 800 : 1500);
   };
 
+  // Keyboard support
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+      if (e.key === '1') handleAnswer('der');
+      if (e.key === '2') handleAnswer('die');
+      if (e.key === '3') handleAnswer('das');
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, handleAnswer]);
+
   const calculateStats = () => {
     if (sessionResults.length === 0) return null;
     const correct = sessionResults.filter(r => r.correct).length;
@@ -321,7 +321,7 @@ export default function DerDieDas() {
   const stats = calculateStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

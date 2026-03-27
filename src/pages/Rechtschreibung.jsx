@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Rechtschreibung-Datenbank für Klasse 3
@@ -188,7 +189,6 @@ const CATEGORY_LABELS = Object.fromEntries(CATEGORIES.map(c => [c.key, c.label])
 
 // ── Hilfsfunktionen ─────────────────────────────────────────────────────────
 
-const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
 /**
  * Generiert eine Session für Lückenwörter
@@ -251,7 +251,7 @@ export default function Rechtschreibung() {
   const [sessionResults, setSessionResults] = useState([]);
   const [isSessionComplete, setIsSessionComplete] = useState(false);
   const [correctStreak, setCorrectStreak] = useState(0);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   // Feedback State
   const [showFeedback, setShowFeedback] = useState(false);
@@ -261,6 +261,21 @@ export default function Rechtschreibung() {
   const [showStreakModal, setShowStreakModal] = useState(false);
 
   const containerRef = useRef(null);
+
+  /**
+   * Hole bisherige Rechtschreib-Fehler aus dem Error-Context
+   */
+  const getSpellingErrors = () => {
+    const seen = new Set();
+    return errors
+      .filter(e => e.type === 'spelling')
+      .map(e => e.question)
+      .filter(w => {
+        if (seen.has(w)) return false;
+        seen.add(w);
+        return true;
+      });
+  };
 
   /**
    * Startet eine neue Session
@@ -308,25 +323,23 @@ export default function Rechtschreibung() {
     startNewSession('gap', 'alle');
   }, []);
 
-  // Keyboard support
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-      if (!questions[currentIndex]) return;
+  /**
+   * Geht zur nächsten Frage oder beendet die Session
+   */
+  const advanceToNext = () => {
+    setShowFeedback(false);
+    setLastAnswer(null);
+    const nextIndex = currentIndex + 1;
 
-      if (mode === 'gap' || mode === 'mistakes') {
-        const q = questions[currentIndex];
-        if (e.key === '1' && q.options?.[0]) handleGapAnswer(q.options[0]);
-        if (e.key === '2' && q.options?.[1]) handleGapAnswer(q.options[1]);
-        if (e.key === '3' && q.options?.[2]) handleGapAnswer(q.options[2]);
-      } else if (mode === 'rf') {
-        if (e.key === 'r' || e.key === 'R') handleRFAnswer(true);
-        if (e.key === 'f' || e.key === 'F') handleRFAnswer(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions, mode]);
+    if (nextIndex >= questions.length) {
+      setIsSessionComplete(true);
+      increment();
+      updateStreak();
+    } else {
+      setCurrentIndex(nextIndex);
+      setStartTime(Date.now());
+    }
+  };
 
   /**
    * Verarbeitet eine Lückenwort-Antwort
@@ -434,38 +447,25 @@ export default function Rechtschreibung() {
     }, correct ? 800 : 2000);
   };
 
-  /**
-   * Geht zur nächsten Frage oder beendet die Session
-   */
-  const advanceToNext = () => {
-    setShowFeedback(false);
-    setLastAnswer(null);
-    const nextIndex = currentIndex + 1;
+  // Keyboard support
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+      if (!questions[currentIndex]) return;
 
-    if (nextIndex >= questions.length) {
-      setIsSessionComplete(true);
-      increment();
-      updateStreak();
-    } else {
-      setCurrentIndex(nextIndex);
-      setStartTime(Date.now());
-    }
-  };
-
-  /**
-   * Hole bisherige Rechtschreib-Fehler aus dem Error-Context
-   */
-  const getSpellingErrors = () => {
-    const seen = new Set();
-    return errors
-      .filter(e => e.type === 'spelling')
-      .map(e => e.question)
-      .filter(w => {
-        if (seen.has(w)) return false;
-        seen.add(w);
-        return true;
-      });
-  };
+      if (mode === 'gap' || mode === 'mistakes') {
+        const q = questions[currentIndex];
+        if (e.key === '1' && q.options?.[0]) handleGapAnswer(q.options[0]);
+        if (e.key === '2' && q.options?.[1]) handleGapAnswer(q.options[1]);
+        if (e.key === '3' && q.options?.[2]) handleGapAnswer(q.options[2]);
+      } else if (mode === 'rf') {
+        if (e.key === 'r' || e.key === 'R') handleRFAnswer(true);
+        if (e.key === 'f' || e.key === 'F') handleRFAnswer(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, mode, handleGapAnswer, handleRFAnswer]);
 
   /**
    * Berechne Statistiken mit Kategorie-Aufschlüsselung
@@ -510,7 +510,7 @@ export default function Rechtschreibung() {
   const isGapMode = mode === 'gap' || mode === 'mistakes';
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

@@ -1,35 +1,18 @@
 import { useSettings, useStreak, useAllProgress, useErrors } from '../context/AppContext';
 import { Settings, Type, Contrast, RotateCcw, Flame } from 'lucide-react';
+import { MODULE_REGISTRY } from '../data/modules';
 
 /**
  * Seite: Einstellungen
  * Erlaubt Anpassung von Textgröße, Kontrast und Rechenmethode
  */
 export default function Einstellungen() {
-  const { textSize, highContrast, mathMethod, difficulty, autoCheck, showTimer, updateSettings } = useSettings();
+  const { textSize, highContrast, difficulty, autoCheck, showTimer, updateSettings } = useSettings();
   const { streak } = useStreak();
   const progress = useAllProgress();
   const { errors } = useErrors();
 
-  const allModules = [
-    { key: 'schriftlich', label: 'Schriftlich Rechnen' },
-    { key: 'einmaleins', label: '1x1 Training' },
-    { key: 'kopfrechnen', label: 'Kopfrechnen' },
-    { key: 'geld-rechnen', label: 'Geld rechnen' },
-    { key: 'uhrzeit', label: 'Uhrzeit' },
-    { key: 'zahlenraum', label: 'Zahlenraum bis 1000' },
-    { key: 'wortarten', label: 'Wortarten' },
-    { key: 'der-die-das', label: 'der/die/das' },
-    { key: 'einzahl-mehrzahl', label: 'Einzahl & Mehrzahl' },
-    { key: 'satzglieder', label: 'Satzglieder' },
-    { key: 'satzarten', label: 'Satzarten' },
-    { key: 'zeitformen', label: 'Zeitformen' },
-    { key: 'steigerung', label: 'Steigerung' },
-    { key: 'rechtschreibung', label: 'Rechtschreibung' },
-    { key: 'silbentrennung', label: 'Silbentrennung' },
-  ];
-
-  const totalSessions = allModules.reduce((sum, m) => sum + (progress[m.key]?.total || 0), 0);
+  const totalSessions = MODULE_REGISTRY.reduce((sum, m) => sum + (progress[m.key]?.total || 0), 0);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -201,7 +184,7 @@ export default function Einstellungen() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
-            {allModules.map((mod) => {
+            {MODULE_REGISTRY.map((mod) => {
               const p = progress[mod.key] || { today: 0, total: 0 };
               return (
                 <div key={mod.key} className="bg-gray-50 rounded-lg p-3">

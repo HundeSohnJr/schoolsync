@@ -1,45 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Calculator, Grid3x3, BookOpen, Tag, Layers, PenTool, Clock, ArrowLeftRight, MessageCircle, Scissors, History, TrendingUp, Settings, Menu, X, Home, Brain, Coins, Hash } from 'lucide-react';
-
-const navGroups = [
-  {
-    label: 'Mathe',
-    items: [
-      { path: '/schriftlich-rechnen', label: 'Schriftlich Rechnen', icon: Calculator },
-      { path: '/einmaleins', label: '1×1 Training', icon: Grid3x3 },
-      { path: '/kopfrechnen', label: 'Kopfrechnen', icon: Brain },
-      { path: '/geld-rechnen', label: 'Geld rechnen', icon: Coins },
-      { path: '/uhrzeit', label: 'Uhrzeit', icon: Clock },
-      { path: '/zahlenraum', label: 'Zahlenraum bis 1000', icon: Hash },
-    ],
-  },
-  {
-    label: 'Grammatik',
-    items: [
-      { path: '/wortarten', label: 'Wortarten', icon: BookOpen },
-      { path: '/der-die-das', label: 'der/die/das', icon: Tag },
-      { path: '/einzahl-mehrzahl', label: 'Einzahl & Mehrzahl', icon: ArrowLeftRight },
-      { path: '/satzglieder', label: 'Satzglieder', icon: Layers },
-      { path: '/satzarten', label: 'Satzarten . ? !', icon: MessageCircle },
-      { path: '/zeitformen', label: 'Zeitformen', icon: History },
-      { path: '/steigerung', label: 'Steigerung', icon: TrendingUp },
-    ],
-  },
-  {
-    label: 'Rechtschreibung',
-    items: [
-      { path: '/rechtschreibung', label: 'Rechtschreibung', icon: PenTool },
-      { path: '/silbentrennung', label: 'Silbentrennung', icon: Scissors },
-      { path: '/gross-klein', label: 'Groß/Klein', icon: PenTool },
-    ],
-  },
-];
+import { Settings, Menu, X, Home } from 'lucide-react';
+import { NAV_GROUPS } from '../data/modules';
 
 function NavContent({ onItemClick }) {
   return (
     <>
-      {navGroups.map((group) => (
+      {NAV_GROUPS.map((group) => (
         <div key={group.label} className="mb-4">
           <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider px-4 mb-2">
             {group.label}
@@ -113,7 +80,7 @@ export default function Layout({ children }) {
   }, []);
 
   // Find current page label for mobile header
-  const allItems = navGroups.flatMap(g => g.items);
+  const allItems = NAV_GROUPS.flatMap(g => g.items);
   const currentItem = allItems.find(item => item.path === location.pathname);
   const currentLabel = currentItem?.label || 'SchoolSync';
 

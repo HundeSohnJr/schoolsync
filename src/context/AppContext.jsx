@@ -1,18 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { MODULE_KEYS } from '../data/modules';
 
 const AppContext = createContext(null);
 
 const STORAGE_KEY = 'schoolsync-data';
-
-/**
- * All module keys for progress tracking
- */
-const MODULE_KEYS = [
-  'schriftlich', 'einmaleins', 'kopfrechnen', 'geld-rechnen', 'uhrzeit', 'zahlenraum',
-  'wortarten', 'der-die-das', 'einzahl-mehrzahl',
-  'satzglieder', 'satzarten', 'zeitformen',
-  'steigerung', 'rechtschreibung', 'silbentrennung', 'gross-klein',
-];
 
 const buildDefaultProgress = () => {
   const progress = {};
@@ -183,23 +174,6 @@ export function AppProvider({ children }) {
     updateStreak();
   };
 
-  const recordAttempt = (module, wasCorrect) => {
-    setState((prev) => {
-      const current = prev.progress[module] || { today: 0, total: 0, correct: 0, attempts: 0 };
-      return {
-        ...prev,
-        progress: {
-          ...prev.progress,
-          [module]: {
-            ...current,
-            attempts: current.attempts + 1,
-            correct: wasCorrect ? current.correct + 1 : current.correct,
-          },
-        },
-      };
-    });
-  };
-
   const addError = (type, question) => {
     setState((prev) => {
       const newError = {
@@ -235,7 +209,6 @@ export function AppProvider({ children }) {
     state,
     updateStreak,
     incrementProgress,
-    recordAttempt,
     addError,
     updateSettings,
   };
@@ -267,12 +240,6 @@ export function useProgress(module) {
     attempts: progress.attempts,
     increment: (wasCorrect) => context.incrementProgress(module, wasCorrect),
   };
-}
-
-export function useRecordAttempt() {
-  const context = useContext(AppContext);
-  if (!context) throw new Error('useRecordAttempt muss innerhalb von AppProvider verwendet werden');
-  return context.recordAttempt;
 }
 
 export function useAllProgress() {

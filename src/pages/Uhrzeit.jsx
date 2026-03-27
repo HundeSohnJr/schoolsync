@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 // ---------------------------------------------------------------------------
 // Reusable SVG Analog Clock
@@ -132,14 +133,6 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 function formatTime(h, m) {
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
@@ -349,7 +342,7 @@ export default function Uhrzeit() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswer, setLastAnswer] = useState(null);
   const [showStreakModal, setShowStreakModal] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   // Mode 1: text input state
   const [inputValue, setInputValue] = useState('');
@@ -370,24 +363,6 @@ export default function Uhrzeit() {
   useEffect(() => {
     startNewSession(0);
   }, []);
-
-  // Keyboard support for mode 2 (1-4 keys) and mode 3 (1-4 keys)
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-      const q = questions[currentIndex];
-      if (!q) return;
-
-      if (q.mode === 2 || q.mode === 3) {
-        const idx = parseInt(e.key) - 1;
-        if (idx >= 0 && idx < 4) {
-          handleOptionSelect(idx);
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions]);
 
   const processAnswer = (correct, errorLabel) => {
     const timeTaken = (Date.now() - startTime) / 1000;
@@ -501,6 +476,24 @@ export default function Uhrzeit() {
     processAnswer(correct, label);
   };
 
+  // Keyboard support for mode 2 (1-4 keys) and mode 3 (1-4 keys)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+      const q = questions[currentIndex];
+      if (!q) return;
+
+      if (q.mode === 2 || q.mode === 3) {
+        const idx = parseInt(e.key) - 1;
+        if (idx >= 0 && idx < 4) {
+          handleOptionSelect(idx);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, handleOptionSelect]);
+
   const calculateStats = () => {
     if (sessionResults.length === 0) return null;
     const correct = sessionResults.filter((r) => r.correct).length;
@@ -531,7 +524,7 @@ export default function Uhrzeit() {
   // ---------------------------------------------------------------------------
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">
@@ -682,7 +675,6 @@ export default function Uhrzeit() {
                 <div className="grid grid-cols-2 gap-6 max-w-lg mx-auto">
                   {current.options.map((opt, idx) => {
                     const isCorrect = opt.correct;
-                    const isSelected = showFeedback && lastAnswer;
                     let borderClass = 'border-gray-200 hover:border-blue-400';
                     if (showFeedback) {
                       if (isCorrect) borderClass = 'border-green-500 bg-green-50';

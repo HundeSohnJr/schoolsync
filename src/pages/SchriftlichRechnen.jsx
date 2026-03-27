@@ -238,12 +238,13 @@ export default function SchriftlichRechnen() {
         num2 = randomNumber(...config.multiplication.num2);
         break;
         
-      case OPERATIONS.DIVISION:
+      case OPERATIONS.DIVISION: {
         const divisor = randomNumber(...config.division.divisor);
         const quotient = randomNumber(...config.division.quotient);
         num1 = quotient * divisor;
         num2 = divisor;
         break;
+      }
         
       default:
         num1 = 100;
@@ -292,14 +293,6 @@ export default function SchriftlichRechnen() {
       resetValidation();
       generateProblem(activeOperation);
     }, 0);
-  };
-
-  /**
-   * Handler für Methoden-Toggle
-   */
-  const handleMethodToggle = () => {
-    const newMethod = mathMethod === 'Entbündeln' ? 'Ergänzen' : 'Entbündeln';
-    updateSettings('mathMethod', newMethod);
   };
 
   /**
@@ -495,7 +488,7 @@ export default function SchriftlichRechnen() {
   const isButtonDisabled = userAnswer.every(val => val === '');
 
   return (
-    <div>
+    <div className="exercise-content">
       {/* Header mit Streak */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Schriftlich Rechnen</h1>
@@ -758,7 +751,7 @@ export default function SchriftlichRechnen() {
                   {activeOperation !== OPERATIONS.DIVISION && correctCarries.some(c => c !== '') && (
                     <p className="text-sm text-gray-500">
                       Richtige Überträge: <span className="font-semibold text-gray-700">
-                        {correctCarries.map((c, i) => c || '–').join(' ')}
+                        {correctCarries.map((c) => c || '–').join(' ')}
                       </span>
                     </p>
                   )}

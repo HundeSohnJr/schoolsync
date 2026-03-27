@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, ToggleLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Mode 1: "Richtig oder Falsch?"
@@ -212,17 +213,15 @@ const toggleCase = (word) => {
  * Generiert eine gemischte Session mit 10 Fragen aus beiden Modi
  */
 const generateSession = () => {
-  const mode1 = MODE1_ITEMS
-    .sort(() => Math.random() - 0.5)
+  const mode1 = shuffle(MODE1_ITEMS)
     .slice(0, 5)
     .map((item) => ({ ...item, mode: 1 }));
 
-  const mode2 = MODE2_ITEMS
-    .sort(() => Math.random() - 0.5)
+  const mode2 = shuffle(MODE2_ITEMS)
     .slice(0, 5)
     .map((item) => ({ ...item, mode: 2 }));
 
-  return [...mode1, ...mode2].sort(() => Math.random() - 0.5);
+  return shuffle([...mode1, ...mode2]);
 };
 
 /**
@@ -243,7 +242,7 @@ export default function GrossKlein() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswer, setLastAnswer] = useState(null);
   const [showStreakModal, setShowStreakModal] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   // Mode 2 state: current word states (toggled or not)
   const [wordStates, setWordStates] = useState([]);
@@ -277,18 +276,21 @@ export default function GrossKlein() {
     }
   }, [currentIndex, questions]);
 
-  // Keyboard support for Mode 1: G = GROSS, K = klein
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-      const current = questions[currentIndex];
-      if (!current || current.mode !== 1) return;
-      if (e.key === 'g' || e.key === 'G') handleMode1Answer(true);
-      if (e.key === 'k' || e.key === 'K') handleMode1Answer(false);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions]);
+  const advanceToNext = () => {
+    setShowFeedback(false);
+    setLastAnswer(null);
+    setMode2Submitted(false);
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex >= questions.length) {
+      setIsSessionComplete(true);
+      increment();
+      updateStreak();
+    } else {
+      setCurrentIndex(nextIndex);
+      setStartTime(Date.now());
+    }
+  };
 
   const handleMode1Answer = (userSaysGross) => {
     if (showFeedback || isSessionComplete || questions.length === 0) return;
@@ -338,6 +340,19 @@ export default function GrossKlein() {
       advanceToNext();
     }, correct ? 800 : 2000);
   };
+
+  // Keyboard support for Mode 1: G = GROSS, K = klein
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+      const current = questions[currentIndex];
+      if (!current || current.mode !== 1) return;
+      if (e.key === 'g' || e.key === 'G') handleMode1Answer(true);
+      if (e.key === 'k' || e.key === 'K') handleMode1Answer(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, handleMode1Answer]);
 
   const handleMode2Submit = () => {
     if (mode2Submitted || showFeedback) return;
@@ -405,22 +420,6 @@ export default function GrossKlein() {
     });
   };
 
-  const advanceToNext = () => {
-    setShowFeedback(false);
-    setLastAnswer(null);
-    setMode2Submitted(false);
-    const nextIndex = currentIndex + 1;
-
-    if (nextIndex >= questions.length) {
-      setIsSessionComplete(true);
-      increment();
-      updateStreak();
-    } else {
-      setCurrentIndex(nextIndex);
-      setStartTime(Date.now());
-    }
-  };
-
   const calculateStats = () => {
     if (sessionResults.length === 0) return null;
     const correct = sessionResults.filter((r) => r.correct).length;
@@ -466,7 +465,7 @@ export default function GrossKlein() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

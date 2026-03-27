@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, ArrowRightLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Wortpaare: Einzahl/Mehrzahl für Klasse 3
@@ -132,7 +133,6 @@ const MODES = [
 /**
  * Shuffle-Hilfe
  */
-const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
 /**
  * Generiert 4 Antwort-Optionen (1 richtig, 3 falsch) aus dem Pool
@@ -213,7 +213,7 @@ export default function EinzahlMehrzahl() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastAnswer, setLastAnswer] = useState(null);
   const [showStreakModal, setShowStreakModal] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
 
   const containerRef = useRef(null);
 
@@ -234,22 +234,6 @@ export default function EinzahlMehrzahl() {
   useEffect(() => {
     startNewSession();
   }, []);
-
-  // Keyboard support: 1-4 for options
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (isSessionComplete || showFeedback) return;
-      const current = questions[currentIndex];
-      if (!current) return;
-
-      const keyNum = parseInt(e.key);
-      if (keyNum >= 1 && keyNum <= 4 && current.options[keyNum - 1]) {
-        handleAnswer(current.options[keyNum - 1]);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isSessionComplete, showFeedback, questions]);
 
   const handleAnswer = (answer) => {
     if (showFeedback || isSessionComplete || questions.length === 0) return;
@@ -320,6 +304,22 @@ export default function EinzahlMehrzahl() {
     }, correct ? 800 : 1500);
   };
 
+  // Keyboard support: 1-4 for options
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (isSessionComplete || showFeedback) return;
+      const current = questions[currentIndex];
+      if (!current) return;
+
+      const keyNum = parseInt(e.key);
+      if (keyNum >= 1 && keyNum <= 4 && current.options[keyNum - 1]) {
+        handleAnswer(current.options[keyNum - 1]);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isSessionComplete, showFeedback, questions, handleAnswer]);
+
   const calculateStats = () => {
     if (sessionResults.length === 0) return null;
     const correct = sessionResults.filter((r) => r.correct).length;
@@ -349,7 +349,7 @@ export default function EinzahlMehrzahl() {
   const stats = calculateStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

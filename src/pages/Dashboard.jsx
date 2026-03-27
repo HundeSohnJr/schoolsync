@@ -1,47 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAllProgress, useStreak } from '../context/AppContext';
-import {
-  Calculator, Grid3x3, Brain, Coins, Clock, Hash, BookOpen, Tag, ArrowLeftRight,
-  Layers, MessageCircle, History, TrendingUp, PenTool, Scissors,
-  Flame,
-} from 'lucide-react';
-
-const sections = [
-  {
-    label: 'Mathe',
-    color: 'blue',
-    modules: [
-      { key: 'schriftlich', path: '/schriftlich-rechnen', label: 'Schriftlich Rechnen', icon: Calculator },
-      { key: 'einmaleins', path: '/einmaleins', label: '1x1 Training', icon: Grid3x3 },
-      { key: 'kopfrechnen', path: '/kopfrechnen', label: 'Kopfrechnen', icon: Brain },
-      { key: 'geld-rechnen', path: '/geld-rechnen', label: 'Geld rechnen', icon: Coins },
-      { key: 'uhrzeit', path: '/uhrzeit', label: 'Uhrzeit', icon: Clock },
-      { key: 'zahlenraum', path: '/zahlenraum', label: 'Zahlenraum bis 1000', icon: Hash },
-    ],
-  },
-  {
-    label: 'Grammatik',
-    color: 'purple',
-    modules: [
-      { key: 'wortarten', path: '/wortarten', label: 'Wortarten', icon: BookOpen },
-      { key: 'der-die-das', path: '/der-die-das', label: 'der/die/das', icon: Tag },
-      { key: 'einzahl-mehrzahl', path: '/einzahl-mehrzahl', label: 'Einzahl & Mehrzahl', icon: ArrowLeftRight },
-      { key: 'satzglieder', path: '/satzglieder', label: 'Satzglieder', icon: Layers },
-      { key: 'satzarten', path: '/satzarten', label: 'Satzarten . ? !', icon: MessageCircle },
-      { key: 'zeitformen', path: '/zeitformen', label: 'Zeitformen', icon: History },
-      { key: 'steigerung', path: '/steigerung', label: 'Steigerung', icon: TrendingUp },
-    ],
-  },
-  {
-    label: 'Rechtschreibung',
-    color: 'green',
-    modules: [
-      { key: 'rechtschreibung', path: '/rechtschreibung', label: 'Rechtschreibung', icon: PenTool },
-      { key: 'silbentrennung', path: '/silbentrennung', label: 'Silbentrennung', icon: Scissors },
-      { key: 'gross-klein', path: '/gross-klein', label: 'Groß/Klein', icon: PenTool },
-    ],
-  },
-];
+import { Flame } from 'lucide-react';
+import { DASHBOARD_SECTIONS } from '../data/modules';
 
 const colorMap = {
   blue: {
@@ -87,7 +47,7 @@ export default function Dashboard() {
         </div>
 
         {/* Sections */}
-        {sections.map((section) => {
+        {DASHBOARD_SECTIONS.map((section) => {
           const colors = colorMap[section.color];
           return (
             <div key={section.label} className="mb-8">
@@ -139,7 +99,7 @@ export default function Dashboard() {
                         to={mod.path}
                         className={`mt-auto px-4 py-1.5 ${colors.button} text-white text-sm font-semibold rounded-lg transition-colors`}
                       >
-                        Uben
+                        Üben
                       </Link>
                     </div>
                   );

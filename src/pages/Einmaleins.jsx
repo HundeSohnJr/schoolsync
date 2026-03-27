@@ -4,6 +4,7 @@ import { Flame, RefreshCw, Check, X, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Schwierigkeitsgrad-Konfiguration
@@ -34,7 +35,7 @@ const generateFocusQuestions = (row) => {
     questions.push({ num1: row, num2: i });
   }
   // Mische die Reihenfolge
-  return questions.sort(() => Math.random() - 0.5);
+  return shuffle(questions);
 };
 
 /**
@@ -56,7 +57,7 @@ export default function Einmaleins() {
   const [sessionResults, setSessionResults] = useState([]);
   const [correctStreak, setCorrectStreak] = useState(0);
   const [isSessionComplete, setIsSessionComplete] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
   const [questionQueue, setQuestionQueue] = useState([]);
   
   // Feedback State
@@ -89,7 +90,7 @@ export default function Einmaleins() {
       while (queue.length < 10) {
         queue.push(...mistakeQuestions);
       }
-      queue = queue.slice(0, 10).sort(() => Math.random() - 0.5);
+      queue = shuffle(queue.slice(0, 10));
     } else {
       // Random mode: 10 unique questions filtered by difficulty
       const used = new Set();
@@ -283,7 +284,7 @@ export default function Einmaleins() {
   const multiplicationErrors = getMultiplicationErrors();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

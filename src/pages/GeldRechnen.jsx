@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, Timer } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 // ---------------------------------------------------------------------------
 // Modus-Definitionen
@@ -33,24 +34,6 @@ const formatEuro = (cents) => {
   return `${euros},${String(ct).padStart(2, '0')}€`;
 };
 
-/** Parse "3,50€" or "3,50" back to cents (integer) */
-const parseEuroInput = (str) => {
-  const cleaned = str.replace(/€/g, '').replace(/\s/g, '');
-  // Handle both comma and period as decimal separator
-  const match = cleaned.match(/^(\d+)[,.](\d{1,2})$/);
-  if (match) {
-    const euros = parseInt(match[1], 10);
-    let cents = match[2];
-    if (cents.length === 1) cents = cents + '0';
-    return euros * 100 + parseInt(cents, 10);
-  }
-  // Whole number — could be euros
-  const wholeMatch = cleaned.match(/^(\d+)$/);
-  if (wholeMatch) {
-    return parseInt(wholeMatch[1], 10) * 100;
-  }
-  return NaN;
-};
 
 // ---------------------------------------------------------------------------
 // Waren-Katalog (~20 Artikel mit realistischen Preisen in Cent)
@@ -299,7 +282,7 @@ const generateMuenzen = (difficulty) => {
   const actualTotal = coins.reduce((s, c) => s + c, 0);
 
   // Shuffle coins for display
-  const shuffled = [...coins].sort(() => Math.random() - 0.5);
+  const shuffled = shuffle(coins);
 
   const formatCoin = (c) => {
     if (c >= 100) return `${c / 100}€`;
@@ -331,7 +314,7 @@ const generateOptions = (correctCents, wholeEurosOnly) => {
     ? [100, -100, 200, -200, 300, -300]
     : [10, -10, 20, -20, 50, -50, 100, -100, 30, -30, 5, -5, 15, -15];
 
-  const shuffledOffsets = [...offsets].sort(() => Math.random() - 0.5);
+  const shuffledOffsets = shuffle(offsets);
 
   for (const off of shuffledOffsets) {
     if (opts.size >= 4) break;
@@ -346,7 +329,7 @@ const generateOptions = (correctCents, wholeEurosOnly) => {
     if (v > 0) opts.add(v);
   }
 
-  return [...opts].sort(() => Math.random() - 0.5);
+  return shuffle(opts);
 };
 
 // ---------------------------------------------------------------------------
@@ -418,7 +401,7 @@ export default function GeldRechnen() {
   const [correctStreak, setCorrectStreak] = useState(0);
 
   // Timer state
-  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
+  const [questionStartTime, setQuestionStartTime] = useState(() => Date.now());
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   // Feedback state
@@ -613,7 +596,7 @@ export default function GeldRechnen() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

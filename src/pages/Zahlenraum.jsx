@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, Timer } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 // ---------------------------------------------------------------------------
 // Modus-Definitionen
@@ -31,15 +32,6 @@ const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const maxNumber = (difficulty) =>
   difficulty === 'leicht' ? 500 : 1000;
 
-/** Shuffle an array (Fisher-Yates) */
-const shuffle = (arr) => {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-};
 
 // ---------------------------------------------------------------------------
 // Aufgaben-Generatoren
@@ -367,7 +359,7 @@ export default function Zahlenraum() {
   const [correctStreak, setCorrectStreak] = useState(0);
 
   // Timer state
-  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
+  const [questionStartTime, setQuestionStartTime] = useState(() => Date.now());
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   // Feedback state
@@ -612,7 +604,7 @@ export default function Zahlenraum() {
   const hasOptions = current?.options !== null && current?.options !== undefined;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">

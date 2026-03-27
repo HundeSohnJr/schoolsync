@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Satzarten-Datenbank: Aussagesatz, Fragesatz, Ausrufesatz
@@ -67,11 +68,11 @@ const SENTENCES = [
  */
 const generateSession = () => {
   const byType = {
-    aussage: SENTENCES.filter(s => s.type === 'aussage').sort(() => Math.random() - 0.5).slice(0, 4),
-    frage: SENTENCES.filter(s => s.type === 'frage').sort(() => Math.random() - 0.5).slice(0, 3),
-    ausruf: SENTENCES.filter(s => s.type === 'ausruf').sort(() => Math.random() - 0.5).slice(0, 3),
+    aussage: shuffle(SENTENCES.filter(s => s.type === 'aussage')).slice(0, 4),
+    frage: shuffle(SENTENCES.filter(s => s.type === 'frage')).slice(0, 3),
+    ausruf: shuffle(SENTENCES.filter(s => s.type === 'ausruf')).slice(0, 3),
   };
-  return [...byType.aussage, ...byType.frage, ...byType.ausruf].sort(() => Math.random() - 0.5);
+  return shuffle([...byType.aussage, ...byType.frage, ...byType.ausruf]);
 };
 
 const PUNCTUATION_STYLES = {

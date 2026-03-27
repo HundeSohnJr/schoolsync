@@ -4,6 +4,7 @@ import { Flame, Check, X, Trophy, Zap, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
 import SessionRating from '../components/SessionRating';
+import { shuffle } from '../utils/shuffle';
 
 /**
  * Satzglieder-Datenbank für Klasse 3
@@ -440,7 +441,7 @@ const PART_KEYS = ['subjekt', 'prädikat', 'objekt'];
  * Generiert eine zufällige Session aus dem Pool
  */
 const generateSession = (count = 10) => {
-  const pool = [...SENTENCES].sort(() => Math.random() - 0.5);
+  const pool = shuffle(SENTENCES);
   return pool.slice(0, Math.min(count, pool.length));
 };
 
@@ -647,7 +648,7 @@ export default function Satzglieder() {
   const stats = isSessionComplete ? calculateStats() : null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 exercise-content">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">
