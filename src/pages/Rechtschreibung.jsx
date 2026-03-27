@@ -217,7 +217,10 @@ const generateGapSession = (count = 10, filterCategory = null, errorWords = []) 
   const remaining = shuffle(pool.filter(w => !prioritizedWords.has(w.word)))
     .slice(0, count - prioritized.length);
 
-  return shuffle([...prioritized, ...remaining]);
+  return shuffle([...prioritized, ...remaining]).map(item => ({
+    ...item,
+    options: shuffle(item.options),
+  }));
 };
 
 /**
