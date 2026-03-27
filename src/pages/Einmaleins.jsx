@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, RefreshCw, Check, X, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
@@ -44,6 +44,7 @@ export default function Einmaleins() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('einmaleins');
   const { errors, addError } = useErrors();
+  const { autoCheck } = useSettings();
   
   // Session State
   const [mode, setMode] = useState('random'); // 'random' | 'focus' | 'mistakes'
@@ -68,6 +69,7 @@ export default function Einmaleins() {
   
   // Refs
   const inputRef = useRef(null);
+  const autoCheckFiredRef = useRef(false);
 
   /**
    * Startet eine neue Session
@@ -108,6 +110,7 @@ export default function Einmaleins() {
     setStartTime(Date.now());
     setUserAnswer('');
     setShowFeedback(false);
+    autoCheckFiredRef.current = false;
     setTimeout(() => inputRef.current?.focus(), 0);
   };
 
@@ -180,6 +183,7 @@ export default function Einmaleins() {
       setUserAnswer('');
       setShowFeedback(false);
       setStartTime(Date.now());
+      autoCheckFiredRef.current = false;
     }
   };
 
@@ -200,6 +204,15 @@ export default function Einmaleins() {
     // Nur Zahlen, max 3 Ziffern
     if (/^\d{0,3}$/.test(value)) {
       setUserAnswer(value);
+
+      // Auto-check: wenn genug Ziffern eingegeben
+      if (autoCheck && !autoCheckFiredRef.current && !showFeedback) {
+        const expectedLength = (currentQuestion.num1 * currentQuestion.num2).toString().length;
+        if (value.length >= expectedLength) {
+          autoCheckFiredRef.current = true;
+          setTimeout(() => handleCheck(), 50);
+        }
+      }
     }
   };
 
@@ -418,6 +431,7 @@ export default function Einmaleins() {
                   ref={inputRef}
                   type="text"
                   inputMode="numeric"
+                  pattern="[0-9]*"
                   value={userAnswer}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}

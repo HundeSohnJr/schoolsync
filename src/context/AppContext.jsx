@@ -62,6 +62,7 @@ const getInitialState = () => {
       highContrast: false,
       mathMethod: 'Entbündeln',
       difficulty: 'mittel',
+      autoCheck: false,
     },
   };
 };

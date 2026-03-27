@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, Timer } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
@@ -354,6 +354,7 @@ export default function Zahlenraum() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('zahlenraum');
   const { addError } = useErrors();
+  const { autoCheck: autoCheckSetting } = useSettings();
 
   // Session state
   const [mode, setMode] = useState('gemischt');
@@ -380,6 +381,7 @@ export default function Zahlenraum() {
 
   const inputRef = useRef(null);
   const timerRef = useRef(null);
+  const autoCheckFiredRef = useRef(false);
 
   // -------------------------------------------------------------------------
   // Timer
@@ -416,6 +418,7 @@ export default function Zahlenraum() {
     setFeedbackMessage('');
     setQuestionStartTime(Date.now());
     setElapsedSeconds(0);
+    autoCheckFiredRef.current = false;
     setTimeout(() => inputRef.current?.focus(), 0);
   }, [mode, difficulty]);
 
@@ -516,6 +519,7 @@ export default function Zahlenraum() {
       setFeedbackMessage('');
       setQuestionStartTime(Date.now());
       setElapsedSeconds(0);
+      autoCheckFiredRef.current = false;
     }
   };
 
@@ -536,6 +540,16 @@ export default function Zahlenraum() {
     const value = e.target.value;
     if (/^-?\d{0,4}$/.test(value)) {
       setUserAnswer(value);
+
+      // Auto-check: wenn genug Ziffern eingegeben (nur für Text-Input-Fragen)
+      const current = questions[currentIndex];
+      if (autoCheckSetting && current && !current.options && !autoCheckFiredRef.current && !showFeedback) {
+        const expectedLength = current.answer.toString().length;
+        if (value.length >= expectedLength && /^\d+$/.test(value)) {
+          autoCheckFiredRef.current = true;
+          setTimeout(() => handleCheck(), 50);
+        }
+      }
     }
   };
 
@@ -770,6 +784,7 @@ export default function Zahlenraum() {
                     ref={inputRef}
                     type="text"
                     inputMode="numeric"
+                    pattern="[0-9]*"
                     value={userAnswer}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}

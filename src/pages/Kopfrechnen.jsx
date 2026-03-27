@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, Timer } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
@@ -227,6 +227,7 @@ export default function Kopfrechnen() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('kopfrechnen');
   const { addError } = useErrors();
+  const { autoCheck } = useSettings();
 
   // Session state
   const [mode, setMode] = useState('gemischt');
@@ -253,6 +254,7 @@ export default function Kopfrechnen() {
 
   const inputRef = useRef(null);
   const timerRef = useRef(null);
+  const autoCheckFiredRef = useRef(false);
 
   // -------------------------------------------------------------------------
   // Timer
@@ -289,6 +291,7 @@ export default function Kopfrechnen() {
     setFeedbackMessage('');
     setQuestionStartTime(Date.now());
     setElapsedSeconds(0);
+    autoCheckFiredRef.current = false;
     setTimeout(() => inputRef.current?.focus(), 0);
   }, [mode, difficulty]);
 
@@ -377,6 +380,7 @@ export default function Kopfrechnen() {
       setFeedbackMessage('');
       setQuestionStartTime(Date.now());
       setElapsedSeconds(0);
+      autoCheckFiredRef.current = false;
     }
   };
 
@@ -398,6 +402,17 @@ export default function Kopfrechnen() {
     // Zahlen, optional mit führendem Minus (für theoretische negative Ergebnisse)
     if (/^-?\d{0,4}$/.test(value)) {
       setUserAnswer(value);
+
+      // Auto-check: wenn genug Ziffern eingegeben
+      const current = questions[currentIndex];
+      if (autoCheck && current && !autoCheckFiredRef.current && !showFeedback) {
+        const expectedLength = current.answer.toString().length;
+        // Only auto-check for positive numeric values (skip if user typed minus)
+        if (value.length >= expectedLength && /^\d+$/.test(value)) {
+          autoCheckFiredRef.current = true;
+          setTimeout(() => handleCheck(), 50);
+        }
+      }
     }
   };
 
@@ -612,6 +627,7 @@ export default function Kopfrechnen() {
                   ref={inputRef}
                   type="text"
                   inputMode="numeric"
+                  pattern="[0-9]*"
                   value={userAnswer}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}

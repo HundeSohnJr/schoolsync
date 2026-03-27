@@ -6,7 +6,7 @@ import { Settings, Type, Contrast, RotateCcw, Flame } from 'lucide-react';
  * Erlaubt Anpassung von Textgröße, Kontrast und Rechenmethode
  */
 export default function Einstellungen() {
-  const { textSize, highContrast, mathMethod, difficulty, updateSettings } = useSettings();
+  const { textSize, highContrast, mathMethod, difficulty, autoCheck, updateSettings } = useSettings();
   const { streak } = useStreak();
   const progress = useAllProgress();
   const { errors } = useErrors();
@@ -103,6 +103,30 @@ export default function Einstellungen() {
           <h2 className="text-xl font-bold text-gray-800 mb-4">
             Mathe-Einstellungen
           </h2>
+
+          {/* Auto-Prüfen */}
+          <div className="mb-6">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <div
+                onClick={() => updateSettings('autoCheck', !autoCheck)}
+                className={`w-12 h-7 rounded-full transition-colors relative ${
+                  autoCheck ? 'bg-blue-500' : 'bg-gray-300'
+                }`}
+              >
+                <div
+                  className={`w-5 h-5 bg-white rounded-full absolute top-1 transition-transform ${
+                    autoCheck ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </div>
+              <div>
+                <span className="font-semibold text-gray-700">
+                  Auto-Prüfen
+                </span>
+                <span className="text-sm text-gray-500 block">Antwort wird automatisch geprüft, sobald genug Ziffern eingegeben sind</span>
+              </div>
+            </label>
+          </div>
 
           {/* Standard-Schwierigkeit */}
           <div>
