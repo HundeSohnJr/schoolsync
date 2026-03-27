@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ArrowUpRight, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
@@ -218,6 +218,7 @@ export default function Steigerung() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('steigerung');
   const { addError } = useErrors();
+  const { showTimer } = useSettings();
 
   const [mode, setMode] = useState('steigern');
   const [category, setCategory] = useState('Alle');
@@ -605,9 +606,11 @@ export default function Steigerung() {
               <div className="text-4xl font-bold text-gray-800 mb-2">
                 {stats.score} richtig ({stats.percentage}%)
               </div>
-              <div className="text-lg text-gray-600 mb-6">
-                Durchschnittszeit: {stats.avgTime}s
-              </div>
+              {showTimer && (
+                <div className="text-lg text-gray-600 mb-6">
+                  Durchschnittszeit: {stats.avgTime}s
+                </div>
+              )}
 
               {/* Per-form breakdown */}
               <div className="flex gap-4 justify-center mb-8">

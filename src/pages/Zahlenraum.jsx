@@ -354,7 +354,7 @@ export default function Zahlenraum() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('zahlenraum');
   const { addError } = useErrors();
-  const { autoCheck: autoCheckSetting } = useSettings();
+  const { autoCheck: autoCheckSetting, showTimer } = useSettings();
 
   // Session state
   const [mode, setMode] = useState('gemischt');
@@ -716,9 +716,11 @@ export default function Zahlenraum() {
                 <span className="text-sm font-semibold text-gray-600">
                   Aufgabe {currentIndex + 1}/10
                 </span>
-                <span className="text-sm text-gray-500">
-                  Ø {getCurrentAvgTime()}s
-                </span>
+                {showTimer && (
+                  <span className="text-sm text-gray-500">
+                    Ø {getCurrentAvgTime()}s
+                  </span>
+                )}
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
                 <div
@@ -729,20 +731,22 @@ export default function Zahlenraum() {
             </div>
 
             {/* Timer */}
-            <div className="flex justify-center mb-4">
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-lg font-mono font-semibold ${
-                elapsedSeconds < 3
-                  ? 'bg-green-100 text-green-700'
-                  : elapsedSeconds < 6
-                    ? 'bg-blue-100 text-blue-700'
-                    : elapsedSeconds < 10
-                      ? 'bg-yellow-100 text-yellow-700'
-                      : 'bg-red-100 text-red-700'
-              }`}>
-                <Timer className="w-5 h-5" />
-                {elapsedSeconds.toFixed(1)}s
+            {showTimer && (
+              <div className="flex justify-center mb-4">
+                <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-lg font-mono font-semibold ${
+                  elapsedSeconds < 3
+                    ? 'bg-green-100 text-green-700'
+                    : elapsedSeconds < 6
+                      ? 'bg-blue-100 text-blue-700'
+                      : elapsedSeconds < 10
+                        ? 'bg-yellow-100 text-yellow-700'
+                        : 'bg-red-100 text-red-700'
+                }`}>
+                  <Timer className="w-5 h-5" />
+                  {elapsedSeconds.toFixed(1)}s
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Aufgabe */}
             <div className="text-center mb-8">
@@ -869,26 +873,32 @@ export default function Zahlenraum() {
               <div className="text-4xl font-bold text-gray-800 mb-2">
                 {stats.score} richtig ({stats.percentage}%)
               </div>
-              <div className="text-lg text-gray-600 mb-2">
-                Durchschnittszeit: {stats.avgTime}s
-              </div>
+              {showTimer && (
+                <div className="text-lg text-gray-600 mb-2">
+                  Durchschnittszeit: {stats.avgTime}s
+                </div>
+              )}
 
               {/* Speed Rating */}
-              <div className={`text-xl font-semibold mb-6 ${getSpeedRating(parseFloat(stats.avgTime)).color}`}>
-                {getSpeedRating(parseFloat(stats.avgTime)).label}
-              </div>
+              {showTimer && (
+                <div className={`text-xl font-semibold mb-6 ${getSpeedRating(parseFloat(stats.avgTime)).color}`}>
+                  {getSpeedRating(parseFloat(stats.avgTime)).label}
+                </div>
+              )}
 
               {/* Schnellste / Langsamste */}
-              <div className="flex gap-6 justify-center mb-8">
-                <div className="bg-green-50 rounded-lg px-5 py-3 text-center">
-                  <div className="text-sm text-gray-500">Schnellste</div>
-                  <div className="text-2xl font-bold text-green-600">{stats.fastest}s</div>
+              {showTimer && (
+                <div className="flex gap-6 justify-center mb-8">
+                  <div className="bg-green-50 rounded-lg px-5 py-3 text-center">
+                    <div className="text-sm text-gray-500">Schnellste</div>
+                    <div className="text-2xl font-bold text-green-600">{stats.fastest}s</div>
+                  </div>
+                  <div className="bg-orange-50 rounded-lg px-5 py-3 text-center">
+                    <div className="text-sm text-gray-500">Langsamste</div>
+                    <div className="text-2xl font-bold text-orange-600">{stats.slowest}s</div>
+                  </div>
                 </div>
-                <div className="bg-orange-50 rounded-lg px-5 py-3 text-center">
-                  <div className="text-sm text-gray-500">Langsamste</div>
-                  <div className="text-2xl font-bold text-orange-600">{stats.slowest}s</div>
-                </div>
-              </div>
+              )}
 
               {/* Per-Mode Breakdown */}
               {Object.keys(stats.byMode).length > 0 && (
@@ -943,10 +953,12 @@ export default function Zahlenraum() {
                             <span className="text-red-600 text-sm">(du: {r.userAnswer})</span>
                           )}
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-500">{r.time.toFixed(1)}s</span>
-                          <span className={`text-xs font-semibold ${speed.color}`}>{speed.label}</span>
-                        </div>
+                        {showTimer && (
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-500">{r.time.toFixed(1)}s</span>
+                            <span className={`text-xs font-semibold ${speed.color}`}>{speed.label}</span>
+                          </div>
+                        )}
                       </div>
                     );
                   })}

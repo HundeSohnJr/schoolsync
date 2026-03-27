@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
@@ -338,6 +338,7 @@ export default function Uhrzeit() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('uhrzeit');
   const { addError } = useErrors();
+  const { showTimer } = useSettings();
 
   const [activeMode, setActiveMode] = useState(0); // 0 = mixed, 1/2/3
   const [questions, setQuestions] = useState([]);
@@ -803,9 +804,11 @@ export default function Uhrzeit() {
               <div className="text-4xl font-bold text-gray-800 mb-2">
                 {stats.score} richtig ({stats.percentage}%)
               </div>
-              <div className="text-lg text-gray-600 mb-6">
-                Durchschnittszeit: {stats.avgTime}s
-              </div>
+              {showTimer && (
+                <div className="text-lg text-gray-600 mb-6">
+                  Durchschnittszeit: {stats.avgTime}s
+                </div>
+              )}
 
               {/* Per-mode breakdown */}
               <div className="flex gap-4 justify-center mb-8">

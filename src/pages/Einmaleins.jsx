@@ -44,7 +44,7 @@ export default function Einmaleins() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('einmaleins');
   const { errors, addError } = useErrors();
-  const { autoCheck } = useSettings();
+  const { autoCheck, showTimer } = useSettings();
   
   // Session State
   const [mode, setMode] = useState('random'); // 'random' | 'focus' | 'mistakes'
@@ -408,9 +408,11 @@ export default function Einmaleins() {
                 <span className="text-sm font-semibold text-gray-600">
                   Aufgabe {sessionProgress + 1}/10
                 </span>
-                <span className="text-sm text-gray-500">
-                  Ø {getCurrentAvgTime()}s
-                </span>
+                {showTimer && (
+                  <span className="text-sm text-gray-500">
+                    Ø {getCurrentAvgTime()}s
+                  </span>
+                )}
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
                 <div
@@ -508,9 +510,11 @@ export default function Einmaleins() {
                   <div className="text-4xl font-bold text-gray-800 mb-2">
                     {stats.score} richtig ({stats.percentage}%)
                   </div>
-                  <div className="text-lg text-gray-600">
-                    Durchschnittszeit: {stats.avgTime}s
-                  </div>
+                  {showTimer && (
+                    <div className="text-lg text-gray-600">
+                      Durchschnittszeit: {stats.avgTime}s
+                    </div>
+                  )}
                 </div>
               )}
 

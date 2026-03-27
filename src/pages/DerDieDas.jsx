@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
@@ -184,6 +184,7 @@ export default function DerDieDas() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('der-die-das');
   const { errors, addError } = useErrors();
+  const { showTimer } = useSettings();
 
   const [category, setCategory] = useState('Alle');
   const [questions, setQuestions] = useState([]);
@@ -469,9 +470,11 @@ export default function DerDieDas() {
               <div className="text-4xl font-bold text-gray-800 mb-2">
                 {stats.score} richtig ({stats.percentage}%)
               </div>
-              <div className="text-lg text-gray-600 mb-6">
-                Durchschnittszeit: {stats.avgTime}s
-              </div>
+              {showTimer && (
+                <div className="text-lg text-gray-600 mb-6">
+                  Durchschnittszeit: {stats.avgTime}s
+                </div>
+              )}
 
               {/* Per-article breakdown */}
               <div className="flex gap-4 justify-center mb-8">

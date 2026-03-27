@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useStreak, useProgress, useErrors } from '../context/AppContext';
+import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import TheoryPanel from '../components/TheoryPanel';
@@ -241,6 +241,7 @@ export default function Rechtschreibung() {
   const { streak, updateStreak } = useStreak();
   const { increment } = useProgress('rechtschreibung');
   const { errors, addError } = useErrors();
+  const { showTimer } = useSettings();
 
   // Session State
   const [mode, setMode] = useState('gap'); // 'gap' | 'rf' | 'mistakes'
@@ -810,9 +811,11 @@ export default function Rechtschreibung() {
               <div className="text-4xl font-bold text-gray-800 mb-2">
                 {stats.score} richtig ({stats.percentage}%)
               </div>
-              <div className="text-lg text-gray-600 mb-8">
-                Durchschnittszeit: {stats.avgTime}s
-              </div>
+              {showTimer && (
+                <div className="text-lg text-gray-600 mb-8">
+                  Durchschnittszeit: {stats.avgTime}s
+                </div>
+              )}
 
               {/* Per-category breakdown */}
               {stats.categoryStats.length > 0 && (
