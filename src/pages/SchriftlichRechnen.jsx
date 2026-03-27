@@ -198,11 +198,39 @@ export default function SchriftlichRechnen() {
       case OPERATIONS.ADDITION:
         num1 = randomNumber(config.addition.min, config.addition.max);
         num2 = randomNumber(config.addition.min, config.addition.max);
+        // On leicht: ensure no carrying is needed (each column sums to < 10)
+        if (difficulty === 'leicht') {
+          for (let attempt = 0; attempt < 20; attempt++) {
+            const d1 = numberToDigits(num1, numColumns);
+            const d2 = numberToDigits(num2, numColumns);
+            let needsCarry = false;
+            for (let i = 0; i < numColumns; i++) {
+              if (d1[i] + d2[i] >= 10) { needsCarry = true; break; }
+            }
+            if (!needsCarry) break;
+            num1 = randomNumber(config.addition.min, config.addition.max);
+            num2 = randomNumber(config.addition.min, config.addition.max);
+          }
+        }
         break;
         
       case OPERATIONS.SUBTRACTION:
         num1 = randomNumber(config.subtraction.min, config.subtraction.max);
         num2 = randomNumber(config.subtraction.subMin, Math.min(num1 - 1, config.subtraction.subMax));
+        // On leicht: ensure no borrowing is needed (ones digit of num1 >= ones digit of num2)
+        if (difficulty === 'leicht') {
+          for (let attempt = 0; attempt < 20; attempt++) {
+            const d1 = numberToDigits(num1, numColumns);
+            const d2 = numberToDigits(num2, numColumns);
+            let needsBorrow = false;
+            for (let i = numColumns - 1; i >= 0; i--) {
+              if (d1[i] < d2[i]) { needsBorrow = true; break; }
+            }
+            if (!needsBorrow) break;
+            num1 = randomNumber(config.subtraction.min, config.subtraction.max);
+            num2 = randomNumber(config.subtraction.subMin, Math.min(num1 - 1, config.subtraction.subMax));
+          }
+        }
         break;
         
       case OPERATIONS.MULTIPLICATION:

@@ -147,7 +147,7 @@ const generateWieViel = (difficulty) => {
     useWholeCents = false;
     itemCount = pick([2, 3]);
   } else {
-    maxTotal = 5000;  // 50€
+    maxTotal = 2000;  // 20€
     useWholeCents = false;
     itemCount = pick([3, 4]);
   }
@@ -208,7 +208,7 @@ const generateRueckgeld = (difficulty) => {
   }
 
   // Choose a payment amount (next round note/coin)
-  const paymentOptions = [200, 500, 1000, 2000, 5000];
+  const paymentOptions = [200, 500, 1000, 2000];
   const validPayments = paymentOptions.filter((p) => p > price);
   let maxPayment;
   if (difficulty === 'leicht') {
@@ -216,7 +216,7 @@ const generateRueckgeld = (difficulty) => {
   } else if (difficulty === 'mittel') {
     maxPayment = validPayments.find((p) => p <= 2000) || validPayments[0];
   } else {
-    maxPayment = pick(validPayments.slice(0, 4)) || validPayments[0];
+    maxPayment = pick(validPayments.slice(0, 3)) || validPayments[0];
   }
 
   const change = maxPayment - price;
@@ -259,9 +259,9 @@ const generateMuenzen = (difficulty) => {
     targetMax = 2000;
     pool = [5, 10, 20, 50, 100, 200];
   } else {
-    targetMin = 500;
-    targetMax = 5000;
-    pool = [5, 10, 20, 50, 100, 200, 500, 1000, 2000];
+    targetMin = 200;
+    targetMax = 2500;
+    pool = [5, 10, 20, 50, 100, 200, 500];
   }
 
   const target = roundTo5(rand(targetMin, targetMax));
