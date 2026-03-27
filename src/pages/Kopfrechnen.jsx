@@ -303,12 +303,13 @@ export default function Kopfrechnen() {
   // -------------------------------------------------------------------------
   // Antwort prüfen
   // -------------------------------------------------------------------------
-  const handleCheck = () => {
-    if (!userAnswer && userAnswer !== '0') return;
+  const handleCheck = (overrideAnswer) => {
+    const answerStr = overrideAnswer !== undefined ? overrideAnswer : userAnswer;
+    if (!answerStr && answerStr !== '0') return;
 
     const timeTaken = (Date.now() - questionStartTime) / 1000;
     const current = questions[currentIndex];
-    const userNum = parseInt(userAnswer, 10);
+    const userNum = parseInt(answerStr, 10);
     const correct = userNum === current.answer;
 
     const result = {
@@ -410,7 +411,7 @@ export default function Kopfrechnen() {
         // Only auto-check for positive numeric values (skip if user typed minus)
         if (value.length >= expectedLength && /^\d+$/.test(value)) {
           autoCheckFiredRef.current = true;
-          setTimeout(() => handleCheck(), 50);
+          setTimeout(() => handleCheck(value), 0);
         }
       }
     }

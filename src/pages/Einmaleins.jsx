@@ -117,12 +117,13 @@ export default function Einmaleins() {
   /**
    * Prüft die Antwort
    */
-  const handleCheck = () => {
-    if (!userAnswer) return;
-    
+  const handleCheck = (overrideAnswer) => {
+    const answerStr = overrideAnswer !== undefined ? overrideAnswer : userAnswer;
+    if (!answerStr) return;
+
     const timeTaken = (Date.now() - startTime) / 1000;
     const expected = currentQuestion.num1 * currentQuestion.num2;
-    const userNum = parseInt(userAnswer);
+    const userNum = parseInt(answerStr);
     const correct = userNum === expected;
     
     const result = {
@@ -210,7 +211,7 @@ export default function Einmaleins() {
         const expectedLength = (currentQuestion.num1 * currentQuestion.num2).toString().length;
         if (value.length >= expectedLength) {
           autoCheckFiredRef.current = true;
-          setTimeout(() => handleCheck(), 50);
+          setTimeout(() => handleCheck(value), 0);
         }
       }
     }

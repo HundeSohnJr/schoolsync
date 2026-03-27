@@ -439,8 +439,9 @@ export default function Zahlenraum() {
     if (hasOptions) {
       userValue = selectedOption;
     } else {
-      if (!userAnswer && userAnswer !== '0') return;
-      userValue = parseInt(userAnswer, 10);
+      const answerStr = typeof selectedOption === 'string' ? selectedOption : userAnswer;
+      if (!answerStr && answerStr !== '0') return;
+      userValue = parseInt(answerStr, 10);
     }
 
     const timeTaken = (Date.now() - questionStartTime) / 1000;
@@ -547,7 +548,7 @@ export default function Zahlenraum() {
         const expectedLength = current.answer.toString().length;
         if (value.length >= expectedLength && /^\d+$/.test(value)) {
           autoCheckFiredRef.current = true;
-          setTimeout(() => handleCheck(), 50);
+          setTimeout(() => handleCheck(value), 0);
         }
       }
     }
