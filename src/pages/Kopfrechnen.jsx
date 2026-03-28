@@ -404,14 +404,20 @@ export default function Kopfrechnen() {
     if (/^-?\d{0,4}$/.test(value)) {
       setUserAnswer(value);
 
-      // Auto-check: wenn genug Ziffern eingegeben
+      // Auto-check: wenn die eingegebene Zahl exakt mit der Antwort übereinstimmt
       const current = questions[currentIndex];
       if (autoCheck && current && !autoCheckFiredRef.current && !showFeedback) {
-        const expectedLength = current.answer.toString().length;
-        // Only auto-check for positive numeric values (skip if user typed minus)
-        if (value.length >= expectedLength && /^\d+$/.test(value)) {
+        const userNum = parseInt(value, 10);
+        if (!isNaN(userNum) && userNum === current.answer) {
           autoCheckFiredRef.current = true;
-          setTimeout(() => handleCheck(value), 0);
+          handleCheck(value);
+        } else {
+          // Auch auto-checken wenn genug Ziffern da sind aber falsch (sofortiges Feedback)
+          const expectedLength = current.answer.toString().length;
+          if (value.length >= expectedLength && /^\d+$/.test(value)) {
+            autoCheckFiredRef.current = true;
+            handleCheck(value);
+          }
         }
       }
     }
