@@ -125,16 +125,18 @@ const NOUNS = [
   { word: "Mütze", article: "die", hint: "Kleidung" },
   { word: "Hemd", article: "das", hint: "Kleidung" },
 
-  // Sport & Freizeit
+  // Sport
   { word: "Ball", article: "der", hint: "Sport" },
-  { word: "Puppe", article: "die", hint: "Sport" },
   { word: "Fahrrad", article: "das", hint: "Sport" },
   { word: "Roller", article: "der", hint: "Sport" },
-  { word: "Gitarre", article: "die", hint: "Sport" },
-  { word: "Spiel", article: "das", hint: "Sport" },
-  { word: "Computer", article: "der", hint: "Sport" },
-  { word: "Flöte", article: "die", hint: "Sport" },
-  { word: "Spielzeug", article: "das", hint: "Sport" },
+
+  // Spielzeug & Freizeit
+  { word: "Puppe", article: "die", hint: "Spielzeug" },
+  { word: "Spiel", article: "das", hint: "Spielzeug" },
+  { word: "Spielzeug", article: "das", hint: "Spielzeug" },
+  { word: "Gitarre", article: "die", hint: "Spielzeug" },
+  { word: "Flöte", article: "die", hint: "Spielzeug" },
+  { word: "Computer", article: "der", hint: "Technik" },
 ];
 
 /**
@@ -169,7 +171,7 @@ const generateSession = (count = 10, filterCategory = null, errorNouns = []) => 
   return shuffle([...prioritized, ...remaining]);
 };
 
-const CATEGORIES = ['Alle', 'Tier', 'Schule', 'Familie', 'Essen', 'Natur', 'Haus', 'Kleidung', 'Sport'];
+const CATEGORIES = ['Alle', 'Tier', 'Schule', 'Familie', 'Essen', 'Natur', 'Haus', 'Kleidung', 'Sport', 'Spielzeug', 'Technik'];
 
 const ARTICLE_COLORS = {
   der: { bg: 'bg-blue-500', hover: 'hover:bg-blue-600', light: 'bg-blue-100 text-blue-700', ring: 'ring-blue-500' },
