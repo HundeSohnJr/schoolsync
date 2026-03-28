@@ -311,6 +311,7 @@ export default function Kopfrechnen() {
     const current = questions[currentIndex];
     const userNum = parseInt(answerStr, 10);
     const correct = userNum === current.answer;
+    console.log('[handleCheck]', { answerStr, userNum, expected: current.answer, correct, display: current.display, currentIndex, overrideProvided: overrideAnswer !== undefined });
 
     const result = {
       display: current.display,
