@@ -16,47 +16,78 @@ const buildDefaultProgress = () => {
 /**
  * Initiale Datenstruktur
  */
+const DEFAULT_STATE = {
+  streak: {
+    count: 0,
+    lastVisit: null,
+  },
+  progress: buildDefaultProgress(),
+  errors: [],
+  settings: {
+    textSize: 'normal',
+    highContrast: false,
+    mathMethod: 'Entbündeln',
+    difficulty: 'mittel',
+    autoCheck: false,
+    showTimer: true,
+  },
+};
+
 const getInitialState = () => {
-  const stored = localStorage.getItem(STORAGE_KEY);
+  let stored;
+  try {
+    stored = localStorage.getItem(STORAGE_KEY);
+  } catch (e) {
+    console.error('localStorage nicht verfügbar:', e);
+    return { ...DEFAULT_STATE, progress: buildDefaultProgress() };
+  }
+
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      // Merge with defaults to support new module keys and new fields
+
+      // Validate basic structure — if it's not an object, reset
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        console.warn('Ungültige Datenstruktur, wird zurückgesetzt');
+        localStorage.removeItem(STORAGE_KEY);
+        return { ...DEFAULT_STATE, progress: buildDefaultProgress() };
+      }
+
+      // Ensure streak is valid
+      const streak = {
+        count: typeof parsed.streak?.count === 'number' && isFinite(parsed.streak.count)
+          ? parsed.streak.count : 0,
+        lastVisit: parsed.streak?.lastVisit || null,
+      };
+
+      // Merge progress with defaults to support new module keys
       const defaultProgress = buildDefaultProgress();
       const mergedProgress = {};
       for (const key of Object.keys({ ...defaultProgress, ...parsed.progress })) {
         const def = defaultProgress[key] || { today: 0, total: 0, correct: 0, attempts: 0 };
         const existing = parsed.progress?.[key] || {};
         mergedProgress[key] = {
-          today: existing.today ?? def.today,
-          total: existing.total ?? def.total,
-          correct: existing.correct ?? def.correct,
-          attempts: existing.attempts ?? def.attempts,
+          today: typeof existing.today === 'number' && isFinite(existing.today) ? existing.today : def.today,
+          total: typeof existing.total === 'number' && isFinite(existing.total) ? existing.total : def.total,
+          correct: typeof existing.correct === 'number' && isFinite(existing.correct) ? existing.correct : def.correct,
+          attempts: typeof existing.attempts === 'number' && isFinite(existing.attempts) ? existing.attempts : def.attempts,
         };
       }
-      parsed.progress = mergedProgress;
-      return parsed;
+
+      // Ensure errors is a valid array
+      const errors = Array.isArray(parsed.errors) ? parsed.errors.slice(-20) : [];
+
+      // Merge settings with defaults
+      const settings = { ...DEFAULT_STATE.settings, ...(parsed.settings || {}) };
+
+      return { streak, progress: mergedProgress, errors, settings };
     } catch (e) {
-      console.error('Fehler beim Laden der Daten:', e);
+      console.error('Fehler beim Laden der Daten, wird zurückgesetzt:', e);
+      localStorage.removeItem(STORAGE_KEY);
     }
   }
 
-  return {
-    streak: {
-      count: 0,
-      lastVisit: null,
-    },
-    progress: buildDefaultProgress(),
-    errors: [],
-    settings: {
-      textSize: 'normal',
-      highContrast: false,
-      mathMethod: 'Entbündeln',
-      difficulty: 'mittel',
-      autoCheck: false,
-      showTimer: true,
-    },
-  };
+  return { ...DEFAULT_STATE, progress: buildDefaultProgress() };
 };
 
 /**

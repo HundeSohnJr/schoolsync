@@ -267,7 +267,7 @@ export default function Kopfrechnen() {
 
     timerRef.current = setInterval(() => {
       setElapsedSeconds(((Date.now() - questionStartTime) / 1000));
-    }, 100);
+    }, 500);
 
     return () => clearInterval(timerRef.current);
   }, [questionStartTime, showFeedback, isSessionComplete]);
