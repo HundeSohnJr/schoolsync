@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useStreak, useProgress, useErrors, useSettings } from '../context/AppContext';
 import { Flame, Check, X, Trophy, Zap, ToggleLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -267,8 +267,12 @@ export default function GrossKlein() {
     startNewSession();
   }, []);
 
-  // Initialize word states when entering a Mode 2 question
-  useEffect(() => {
+  // Initialize word states when entering a Mode 2 question.
+  // Uses useLayoutEffect so wordStates is updated SYNCHRONOUSLY before
+  // the browser paints — prevents the render race where the old wordStates
+  // briefly mismatched the new question's words (caused "Cannot read
+  // properties of undefined (reading 'correct')" crash on question transitions).
+  useLayoutEffect(() => {
     const current = questions[currentIndex];
     if (current?.mode === 2) {
       setWordStates(current.words.map((w) => w.word));
@@ -358,6 +362,9 @@ export default function GrossKlein() {
     if (mode2Submitted || showFeedback) return;
 
     const current = questions[currentIndex];
+    if (!current || !current.words) return;
+    // Guard: don't submit if wordStates hasn't caught up to the current question
+    if (wordStates.length !== current.words.length) return;
     const timeTaken = (Date.now() - startTime) / 1000;
 
     // Check each word
@@ -598,38 +605,46 @@ export default function GrossKlein() {
                   <p className="text-sm text-gray-500">Tippe auf ein Wort, um groß/klein zu wechseln.</p>
                 </div>
 
-                {/* Word Buttons */}
-                <div className="flex flex-wrap gap-2 justify-center mb-8">
-                  {wordStates.map((word, idx) => {
-                    const isCorrect = word === current.words[idx].correct;
-                    const wasChanged = word !== current.words[idx].word;
+                {/* Word Buttons — guard against useEffect race: wordStates
+                    might briefly be out of sync with current.words during
+                    question transitions. Only render when aligned. */}
+                {wordStates.length === current.words.length ? (
+                  <div className="flex flex-wrap gap-2 justify-center mb-8">
+                    {wordStates.map((word, idx) => {
+                      const wordDef = current.words[idx];
+                      if (!wordDef) return null;  // extra safety
+                      const isCorrect = word === wordDef.correct;
+                      const wasChanged = word !== wordDef.word;
 
-                    let btnClass = 'bg-gray-100 text-gray-800 hover:bg-gray-200 border-2 border-transparent';
-                    if (mode2Submitted) {
-                      btnClass = isCorrect
-                        ? 'bg-green-100 text-green-800 border-2 border-green-400'
-                        : 'bg-red-100 text-red-800 border-2 border-red-400';
-                    } else if (wasChanged) {
-                      btnClass = 'bg-blue-100 text-blue-800 border-2 border-blue-400';
-                    }
+                      let btnClass = 'bg-gray-100 text-gray-800 hover:bg-gray-200 border-2 border-transparent';
+                      if (mode2Submitted) {
+                        btnClass = isCorrect
+                          ? 'bg-green-100 text-green-800 border-2 border-green-400'
+                          : 'bg-red-100 text-red-800 border-2 border-red-400';
+                      } else if (wasChanged) {
+                        btnClass = 'bg-blue-100 text-blue-800 border-2 border-blue-400';
+                      }
 
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => toggleWord(idx)}
-                        disabled={mode2Submitted}
-                        className={`px-3 py-2 text-lg sm:text-xl font-semibold rounded-lg transition-all duration-150 ${btnClass} disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95`}
-                      >
-                        {word}
-                        {mode2Submitted && !isCorrect && (
-                          <span className="block text-xs text-green-700 font-normal">
-                            {current.words[idx].correct}
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => toggleWord(idx)}
+                          disabled={mode2Submitted}
+                          className={`px-3 py-2 text-lg sm:text-xl font-semibold rounded-lg transition-all duration-150 ${btnClass} disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95`}
+                        >
+                          {word}
+                          {mode2Submitted && !isCorrect && (
+                            <span className="block text-xs text-green-700 font-normal">
+                              {wordDef.correct}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="flex justify-center mb-8 text-sm text-gray-400">Lade Aufgabe...</div>
+                )}
 
                 {/* Submit / Feedback */}
                 {!mode2Submitted && (
