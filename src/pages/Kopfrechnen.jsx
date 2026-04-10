@@ -305,13 +305,16 @@ export default function Kopfrechnen() {
   // -------------------------------------------------------------------------
   const handleCheck = (overrideAnswer) => {
     const answerStr = overrideAnswer !== undefined ? overrideAnswer : userAnswer;
-    if (!answerStr && answerStr !== '0') return;
+    if (answerStr === undefined || answerStr === null || answerStr === '') return;
 
     const timeTaken = (Date.now() - questionStartTime) / 1000;
     const current = questions[currentIndex];
-    const userNum = parseInt(answerStr, 10);
-    const correct = userNum === current.answer;
-    console.log('[handleCheck]', { answerStr, userNum, expected: current.answer, correct, display: current.display, currentIndex, overrideProvided: overrideAnswer !== undefined });
+    if (!current) return;  // safety: no question loaded
+    // Use Number() for defensive comparison — handles edge cases parseInt can miss
+    const userNum = Number(answerStr);
+    const expected = Number(current.answer);
+    const correct = Number.isFinite(userNum) && userNum === expected;
+    console.log('[handleCheck]', { answerStr, userNum, expected, correct, display: current.display, currentIndex, overrideProvided: overrideAnswer !== undefined });
 
     const result = {
       display: current.display,
@@ -405,20 +408,17 @@ export default function Kopfrechnen() {
     if (/^-?\d{0,4}$/.test(value)) {
       setUserAnswer(value);
 
-      // Auto-check: wenn die eingegebene Zahl exakt mit der Antwort übereinstimmt
+      // Auto-check: NUR firen wenn die eingegebene Zahl exakt mit der Antwort
+      // übereinstimmt. Der alte "Länge stimmt = wohl fertig" Pfad war fehleranfällig
+      // und konnte eine richtige Antwort als falsch markieren, wenn State-Updates
+      // noch in flight waren. Falsche Antworten müssen jetzt per Enter/Prüfen
+      // bestätigt werden — das gibt dem Kind auch Zeit nochmal nachzudenken.
       const current = questions[currentIndex];
       if (autoCheck && current && !autoCheckFiredRef.current && !showFeedback) {
         const userNum = parseInt(value, 10);
         if (!isNaN(userNum) && userNum === current.answer) {
           autoCheckFiredRef.current = true;
           handleCheck(value);
-        } else {
-          // Auch auto-checken wenn genug Ziffern da sind aber falsch (sofortiges Feedback)
-          const expectedLength = current.answer.toString().length;
-          if (value.length >= expectedLength && /^\d+$/.test(value)) {
-            autoCheckFiredRef.current = true;
-            handleCheck(value);
-          }
         }
       }
     }
